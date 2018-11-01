@@ -33,6 +33,6 @@ function DumpSql ($stmt) {
   }
 }
 
-DumpSql(runQuery('SELECT * FROM stockitems'));
+
 
 ?>
