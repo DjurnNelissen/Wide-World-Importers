@@ -1,7 +1,5 @@
 <?php
-session_start();
-
-
+  session_start();
 ?>
 <html>
 <head>
@@ -18,28 +16,9 @@ session_start();
       </div>
       <div class="row main">
         <?php
-        $servername = "localhost";
-        $username = "wwi";
-        $password = "";
-        $DBname = "wideworldimporters";
+          require_once('common.php');
 
-        // Create connection
-        $conn = new mysqli($servername, $username, $password, $DBname);
-
-        $sql = "SELECT * FROM stockitems";
-
-        $result = $conn->query($sql);
-
-
-        if ($result->num_rows > 0) {
-          // output data of each row
-          while($row = $result->fetch_assoc()) {
-            print("<div>");
-            print("<a href='index.php?id=" . $row['StockItemID'] .  "'>" . $row['StockItemName'] . "</a>");
-            print("</div>");
-          }
-        }
-
+          DumpSql(runQuery('SELECT * FROM stockitems'));
          ?>
       </div>
       <div class="row footer">
