@@ -8,6 +8,8 @@
     <title></title>
   </head>
   <body>
-
+      <div class="nav-bar">
+        
+    </div>
   </body>
 </html>
