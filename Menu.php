@@ -10,6 +10,9 @@
   </head>
   <body>
       <div class="nav-bar">
+        <!-- logo -->
+        <!-- zoekbalk -->
+        <!-- link naar winkelmandje -->
         
     </div>
   </body>
