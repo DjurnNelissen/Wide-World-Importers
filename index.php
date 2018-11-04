@@ -17,8 +17,8 @@
       <div class="row main">
         <?php
           require_once('common.php');
-
-          DumpSql(runQuery('SELECT * FROM stockitems'));
+          addToCart(1,1);
+          DumpSql(fetchProductsFromCart());
          ?>
       </div>
       <div class="row footer">
