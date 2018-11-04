@@ -118,6 +118,12 @@ function fetchProductsFromCart() {
   }
 }
 
+//fetches a single product based on its product ID
+function fetchProduct($id) {
+  $sql = "SELECT * FROM stockitems WHERE StockItemID = $id";
+  return runQuery($sql);
+}
+
 
 
 ?>
