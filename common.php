@@ -1,5 +1,6 @@
 <?php
 
+//dictionary that stores DB settings
 function getDBsettings () {
   return array (
   'DBserver' => "localhost",
@@ -42,6 +43,7 @@ function runQueryWithParams ($q, $p) {
   return $stmt;
 }
 
+//test function to dump the SQL result
 function DumpSql ($stmt) {
   while ($row = $stmt->fetch()) {
     print(var_dump($row));
@@ -71,13 +73,13 @@ function addToCart($productID, $amount) {
         $_SESSION['cart'][$i]['amount'] = $_SESSION['cart'][$i]['amount'] + $amount;
       }
     }
-    //if the item isnt in the cart yet it adds it completely
+    //if the item isnt in the cart yet, create a new product and add it to the cart
     if (! $foundItem) {
       $product = [
         'ID' => $productID,
         'amount' => $amount
       ];
-
+      //adds the product to the cart
       array_push($_SESSION['cart'], $product);
     }
   }
@@ -86,12 +88,15 @@ function addToCart($productID, $amount) {
 //removes a product from the cart -  use 'all' to remove all of the product
 function removeFromCart ($productID, $amount) {
   if (checkCart()) {
+    //loops over the cart to find the item we are looking for
     for ($i=0; $i < count($_SESSION['cart']); $i++) {
       if ($_SESSION['cart'][$i]['ID'] == $productID) {
+        //if the entire amount has to be removed, unset the variable
         if ($amount == 'all' || $amount >= $_SESSION['cart'][$i]['amount']) {
           unset($_SESSION['cart'][$i]);
         } else {
-          $_SESSION['cart'][$i][$amount] = $SESSION['cart'][$i]['amount'] - $amount;
+          //else subtract the requested amount from the cart
+          $_SESSION['cart'][$i]['amount'] = $_SESSION['cart'][$i]['amount'] - $amount;
         }
       }
     }
@@ -130,7 +135,7 @@ function fetchProductsFromCartAsArray () {
         $input['amount'] = $_SESSION['cart'][$i]['amount'];
       }
     }
-    array_push($input,$result);
+    array_push($result,$input);
   }
 
   return $result;
@@ -146,12 +151,15 @@ function fetchProduct($id) {
 function findProducts ($text, $categories, $limit) {
     $sql =   "SELECT * FROM stockitems";
 
+    //checks if the item is in the requested categories
     if (isset($categories) && count($categories) > 0) {
         $sql = $sql . " WHERE StockItemID IN (SELECT StockItemID FROM stockitemstockgroups WHERE StockGroupID IN (" . $arrayToSQLString($categories) . "))";
         if (isset($text) && $text != '') {
+          //adds the text search if needed
           $sql = $sql . "AND StockItemName LIKE '%$text%'";
         }
     } else {
+      //adds the text search if needed
       if (isset($text) && $text != '' ) {
         $sql = $sql . " WHERE StockItemName LIKE '%$text%'";
       }
@@ -176,19 +184,50 @@ function arrayToSQLString ($arr) {
   return $sql;
 }
 
-//prints the cart in HTML 
+//prints the cart in HTML
 function printCart () {
   $products = fetchProductsFromCartAsArray();
 
   if (count($products) > 0) {
   for ($i=0; $i < count($products) ; $i++) {
-    print("<div class='cartItem'> $products[$i]['StockItemName'] - $products[$i]['amount'] X</div>");
+    print("<div class='cartItem'> ". $products[$i]['StockItemName']  ." - " . $products[$i]['amount'] . "X <form class='' action='winkelwagen.php' method='post'>
+      <input type='number' name='ID' value='" . $products[$i]['StockItemID'] . "' hidden>
+      <input type='number' name='amount' value=" . (string)$products[$i]['amount'] . " hidden>
+      <input type='submit' name='RemoveItem' value='Remove'>
+    </form>
+    <form class='' action='winkelwagen.php' method='post'>
+      <input type='number' name='ID' value='" . $products[$i]['StockItemID'] . "' hidden>
+      <input type='number' name='amount' value=1 hidden>
+      <input type='submit' name='RemoveItem' value='Remove one'>
+    </form></div>");
   }
 } else {
   print("Cart is empty");
 }
 }
 
+//used  for index.php
+function printProducts () {
+  //gets all products that match the query -- currently only uses the text search
+  $products = findProducts($_GET['q']);
 
+  while ($row = $products->fetch()) {
+    print ("<div class='product'> <a href='product.php/?id=" . $row['StockItemID'] . "'>" .  $row['StockItemName'] .  "</a> </div>");
+  }
+}
+
+//runs and SQL query to fetch all categories
+function getProductCategories () {
+  $sql = "SELECT * FROM stockgroups";
+  return runQuery($sql);
+}
+
+//prints the product categories
+function printProductCategories () {
+  $stmt = getProductCategories();
+  while ($row = $stmt->fetch()) {
+    print($row['StockGroupName'] . "<br>");
+  }
+}
 
 ?>

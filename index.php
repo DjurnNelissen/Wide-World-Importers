@@ -1,5 +1,6 @@
 <?php
   session_start();
+  require_once('common.php');
 ?>
 <html>
 <head>
@@ -18,11 +19,16 @@
         </form>
       </div>
       <div class="row main">
-        <?php
-          require_once('common.php');
-          addToCart(1,1);
-          DumpSql(findProducts($_GET['q']));
-         ?>
+        <div class="products">
+          <?php
+            printProducts();
+           ?>
+        </div>
+        <div class="categories">
+          <?php
+            printProductCategories();
+           ?>
+        </div>
       </div>
       <div class="row footer">
 
