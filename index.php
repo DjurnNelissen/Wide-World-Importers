@@ -18,7 +18,7 @@
         <?php
           require_once('common.php');
           addToCart(1,1);
-          DumpSql(fetchProductsFromCart());
+          DumpSql(findProducts($_GET['q']));
          ?>
       </div>
       <div class="row footer">

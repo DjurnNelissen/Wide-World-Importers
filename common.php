@@ -114,14 +114,66 @@ function fetchProductsFromCart() {
     }
     $sql = rtrim($sql,",");
     $sql = $sql . ")";
+
     return runQuery($sql); //runs the SQL query
   }
+}
+
+//turns the returned products into an array, also includes the amount that is in the cart
+function fetchProductsFromCartAsArray () {
+  $stmt = fetchProductsFromCart();
+  $result = [];
+  while ($row = $stmt->fetch()) {
+    $input = $row;
+    for ($i=0; $i < count($_SESSION['cart']) ; $i++) {
+      if ($_SESSION['cart'][$i]['ID'] == $row['StockItemID']) {
+        $input['amount'] = $_SESSION['cart'][$i]['amount'];
+      }
+    }
+    array_push($input,$result);
+  }
+
+  return $result;
 }
 
 //fetches a single product based on its product ID
 function fetchProduct($id) {
   $sql = "SELECT * FROM stockitems WHERE StockItemID = $id";
   return runQuery($sql);
+}
+
+//returns products based on name and categories (categories being a stockgroupID array)
+function findProducts ($text, $categories, $limit) {
+    $sql =   "SELECT * FROM stockitems";
+
+    if (isset($categories) && count($categories) > 0) {
+        $sql = $sql . " WHERE StockItemID IN (SELECT StockItemID FROM stockitemstockgroups WHERE StockGroupID IN (" . $arrayToSQLString($categories) . "))";
+        if (isset($text) && $text != '') {
+          $sql = $sql . "AND StockItemName LIKE '%$text%'";
+        }
+    } else {
+      if (isset($text) && $text != '' ) {
+        $sql = $sql . " WHERE StockItemName LIKE '%$text%'";
+      }
+    }
+
+    if (isset($limit)) {
+      $sql = $sql . " LIMIT $limit";
+    }
+  
+    return runQuery($sql);
+}
+
+//turns a single dimension array into a string with a comma between each element
+function arrayToSQLString ($arr) {
+  $sql = "";
+  for ($i=0; $i < count($arr) ; $i++) {
+    $sql = $sql . (string)$arr[$i];
+    if (! $i = count($arr) - 1) {
+      $sql = $sql . ',';
+    }
+  }
+  return $sql;
 }
 
 
