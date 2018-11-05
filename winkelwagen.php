@@ -1,6 +1,11 @@
 <?php
   session_start();
   include_once("common.php");
+
+  if (isset($_POST['addToCart'])) {
+    addToCart($_POST['ProductID'], $_POST['quantity']);
+  }
+
  ?>
 <!DOCTYPE html>
 <html>

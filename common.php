@@ -130,7 +130,7 @@ function fetchProductsFromCartAsArray () {
         $input['amount'] = $_SESSION['cart'][$i]['amount'];
       }
     }
-    array_push($input,$result);
+    array_push($result,$input);
   }
 
   return $result;
@@ -176,17 +176,26 @@ function arrayToSQLString ($arr) {
   return $sql;
 }
 
-//prints the cart in HTML 
+//prints the cart in HTML
 function printCart () {
   $products = fetchProductsFromCartAsArray();
 
   if (count($products) > 0) {
   for ($i=0; $i < count($products) ; $i++) {
-    print("<div class='cartItem'> $products[$i]['StockItemName'] - $products[$i]['amount'] X</div>");
+    print("<div class='cartItem'> ". $products[$i]['StockItemName']  ." - " . $products[$i]['amount'] . "X</div>");
   }
 } else {
   print("Cart is empty");
 }
+}
+
+//used  for index.php
+function printProducts () {
+  $products = findProducts($_GET['q']);
+
+  while ($row = $products->fetch()) {
+    print ("<div class='product'> <a href='product.php/?id=" . $row['StockItemID'] . "'>" .  $row['StockItemName'] .  "</a> </div>");
+  }
 }
 
 

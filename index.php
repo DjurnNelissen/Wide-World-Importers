@@ -20,8 +20,7 @@
       <div class="row main">
         <?php
           require_once('common.php');
-          addToCart(1,1);
-          DumpSql(findProducts($_GET['q']));
+          printProducts();
          ?>
       </div>
       <div class="row footer">
