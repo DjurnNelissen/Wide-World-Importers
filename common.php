@@ -216,6 +216,7 @@ function printProducts () {
   }
 }
 
+//runs and SQL query to fetch all categories
 function getProductCategories () {
   $sql = "SELECT * FROM stockgroups";
   return runQuery($sql);
@@ -228,7 +229,5 @@ function printProductCategories () {
     print($row['StockGroupName'] . "<br>");
   }
 }
-
-
 
 ?>
