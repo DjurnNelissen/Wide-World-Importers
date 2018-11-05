@@ -6,8 +6,6 @@
     addToCart($_POST['ProductID'], $_POST['quantity']);
   }
 
-  print(var_dump($_POST));
-
   if (isset($_POST['RemoveItem'])) {
     removeFromCart($_POST['ID'], $_POST['amount']);
   }
