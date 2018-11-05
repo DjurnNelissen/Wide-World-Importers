@@ -160,7 +160,7 @@ function findProducts ($text, $categories, $limit) {
     if (isset($limit)) {
       $sql = $sql . " LIMIT $limit";
     }
-  
+
     return runQuery($sql);
 }
 
@@ -174,6 +174,19 @@ function arrayToSQLString ($arr) {
     }
   }
   return $sql;
+}
+
+//prints the cart in HTML 
+function printCart () {
+  $products = fetchProductsFromCartAsArray();
+
+  if (count($products) > 0) {
+  for ($i=0; $i < count($products) ; $i++) {
+    print("<div class='cartItem'> $products[$i]['StockItemName'] - $products[$i]['amount'] X</div>");
+  }
+} else {
+  print("Cart is empty");
+}
 }
 
 

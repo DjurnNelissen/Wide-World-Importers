@@ -12,7 +12,10 @@
   <div class="wrapper">
     <div class="container">
       <div class="row nav-bar">
-
+        <form class="" action="index.php" method="get">
+          <input type="text" name="q" value="" placeholder="search">
+          <button type="submit" name="" value="">Search</button>
+        </form>
       </div>
       <div class="row main">
         <?php
