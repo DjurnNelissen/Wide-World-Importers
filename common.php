@@ -1,5 +1,6 @@
 <?php
 
+//dictionary that stores DB settings
 function getDBsettings () {
   return array (
   'DBserver' => "localhost",
@@ -42,6 +43,7 @@ function runQueryWithParams ($q, $p) {
   return $stmt;
 }
 
+//test function to dump the SQL result
 function DumpSql ($stmt) {
   while ($row = $stmt->fetch()) {
     print(var_dump($row));
@@ -71,13 +73,13 @@ function addToCart($productID, $amount) {
         $_SESSION['cart'][$i]['amount'] = $_SESSION['cart'][$i]['amount'] + $amount;
       }
     }
-    //if the item isnt in the cart yet it adds it completely
+    //if the item isnt in the cart yet, create a new product and add it to the cart
     if (! $foundItem) {
       $product = [
         'ID' => $productID,
         'amount' => $amount
       ];
-
+      //adds the product to the cart
       array_push($_SESSION['cart'], $product);
     }
   }
@@ -86,11 +88,14 @@ function addToCart($productID, $amount) {
 //removes a product from the cart -  use 'all' to remove all of the product
 function removeFromCart ($productID, $amount) {
   if (checkCart()) {
+    //loops over the cart to find the item we are looking for
     for ($i=0; $i < count($_SESSION['cart']); $i++) {
       if ($_SESSION['cart'][$i]['ID'] == $productID) {
+        //if the entire amount has to be removed, unset the variable
         if ($amount == 'all' || $amount >= $_SESSION['cart'][$i]['amount']) {
           unset($_SESSION['cart'][$i]);
         } else {
+          //else subtract the requested amount from the cart
           $_SESSION['cart'][$i]['amount'] = $_SESSION['cart'][$i]['amount'] - $amount;
         }
       }
@@ -146,12 +151,15 @@ function fetchProduct($id) {
 function findProducts ($text, $categories, $limit) {
     $sql =   "SELECT * FROM stockitems";
 
+    //checks if the item is in the requested categories
     if (isset($categories) && count($categories) > 0) {
         $sql = $sql . " WHERE StockItemID IN (SELECT StockItemID FROM stockitemstockgroups WHERE StockGroupID IN (" . $arrayToSQLString($categories) . "))";
         if (isset($text) && $text != '') {
+          //adds the text search if needed
           $sql = $sql . "AND StockItemName LIKE '%$text%'";
         }
     } else {
+      //adds the text search if needed
       if (isset($text) && $text != '' ) {
         $sql = $sql . " WHERE StockItemName LIKE '%$text%'";
       }
