@@ -208,10 +208,24 @@ function printCart () {
 
 //used  for index.php
 function printProducts () {
+  //gets all products that match the query -- currently only uses the text search
   $products = findProducts($_GET['q']);
 
   while ($row = $products->fetch()) {
     print ("<div class='product'> <a href='product.php/?id=" . $row['StockItemID'] . "'>" .  $row['StockItemName'] .  "</a> </div>");
+  }
+}
+
+function getProductCategories () {
+  $sql = "SELECT * FROM stockgroups";
+  return runQuery($sql);
+}
+
+//prints the product categories
+function printProductCategories () {
+  $stmt = getProductCategories();
+  while ($row = $stmt->fetch()) {
+    print($row['StockGroupName'] . "<br>");
   }
 }
 
