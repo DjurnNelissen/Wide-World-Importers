@@ -1,6 +1,8 @@
 <?php
   session_start();
- ?>
+  require_once('common.php');
+?>
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -14,10 +16,11 @@
   <body>
       <div class="nav">
           <a class="navbar-brand">Logo</a>
-          <form class="form-inline">
-            <input type="search" placeholder="Search">
-            <button class="btn btn-outline-succes" type="submit">Search</button>
+          <form class="" action="index.php" method="get">
+            <input type="text" name="q" value="" placeholder="search">
+              <button type="submit" name="" value="">Search</button>
           </form>
+
           <div class="nav justify-content-end">
             <ul class="nav justify-content-end">
                 <li class="nav-item">

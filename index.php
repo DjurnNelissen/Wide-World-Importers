@@ -1,6 +1,8 @@
 <?php
   session_start();
   require_once('common.php');
+  include("menu.php");
+
 ?>
 <html>
 <head>
