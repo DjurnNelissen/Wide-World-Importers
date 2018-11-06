@@ -226,7 +226,7 @@ function getProductCategories () {
 function printProductCategories () {
   $stmt = getProductCategories();
   while ($row = $stmt->fetch()) {
-    print($row['StockGroupName'] . "<br>");
+    print("<div class='productgroup'> <input type='checkbox' name='categories[]' value='" . $row['StockGroupID'] . "'>" . $row['StockGroupName'] . "</div>");
   }
 }
 
