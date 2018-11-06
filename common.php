@@ -149,12 +149,13 @@ function fetchProduct($id) {
 }
 
 //returns products based on name and categories (categories being a stockgroupID array)
-function findProducts ($text, $categories, $limit) {
+function findProducts ($text, $category, $limit) {
     $sql =   "SELECT * FROM stockitems";
 
     //checks if the item is in the requested categories
-    if (isset($categories) && count($categories) > 0) {
-        $sql = $sql . " WHERE StockItemID IN (SELECT StockItemID FROM stockitemstockgroups WHERE StockGroupID IN (" . $arrayToSQLString($categories) . "))";
+    if (isset($category) && $category != 'all') {
+      $category = (int)$category;
+        $sql = $sql . " WHERE StockItemID IN (SELECT StockItemID FROM stockitemstockgroups WHERE StockGroupID = $category )";
         if (isset($text) && $text != '') {
           //adds the text search if needed
           $sql = $sql . "AND StockItemName LIKE '%$text%'";
@@ -210,10 +211,25 @@ function printCart () {
 //used  for index.php
 function printProducts () {
   //gets all products that match the query -- currently only uses the text search
-  $products = findProducts($_GET['q']);
+   if (!isset($_GET["q"])) {
+    $_searchtekst = "";
+  } else {
+       $_searchtekst = $_GET["q"] ;
+   }
 
-  while ($row = $products->fetch()) {
-    print ("<div class='product'> <a href='product.php/?id=" . $row['StockItemID'] . "'>" .  $row['StockItemName'] .  "</a> </div>");
+   if (isset($_GET['c'])) {
+    $category = $_GET['c'];
+   } else {
+     $category = 'all';
+   }
+
+    $products = findProducts($_searchtekst,$category,1000);
+    if ($products->rowCount() > 0) {
+      while ($row = $products->fetch()) {
+      print ("<div class='product'> <a href='product.php/?id=" . $row['StockItemID'] . "'>" .  $row['StockItemName'] .  "</a> </div>");
+    }
+  } else {
+    print("No products found");
   }
 }
 
@@ -226,8 +242,9 @@ function getProductCategories () {
 //prints the product categories
 function printProductCategories () {
   $stmt = getProductCategories();
+  print("<div class='productgroup'> <input type='radio' name='category' value='all'>all</div>");
   while ($row = $stmt->fetch()) {
-    print("<div class='productgroup'> <input type='checkbox' name='categories[]' value='" . $row['StockGroupID'] . "'>" . $row['StockGroupName'] . "</div>");
+    print("<div class='productgroup'> <input type='radio' name='category' value='" . $row['StockGroupID'] . "'>" . $row['StockGroupName'] . "</div>");
   }
 }
 
