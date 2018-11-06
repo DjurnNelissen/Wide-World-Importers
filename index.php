@@ -1,11 +1,15 @@
 <?php
   session_start();
   require_once('common.php');
+  include("menu.php");
+
 ?>
 <html>
 <head>
   <title></title>
-  <link rel="stylesheet" href="/css/main.css" media="screen" title="no title">
+
+  <link rel="stylesheet" href="css/main.css" media="screen" title="no title">
+
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 </head>
 <body>

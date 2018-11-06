@@ -6,13 +6,6 @@ body {
 
 }
 
-.nav-bar {
-    width:100%;
-    height:200px;
-    backgroundcolor:red;
-    font-family: sans-serif,"Helvetica";
-  
-}
 
 
 .footer {
@@ -20,5 +13,24 @@ body {
 }
 
 .main > div {
-  width: 100%;
+
+}
+
+.nav{
+    background-color: lightgrey;
+    justify-content: center;
+    height: 4rem;
+
+}
+
+.Search{
+    padding-top: 15px;
+}
+
+.ul{
+    padding-top: 10px;
+}
+
+.navbar-brand{
+    padding-top: 13px;
 }
