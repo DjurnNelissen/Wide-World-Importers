@@ -1,5 +1,6 @@
 <?php
   session_start();
+  require_once('common.php');
 ?>
 <html>
 <head>
@@ -12,14 +13,22 @@
   <div class="wrapper">
     <div class="container">
       <div class="row nav-bar">
-
+        <form class="" action="index.php" method="get">
+          <input type="text" name="q" value="" placeholder="search">
+          <button type="submit" name="" value="">Search</button>
+        </form>
       </div>
       <div class="row main">
-        <?php
-          require_once('common.php');
-
-          DumpSql(runQuery('SELECT * FROM stockitems'));
-         ?>
+        <div class="products">
+          <?php
+            printProducts();
+           ?>
+        </div>
+        <div class="categories">
+          <?php
+            printProductCategories();
+           ?>
+        </div>
       </div>
       <div class="row footer">
 
