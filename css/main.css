@@ -6,14 +6,6 @@ body {
 
 }
 
-.nav-bar{
-    top: 0;
-    left: 0;
-    position: fixed;
-    z-index: 1;
-    width: 100%;
-    background-color: black;
-}
 
 
 .footer {
@@ -21,5 +13,14 @@ body {
 }
 
 .main > div {
-  width: 100%;
+
+}
+
+.nav{
+    background-color: lightgrey;
+
+}
+
+.nav .justify-content-end{
+    justify-content: flex-end;
 }
