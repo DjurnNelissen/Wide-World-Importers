@@ -1,6 +1,7 @@
 <?php
   session_start();
   include_once('common.php');
+  include("menu.php");
 ?>
 <!DOCTYPE html>
 <html>
