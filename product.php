@@ -19,9 +19,26 @@
             <?php
               $product = fetchProduct($_GET['id']);
               $row = $product->fetch();
-
-              print($row['StockItemName']);
             ?>
+            <div class="name">
+              <?php print($row['StockItemName']); ?>
+            </div>
+            <div class="weigth">
+            Gewicht:  <?php print($row['TypicalWeightPerUnit']); ?>
+            </div>
+            <div class="price">
+              Prijs: <?php  print($row['RecommendedRetailPrice']); ?>
+            </div>
+            <div class="tax">
+              Belasting: <?php print($row['TaxRate']); ?> %
+            </div>
+            <div class="description">
+              <?php
+              if ($row['MarketingComments'] != "") {
+                  print("Beschrijving: " . $row['MarketingComments']);
+              }
+               ?>
+            </div>
           </div>
 
 
