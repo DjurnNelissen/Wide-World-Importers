@@ -18,10 +18,19 @@ body {
 
 .nav{
     background-color: lightgrey;
-
+    justify-content: center;
+    height: 4rem;
 
 }
 
-.nav .justify-content-end{
-    justify-content: flex-end;
+.Search{
+    padding-top: 15px;
+}
+
+.ul{
+    padding-top: 10px;
+}
+
+.navbar-brand{
+    padding-top: 13px;
 }
