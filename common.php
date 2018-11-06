@@ -93,7 +93,8 @@ function removeFromCart ($productID, $amount) {
       if ($_SESSION['cart'][$i]['ID'] == $productID) {
         //if the entire amount has to be removed, unset the variable
         if ($amount == 'all' || $amount >= $_SESSION['cart'][$i]['amount']) {
-          unset($_SESSION['cart'][$i]);
+          array_splice($_SESSION['cart'],$i,1);
+          $_SESSION['cart'] = array_values($_SESSION['cart']);
         } else {
           //else subtract the requested amount from the cart
           $_SESSION['cart'][$i]['amount'] = $_SESSION['cart'][$i]['amount'] - $amount;
