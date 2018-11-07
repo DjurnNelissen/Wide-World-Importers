@@ -15,28 +15,28 @@
 	<div class="wrapper page-wrapper">
 		<div class="container-fluid">
 			<div class="row">
-			<div class="col-md-3 sidebar">
-				<p>Hier komt de sidebar met categorieen</p>
-			</div>
-
-			<div class="col-md page-content">
-	<?php include('Menu.php') ?>
-				<div class="row main">
-					<div class="products">
-						<?php
-            printProducts();
-           ?>
-					</div>
+				<div class="col-md-3 sidebar">
+					<p>Hier komt de sidebar met categorieen</p>
 					<div class="categories">
 						<?php
             printProductCategories();
            ?>
 					</div>
 				</div>
-				<div class="row footer">
 
+				<div class="col-md page-content">
+					<?php include('Menu.php') ?>
+					<div class="row main">
+						<div class="products">
+							<?php
+            printProducts();
+           ?>
+						</div>
+					</div>
+					<div class="row footer">
+
+					</div>
 				</div>
-			</div>
 			</div>
 		</div>
 	</div>
