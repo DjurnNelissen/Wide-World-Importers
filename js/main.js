@@ -20,7 +20,17 @@ if (categoryID != 'all') {
 
 //adds a product to the cart
 function addToCart (ID, amount) {
-  sendPostRequest('api/addToCart.php', 'id=' + ID.toString() + '&amount=' + amount.toString());
+  sendPostRequest('api/addToCart.php', 'id=' + ID.toString() + '&amount=' + amount.toString(), function (res) {
+    //do stuff with the response
+
+  });
+}
+
+function removeFromCart (ID, amount) {
+  sendPostRequest('api/removeFromCart.php', 'id=' + ID.toString() + '&amount=' + amount.toString(), function (res) {
+    //do stuff with the response
+
+  });
 }
 
 function sendPostRequest (url, params, callback) {
