@@ -20,9 +20,11 @@ if (categoryID != 'all') {
 
 //adds a product to the cart
 function addToCart (ID, amount) {
+  sendPostRequest('api/addToCart.php', 'id=' + ID.toString() + '&amount=' + amount.toString());
+}
+
+function sendPostRequest (url, params, callback) {
   var http = new XMLHttpRequest();
-  var url = 'api/addToCart.php';
-  var params = 'id=' + ID.toString() + '&amount=' + amount.toString();
   http.open('POST', url, true);
 
   //Send the proper header information along with the request
@@ -30,7 +32,7 @@ function addToCart (ID, amount) {
 
   http.onreadystatechange = function() {//Call a function when the state changes.
     if(http.readyState == 4 && http.status == 200) {
-        alert(http.responseText);
+        callback(http.responseText);
     }
   }
 
