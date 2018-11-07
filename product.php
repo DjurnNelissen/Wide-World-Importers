@@ -41,13 +41,25 @@
                ?>
             </div>
             <div class="color">
-              Kleur: <?php print($row['ColorName']); ?>
+             <?php
+              if ($row['ColorName'] != "") {
+                  print("Kleur: " . $row['ColorName']);
+              }
+              ?>
             </div>
             <div class="brand">
-              Merk: <?php print($row['Brand']); ?>
+              <?php
+              if ($row['Brand'] != "") {
+                  print("Merk: " . $row['Brand']);
+              }
+              ?>
             </div>
             <div class="size">
-              Maat: <?php print($row['Size']); ?>
+              <?php
+              if ($row['Size'] != "") {
+                  print("Maat: " . $row['Size']);
+              }
+               ?>
             </div>
           </div>
 
