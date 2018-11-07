@@ -5,11 +5,8 @@
 <html>
 <head>
   <title>WWI Webshop</title>
-
   <link rel="stylesheet" href="css/main.css" media="screen" title="no title">
-
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-
   <script src="js/main.js" charset="utf-8"></script>
 </head>
 <body>

@@ -191,7 +191,7 @@ function printCart () {
 
   if (count($products) > 0) {
   for ($i=0; $i < count($products) ; $i++) {
-    print("<div class='cartItem'> ". $products[$i]['StockItemName']  ." - " . $products[$i]['amount'] . "X <form class='' action='winkelwagen.php' method='post'>
+    print("<div class='col-md-12 cartItem'> ". $products[$i]['StockItemName']  ." - " . $products[$i]['amount'] . "X <form class='' action='winkelwagen.php' method='post'>
       <input type='number' name='ID' value='" . $products[$i]['StockItemID'] . "' hidden>
       <input type='number' name='amount' value=" . (string)$products[$i]['amount'] . " hidden>
       <input type='submit' name='RemoveItem' value='Remove'>

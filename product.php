@@ -6,16 +6,15 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/main.css">
-    <title></title>
+    <link rel="stylesheet" href="css/main.css" media="screen" title="no title">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <title>WWI Webshop</title>
   </head>
   <body>
-    <header class="container">
-
-      </header>
+    <?php include("Menu.php") ?>
     <section class="container">
-        <?php include("Menu.php"); ?>
+
         <div class="row">
         <figure class="col-sm-6">
             <img  class="img-responsive" src="https://sc02.alicdn.com/kf/HTB1wYdzPFXXXXaXapXXq6xXFXXX2/USB-Flash-Drive-8-GB-Memory-Stick.jpg_350x350.jpg"/>
@@ -31,7 +30,7 @@
                 <p>Gewicht:  <?php print($row['TypicalWeightPerUnit']); ?></p>
             </div>
             <div class="row">
-                <p>€ <?php  print($row['RecommendedRetailPrice']); ?></p>
+                <p>Prijs: € <?php  print($row['RecommendedRetailPrice']); ?></p>
             </div>
             <div class="row">
                 <p>Belasting: <?php print($row['TaxRate']); ?> %</p>
