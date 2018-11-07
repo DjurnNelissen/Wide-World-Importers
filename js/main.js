@@ -8,8 +8,9 @@ function searchCategory (categoryID) {
 
   search_params.delete('c');
 
+if (categoryID != 'all') {
   search_params.append('c',categoryID);
-
+}
   url.search = search_params.toString();
 
   var new_url = url.toString();
