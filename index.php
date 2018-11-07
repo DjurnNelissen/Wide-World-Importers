@@ -1,26 +1,22 @@
 <?php
   session_start();
   require_once('common.php');
-  include("menu.php");
-
 ?>
 <html>
 <head>
-  <title></title>
+  <title>WWI Webshop</title>
 
   <link rel="stylesheet" href="css/main.css" media="screen" title="no title">
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+
+  <script src="js/main.js" charset="utf-8"></script>
 </head>
 <body>
+    <?php include('Menu.php') ?>
   <div class="wrapper">
     <div class="container">
-      <div class="row nav-bar">
-        <form class="" action="index.php" method="get">
-          <input type="text" name="q" value=<?php if (isset($_GET['q'])) print("'" . $_GET['q'] . "'")  ?> placeholder="search">
-          <button type="submit" name="" value="">Search</button>
-        </form>
-      </div>
+
       <div class="row main">
         <div class="products">
           <?php
