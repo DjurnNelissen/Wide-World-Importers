@@ -2,7 +2,6 @@
   //load libs
   session_start();
   include_once("common.php");
-  include("menu.php");
 
   //handle adding items to cart
   if (isset($_POST['addToCart'])) {
