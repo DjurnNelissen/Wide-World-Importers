@@ -1,7 +1,6 @@
 <?php
   session_start();
   include_once('common.php');
-  include("menu.php");
 ?>
 <!DOCTYPE html>
 <html>
@@ -16,6 +15,7 @@
 
       </header>
     <section class="container">
+        <?php include("Menu.php"); ?>
         <div class="row">
         <figure class="col-sm-6">
             <img  class="img-responsive" src="https://sc02.alicdn.com/kf/HTB1wYdzPFXXXXaXapXXq6xXFXXX2/USB-Flash-Drive-8-GB-Memory-Stick.jpg_350x350.jpg"/>
