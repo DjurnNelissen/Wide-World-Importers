@@ -58,7 +58,6 @@ function checkCart() {
   } else {
     return true;
   }
-
 }
 
 //adds the given product ID to the cart of the current session

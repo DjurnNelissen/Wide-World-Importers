@@ -4,7 +4,7 @@
 ?>
 <html>
 <head>
-  <title></title>
+  <title>WWI Webshop</title>
 
   <link rel="stylesheet" href="css/main.css" media="screen" title="no title">
 
