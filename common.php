@@ -58,7 +58,6 @@ function checkCart() {
   } else {
     return true;
   }
-
 }
 
 //adds the given product ID to the cart of the current session
@@ -144,7 +143,7 @@ function fetchProductsFromCartAsArray () {
 
 //fetches a single product based on its product ID
 function fetchProduct($id) {
-  $sql = "SELECT * FROM stockitems WHERE StockItemID = $id";
+  $sql = "SELECT * FROM stockitems s LEFT JOIN colors c ON s.ColorID = c.ColorID WHERE StockItemID = $id";
   return runQuery($sql);
 }
 
@@ -242,9 +241,9 @@ function getProductCategories () {
 //prints the product categories
 function printProductCategories () {
   $stmt = getProductCategories();
-  print("<div class='productgroup'> <input type='radio' name='category' value='all'>all</div>");
+  print("<div class='productgroup'> <input type='radio' name='category' value='all' onchange=searchCategory('all')>all</div>");
   while ($row = $stmt->fetch()) {
-    print("<div class='productgroup'> <input type='radio' name='category' value='" . $row['StockGroupID'] . "'>" . $row['StockGroupName'] . "</div>");
+    print("<div class='productgroup'> <input type='radio' name='category' value='" . $row['StockGroupID'] . "' onchange=searchCategory(" . $row['StockGroupID'] . ")>" . $row['StockGroupName'] . "</div>");
   }
 }
 
