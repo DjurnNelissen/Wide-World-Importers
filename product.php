@@ -40,6 +40,15 @@
               }
                ?>
             </div>
+            <div class="color">
+              Kleur: <?php print($row['ColorName']); ?>
+            </div>
+            <div class="brand">
+              Merk: <?php print($row['Brand']); ?>
+            </div>
+            <div class="size">
+              Maat: <?php print($row['Size']); ?>
+            </div>
           </div>
 
 

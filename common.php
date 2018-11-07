@@ -144,7 +144,7 @@ function fetchProductsFromCartAsArray () {
 
 //fetches a single product based on its product ID
 function fetchProduct($id) {
-  $sql = "SELECT * FROM stockitems WHERE StockItemID = $id";
+  $sql = "SELECT * FROM stockitems s LEFT JOIN colors c ON s.ColorID = c.ColorID WHERE StockItemID = $id";
   return runQuery($sql);
 }
 
