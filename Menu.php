@@ -10,7 +10,7 @@
                     <a class="nav-link active" href="#">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/winkelwagen.php">Winkelwagen</a>
+                    <a class="nav-link" href="../winkelwagen.php">Winkelwagen</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Inloggen</a>
