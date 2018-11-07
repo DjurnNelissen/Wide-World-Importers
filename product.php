@@ -1,60 +1,70 @@
 <?php
   session_start();
   include_once('common.php');
-  include("menu.php");
 ?>
 <!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/main.css">
     <title></title>
   </head>
   <body>
-    <div class="wrapper">
-      <div class="container">
-        <div class="row nav-bar">
+    <header class="container">
 
-        </div>
-        <div class="row main">
-          <div class="">
-            <?php
-              $product = fetchProduct($_GET['id']);
-              $row = $product->fetch();
-            ?>
-            <div class="name">
-              <?php print($row['StockItemName']); ?>
+      </header>
+    <section class="container">
+        <?php include("Menu.php"); ?>
+        <div class="row">
+        <figure class="col-sm-6">
+            <img  class="img-responsive" src="https://sc02.alicdn.com/kf/HTB1wYdzPFXXXXaXapXXq6xXFXXX2/USB-Flash-Drive-8-GB-Memory-Stick.jpg_350x350.jpg"/>
+            </figure>
+        <div class="col-sm-6">
+            <div class="row">
+                <?php
+                    $product = fetchProduct($_GET['id']);
+                    $row = $product->fetch(); ?>
+                <h1><?php print($row['StockItemName']); ?> </h1>
+                 </div>
+            <div class="row">
+                <p>Gewicht:  <?php print($row['TypicalWeightPerUnit']); ?></p>
             </div>
-            <div class="weigth">
-            Gewicht:  <?php print($row['TypicalWeightPerUnit']); ?>
+            <div class="row">
+                <p>€ <?php  print($row['RecommendedRetailPrice']); ?></p>
             </div>
-            <div class="price">
-              Prijs: <?php  print($row['RecommendedRetailPrice']); ?>
+            <div class="row">
+                <p>Belasting: <?php print($row['TaxRate']); ?> %</p>
             </div>
-            <div class="tax">
-              Belasting: <?php print($row['TaxRate']); ?> %
-            </div>
-            <div class="description">
-              <?php
-              if ($row['MarketingComments'] != "") {
+            <div class="row">
+                <p><?php if ($row['MarketingComments'] != "") {
                   print("Beschrijving: " . $row['MarketingComments']);
               }
-               ?>
+               ?></p>
             </div>
-            <div class="color">
-             <?php
+
+            <div class="row">
+                <p><?php
+
               if ($row['ColorName'] != "") {
                   print("Kleur: " . $row['ColorName']);
               }
               ?>
+
+                </p>
             </div>
-            <div class="brand">
-              <?php
+            <div class="row">
+                <p><?php
               if ($row['Brand'] != "") {
                   print("Merk: " . $row['Brand']);
               }
               ?>
+                </p>
             </div>
-            <div class="size">
+            <div class="row">
+                <form class="" action="../winkelwagen.php" method="post">
+            </div>
+            <div class="row">
               <?php
               if ($row['Size'] != "") {
                   print("Maat: " . $row['Size']);
@@ -69,11 +79,24 @@
               <input type="number" name="quantity" value="1" min="1">
               <input type="submit" name="addToCart" value="Add to Cart">
             </form>
+            </div>
         </div>
-        <div class="row footer">
 
-        </div>
-      </div>
-    </div>
+
+
+
+
+      </section>
+
+
+
+
+
+
+
+
+
+
+
   </body>
 </html>
