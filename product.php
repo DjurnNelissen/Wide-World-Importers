@@ -37,10 +37,26 @@
                 <p>Belasting: <?php print($row['TaxRate']); ?> %</p>
             </div>
             <div class="row">
-                <p><?phpif ($row['MarketingComments'] != "") {
+                <p><?php if ($row['MarketingComments'] != "") {
                   print("Beschrijving: " . $row['MarketingComments']);
               }
                ?></p>
+            </div>
+            <div class="row">
+                <p><?php
+              if ($row['ColorName'] != "") {
+                  print("Kleur: " . $row['ColorName']);
+              }
+              ?>
+                </p>
+            </div>
+            <div class="row">
+                <p><?php
+              if ($row['Brand'] != "") {
+                  print("Merk: " . $row['Brand']);
+              }
+              ?>
+                </p>
             </div>
             <div class="row">
                 <form class="" action="../winkelwagen.php" method="post">
