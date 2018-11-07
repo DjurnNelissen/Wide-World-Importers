@@ -42,12 +42,15 @@
               }
                ?></p>
             </div>
+
             <div class="row">
                 <p><?php
+
               if ($row['ColorName'] != "") {
                   print("Kleur: " . $row['ColorName']);
               }
               ?>
+
                 </p>
             </div>
             <div class="row">
@@ -60,6 +63,18 @@
             </div>
             <div class="row">
                 <form class="" action="../winkelwagen.php" method="post">
+            </div>
+            <div class="row">
+              <?php
+              if ($row['Size'] != "") {
+                  print("Maat: " . $row['Size']);
+              }
+               ?>
+            </div>
+          </div>
+
+
+            <form class="" action="../winkelwagen.php" method="post">
               <input type="number" name="ProductID" value="<?php print($_GET['id']) ?>" hidden>
               <input type="number" name="quantity" value="1" min="1">
               <input type="submit" name="addToCart" value="Add to Cart">
