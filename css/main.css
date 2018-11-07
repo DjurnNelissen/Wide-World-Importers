@@ -1,36 +1,35 @@
-body {
-
+/* Navbar */
+.nav {
+	background-color: lightgrey;
+	justify-content: center;
+	height: 4rem;
+	margin-left: -15px;
+	margin-right: -15px;
 }
 
-.main {
-
+.navbar-brand {
+	padding-top: 13px;
 }
 
-
-
-.footer {
-
+.nav-logo {
+	position: relative;
+	height: 100%;
 }
 
-.main > div {
-
+.Search {
+	padding-top: 15px;
 }
 
-.nav{
-    background-color: lightgrey;
-    justify-content: center;
-    height: 4rem;
-
+/* Sidebar */
+.sidebar {
+	border: dashed red;
 }
 
-.Search{
-    padding-top: 15px;
+.ul {
+	padding-top: 10px;
 }
 
-.ul{
-    padding-top: 10px;
-}
-
-.navbar-brand{
-    padding-top: 13px;
+/* Page */
+.page-content {
+	border: dashed blue;
 }
