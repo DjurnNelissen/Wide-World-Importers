@@ -22,7 +22,22 @@
 
 /* Sidebar */
 .sidebar {
+	padding: 50px 0;
 	border: dashed red;
+}
+
+.sidebar-title {
+	text-align: center;
+}
+
+.categories:first-child {
+	border-top: 1px solid lightgrey;
+}
+
+.productgroup {
+	margin: 10px;
+	padding: 0 0 10px 0;
+	border-bottom: 1px solid lightgrey;
 }
 
 .ul {
@@ -31,5 +46,6 @@
 
 /* Page */
 .page-content {
+	background-color: lightgrey;
 	border: dashed blue;
 }

@@ -241,9 +241,9 @@ function getProductCategories () {
 //prints the product categories
 function printProductCategories () {
   $stmt = getProductCategories();
-  print("<div class='productgroup'> <input type='radio' name='category' value='all' onchange=searchCategory('all')>all</div>");
+  print("<div class='productgroup'> <a href='#' value='all' onclick=searchCategory('all')>all</a></div>");
   while ($row = $stmt->fetch()) {
-    print("<div class='productgroup'> <input type='radio' name='category' value='" . $row['StockGroupID'] . "' onchange=searchCategory(" . $row['StockGroupID'] . ")>" . $row['StockGroupName'] . "</div>");
+    print("<div class='productgroup'> <a href='#' value='" . $row['StockGroupID'] . "' onclick=searchCategory(" . $row['StockGroupID'] . ")>" . $row['StockGroupName'] . "</a></div>");
   }
 }
 
