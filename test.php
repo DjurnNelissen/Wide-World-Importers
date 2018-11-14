@@ -6,5 +6,7 @@ include_once('common.php');
 
 addToCart(1,1);
 
+setProductInCartCount(18,20);
+
 var_dump(fetchProductsFromCartAsArray());
 ?>
