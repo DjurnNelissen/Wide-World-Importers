@@ -225,18 +225,22 @@ function printProducts () {
     $products = findProducts($_searchtekst,$category,1000);
     if ($products->rowCount() > 0) {
       while ($row = $products->fetch()) {
-			print ("<div class='col col-md-4 col-lg-3 p-3'><div class='card p-0 box-shadow'>
-								<img class='card-img-top' src='https://i.kym-cdn.com/photos/images/newsfeed/000/012/445/lime-cat.jpg' alt='Card image cap'>
-								<div class='card-body'>
-									<h5 class='card-title'>" .  $row['StockItemName'] .  "</h5>
-									<p class='card-text'>" .  $row['StockItemName'] .  "</p>
-									<a href='product.php/?id=" . $row['StockItemID'] . "' class='btn btn-primary'>Bekijken</a>
-  							</div></div>
+			print ("<div class='col col-sm-6 col-md-4 col-lg-3 p-2'>
+								<div class='card shadow-sm'>
+									<img class='card-img-top' src='img/favicon.png' alt='Card image cap'>
+									<div class='card-body'>
+										<h5 class='card-title'>" .  $row['StockItemName'] .  "</h5>
+										<p class='card-text'>" .  $row['StockItemName'] .  "</p>
+										<a href='product.php/?id=" . $row['StockItemID'] . "' class='btn btn-primary'>View</a>
+									</div>
+								</div>
   						</div>");
       //print ("<div class='product'> <a href='product.php/?id=" . $row['StockItemID'] . "'>" .  $row['StockItemName'] .  "</a> </div>");
     }
   } else {
-    print("No products found");
+    print("<div class='alert alert-danger mx-auto my-5' role='alert'>
+  				   <strong>Oh snap!</strong> No products found. <i class='far fa-frown'></i>
+					 </div>");
   }
 }
 
@@ -249,9 +253,9 @@ function getProductCategories () {
 //prints the product categories
 function printProductCategories () {
   $stmt = getProductCategories();
-  print("<div class='productgroup'> <a href='#' value='all' onclick=searchCategory('all')>All</a></div>");
+  print("<div class='p-2 productgroup'> <a href='#' value='all' onclick=searchCategory('all') class='px-3'>All</a></div>");
   while ($row = $stmt->fetch()) {
-    print("<div class='productgroup'> <a href='#' value='" . $row['StockGroupID'] . "' onclick=searchCategory(" . $row['StockGroupID'] . ")>" . $row['StockGroupName'] . "</a></div>");
+    print("<div class='p-2 productgroup'> <a href='#' value='" . $row['StockGroupID'] . "' onclick=searchCategory(" . $row['StockGroupID'] . ") class='px-3'>" . $row['StockGroupName'] . "</a></div>");
   }
 }
 
