@@ -225,7 +225,7 @@ function printProducts () {
     $products = findProducts($_searchtekst,$category,1000);
     if ($products->rowCount() > 0) {
       while ($row = $products->fetch()) {
-			print ("<div class='card col-3 m-3 box-shadow'>
+			print ("<div class='card col-3 m-3 p-0 box-shadow'>
 								<img class='card-img-top' src='https://i.kym-cdn.com/photos/images/newsfeed/000/012/445/lime-cat.jpg' alt='Card image cap'>
 								<div class='card-body'>
 									<h5 class='card-title'>" .  $row['StockItemName'] .  "</h5>

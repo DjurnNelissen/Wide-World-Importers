@@ -6,7 +6,7 @@
 	<head>
 		<title>Home <!-- De pagina naam moet variabel worden -->| Wide World Importers</title>
 		<link rel="stylesheet" href="css/main.css">
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"> <!-- dit moet nog lokaal komen te staan -->
+		<link rel="stylesheet" href="css/bootstrap.min.css"> <!-- dit moet nog lokaal komen te staan -->
 		<script src="js/main.js" charset="utf-8"></script>
 	</head>
 
