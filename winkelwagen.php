@@ -20,6 +20,7 @@
     <meta charset="utf-8">
     <link rel="stylesheet" href="css/main.css" media="screen" title="no title">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="js/main.js" charset="utf-8"></script>
     <title>WWI Webshop</title>
   </head>
   <body>

@@ -129,8 +129,11 @@ function fetchProductsFromCart () {
 
 function fetchProductsFromCartAsArray () {
   if (checkCart()) {
+    //gets all products currently in the cart
     $stmt = fetchProductsFromCart();
+    //creates a new array to store all products
     $result = [];
+    //adds each product, also includes the amount in the array
     while ($row = $stmt->fetch()) {
       $id = $row['StockItemID'];
       if (array_key_exists($id, $_SESSION['cart'])) {
@@ -140,6 +143,25 @@ function fetchProductsFromCartAsArray () {
       }
     }
     return $result;
+  }
+}
+
+//sets the amount of items in the cart of a certain item
+function setProductInCartCount ($id, $amount) {
+  //ensures that the cart exists within the session
+  if (checkCart()) {
+    //checks if the product is actually in the cart
+    if (array_key_exists($id, $_SESSION['cart'])) {
+      if ($amount > 0) {
+        $_SESSION['cart'][$id]['amount'] = $amount;
+      } else {
+        //remove product
+        unset($_SESSION['cart'][$id]);
+      }
+    } else {
+      //if not add the product to the cart
+      addToCart($id, $amount);
+    }
   }
 }
 
@@ -254,16 +276,11 @@ function printCart () {
 
   if (count($products) > 0) {
   for ($i=0; $i < count($products) ; $i++) {
-    print("<div class='col-md-12 cartItem'> ". $products[$i]['StockItemName']  ." - " . $products[$i]['amount'] . "X <form class='' action='winkelwagen.php' method='post'>
+    print("<div class='col-md-12 cartItem'> ". $products[$i]['StockItemName']  ." - aantal <input min=1 id='" . $products[$i]['StockItemID'] . "' type='number' onChange='setProductAmount(" . $products[$i]['StockItemID'] .")' value='" . $products[$i]['amount'] . "'><form class='' action='winkelwagen.php' method='post'>
       <input type='number' name='ID' value='" . $products[$i]['StockItemID'] . "' hidden>
       <input type='number' name='amount' value=" . (string)$products[$i]['amount'] . " hidden>
       <input type='submit' name='RemoveItem' value='Remove'>
-    </form>
-    <form class='' action='winkelwagen.php' method='post'>
-      <input type='number' name='ID' value='" . $products[$i]['StockItemID'] . "' hidden>
-      <input type='number' name='amount' value=1 hidden>
-      <input type='submit' name='RemoveItem' value='Remove one'>
-    </form></div>");
+    </form>");
   }
 } else {
   print("Cart is empty");

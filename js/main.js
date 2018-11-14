@@ -33,6 +33,16 @@ function removeFromCart (ID, amount) {
   });
 }
 
+function setProductAmount (ID) {
+  amount = document.getElementById(ID).value;
+  if (amount > 0) {
+  sendPostRequest('api/setAmount.php', 'id=' + ID.toString() + '&amount=' + amount.toString(), function (res) {
+    //do stuff with the response
+
+    });
+  }
+}
+
 function sendPostRequest (url, params, callback) {
   var http = new XMLHttpRequest();
   http.open('POST', url, true);
