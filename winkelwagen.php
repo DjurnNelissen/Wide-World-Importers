@@ -19,7 +19,6 @@
   <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="css/main.css" media="screen" title="no title">
-
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
     <title>WWI Webshop</title>
   </head>
