@@ -1,10 +1,9 @@
 /* Navbar */
 .nav {
-	background-color: lightgrey;
+	background-color: white;
 	justify-content: center;
 	height: 4rem;
-	margin-left: -15px;
-	margin-right: -15px;
+	margin: 0 -15px;
 }
 
 .navbar-brand {
@@ -23,7 +22,6 @@
 /* Sidebar */
 .sidebar {
 	padding: 50px 0;
-	border: dashed red;
 }
 
 .sidebar-title {
@@ -47,5 +45,4 @@
 /* Page */
 .page-content {
 	background-color: lightgrey;
-	border: dashed blue;
 }
