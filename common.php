@@ -60,6 +60,7 @@ function checkCart() {
   }
 }
 
+/* OLD CODE
 //adds the given product ID to the cart of the current session
 function addToCart($productID, $amount) {
   if (checkCart()) {
@@ -83,7 +84,66 @@ function addToCart($productID, $amount) {
     }
   }
 }
+*/
 
+//adds product to the cart
+function addToCart ($productID, $amount) {
+  //make sure a cart exist within the session
+  if (checkCart()) {
+    //check if the product already is in the cart
+    if (array_key_exists($productID,$_SESSION['cart'])) {
+      //only add the amount
+      $_SESSION['cart'][$productID]['amount'] = $_SESSION['cart'][$productID]['amount'] + $amount;
+    } else {
+      //add the product entirely
+      $_SESSION['cart'][$productID] = [
+        'ID' => $productID, // ID isnt really needed since its already in the key
+        'amount' => $amount
+      ];
+    }
+  }
+}
+
+//removes a product from the cart
+function removeFromCart ($productID, $amount) {
+  if (checkCart()) {
+    if (array_key_exists($productID, $_SESSION['cart'])) {
+      if ($amount >= $_SESSION['cart'][$productID]['amount'] || $amount == 'all') {
+        //remove item completely
+        unset($_SESSION['cart'][$productID]);
+      } else {
+        //remove item partially
+        $_SESSION['cart'][$productID]['amount'] = $_SESSION['cart'][$productID]['amount'] - $amount;
+      }
+    }
+  }
+}
+
+//returns a statement object with all products currently in the cart
+function fetchProductsFromCart () {
+  if (checkCart()) {
+    $sql = "SELECT * FROM stockitems WHERE StockItemID IN (" . arrayToSQLString(array_keys($_SESSION['cart'])) . ")";
+    return runQuery($sql);
+  }
+}
+
+function fetchProductsFromCartAsArray () {
+  if (checkCart()) {
+    $stmt = fetchProductsFromCart();
+    $result = [];
+    while ($row = $stmt->fetch()) {
+      $id = $row['StockItemID'];
+      if (array_key_exists($id, $_SESSION['cart'])) {
+        $input = $row;
+        $input['amount'] = $_SESSION['cart'][$id]['amount'];
+        array_push($result,$input);
+      }
+    }
+    return $result;
+  }
+}
+
+/* OLD CODE
 //removes a product from the cart -  use 'all' to remove all of the product
 function removeFromCart ($productID, $amount) {
   if (checkCart()) {
@@ -102,6 +162,7 @@ function removeFromCart ($productID, $amount) {
     }
   }
 }
+*/
 
 //empties the entire cart
 function emptyCart () {
@@ -109,6 +170,7 @@ function emptyCart () {
   checkCart(); // creates a new cart just in case
 }
 
+/* OLD CODE
 //retrieves all products from the database that are currently in the cart
 function fetchProductsFromCart() {
   if (checkCart()) {
@@ -123,7 +185,9 @@ function fetchProductsFromCart() {
     return runQuery($sql); //runs the SQL query
   }
 }
+*/
 
+/* OLD CODE
 //turns the returned products into an array, also includes the amount that is in the cart
 function fetchProductsFromCartAsArray () {
   $stmt = fetchProductsFromCart();
@@ -140,6 +204,7 @@ function fetchProductsFromCartAsArray () {
 
   return $result;
 }
+*/
 
 //fetches a single product based on its product ID
 function fetchProduct($id) {
@@ -176,12 +241,10 @@ function findProducts ($text, $category, $limit) {
 //turns a single dimension array into a string with a comma between each element
 function arrayToSQLString ($arr) {
   $sql = "";
-  for ($i=0; $i < count($arr) ; $i++) {
-    $sql = $sql . (string)$arr[$i];
-    if (! $i = count($arr) - 1) {
-      $sql = $sql . ',';
-    }
+  foreach ($arr as $key => $value) {
+    $sql = $sql . $value . ',';
   }
+  $sql = rtrim($sql,',');
   return $sql;
 }
 
