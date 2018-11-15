@@ -60,6 +60,71 @@ function checkCart() {
   }
 }
 
+//checks if the given credentials are legit
+function verifyUser ($username, $hash) {
+  //TO-DO
+}
+
+//adds a new review to the database for a certain product
+function submitReview ($rating, $text, $productID) {
+  //checks if the user is logged in
+  if (checkLogin()) {
+      if (userHasPurchashedProduct($productID)) {
+        $id = getUserID();
+        //check if the ID didnt get an error
+        if (isset($id)) {
+          //create query
+          $sql = "INSERT INTO reviews
+          (Rating, Comment, ProductID, PeopleID)
+          VALUES
+          ($rating,'$text',$productID," .  . ")
+          ";
+          //execute query
+          runQuery($sql);
+
+          //verify if placing review was succesful
+        }
+    }
+  }
+}
+
+//checks if a user has previously ordered a product
+function userHasPurchashedProduct ($productID) {
+  //if user is logged in
+  if (checkLogin()) {
+    $userid = getUserID();
+  }
+  //return false by default
+  return false;
+}
+
+//checks if the user is logged in
+function checkLogin () {
+  //check is session has user
+  if (isset($_SESSION['user'])) {
+    //check if the credentials match
+    if (verifyUser($_SESSION['user']['name'], $_SESSION['user']['hash'])) {
+      return true;
+    }
+  }
+  //returns false by default
+  return false;
+}
+
+//returns the ID of the user thats currently logged in - returns null if something went wrong
+function getUserID () {
+  if (checkLogin()) {
+    $stmt = runQuery("SELECT PersonID FROM people WHERE LogonName = " . $_SESSION['user']['name']);
+    if ($stmt->rowCount() > 0) {
+      $row = $stmt->fetch();
+      //return the ID
+      return $row['PersonID'];
+    }
+  }
+  //returns null by default
+  return null;
+}
+
 /* OLD CODE
 //adds the given product ID to the cart of the current session
 function addToCart($productID, $amount) {
@@ -272,6 +337,7 @@ function arrayToSQLString ($arr) {
 
 //prints the cart in HTML
 function printCart () {
+  //gets all products from the cart
   $products = fetchProductsFromCartAsArray();
 
   if (count($products) > 0) {
@@ -295,13 +361,13 @@ function printProducts () {
   } else {
        $_searchtekst = $_GET["q"] ;
    }
-
+   //defaults to all categories
    if (isset($_GET['c'])) {
     $category = $_GET['c'];
    } else {
      $category = 'all';
    }
-
+   //finds for all products
     $products = findProducts($_searchtekst,$category,1000);
     if ($products->rowCount() > 0) {
       while ($row = $products->fetch()) {

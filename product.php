@@ -81,6 +81,9 @@
             </div>
         </div>
 
+        <div class="row">
+          <textarea name="name" rows="8" cols="40"></textarea>
+        </div>
 
 
 
