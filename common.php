@@ -63,6 +63,13 @@ function checkCart() {
 //checks if the given credentials are legit
 function verifyUser ($username, $hash) {
   //TO-DO
+
+  //if credentials match return true
+
+  //else return false
+
+  //dummy CODE
+  return true;
 }
 
 //adds a new review to the database for a certain product
@@ -75,9 +82,9 @@ function submitReview ($rating, $text, $productID) {
         if (isset($id)) {
           //create query
           $sql = "INSERT INTO reviews
-          (Rating, Comment, ProductID, PeopleID)
+          (Rating, Comment, ProductID, PersonID)
           VALUES
-          ($rating,'$text',$productID," .  . ")
+          ($rating,'$text',$productID,$id)
           ";
           //execute query
           runQuery($sql);
@@ -93,6 +100,15 @@ function userHasPurchashedProduct ($productID) {
   //if user is logged in
   if (checkLogin()) {
     $userid = getUserID();
+    //get the times this user has purchased this product
+    $sql = "SELECT * FROM orders o join orderlines ol ON o.OrderID = ol.OrderID WHERE ol.StockItemID = $productID AND o.CustomerID = $userid";
+    //execute the query
+    $stmt = runQuery($sql);
+    //check if this user has purchased the product 1 or more times
+    if ($stmt->rowCount() > 0) {
+      //if so return true
+      return true;
+    }
   }
   //return false by default
   return false;
@@ -112,7 +128,7 @@ function checkLogin () {
 }
 
 //returns the ID of the user thats currently logged in - returns null if something went wrong
-function getUserID () {
+function getPersonID () {
   if (checkLogin()) {
     $stmt = runQuery("SELECT PersonID FROM people WHERE LogonName = " . $_SESSION['user']['name']);
     if ($stmt->rowCount() > 0) {
@@ -123,6 +139,34 @@ function getUserID () {
   }
   //returns null by default
   return null;
+}
+
+//returns the account ID, returns null if something went wrong
+function getAccountID () {
+  //checks if the user is logged in
+  if (checkLogin()) {
+    //gets the ID
+    $ID = getPersonID();
+    //setup sql query
+    $sql = "SELECT AccountID FROM accounts WHERE PersonID =  $ID";
+    //runs the query
+    $stmt = runQuery($sql);
+    //checks if we found atleast 1 account
+    if ($stmt->rowCount() >  0) {
+      $row = $stmt->fetch();
+      //returns the ID
+      return $row['AccountID'];
+    }
+  }
+  return null;
+}
+
+//sets the current user
+function setUser ($user, $hash) {
+  $_SESSION['user'] = [
+    'name' => $user,
+    'hash' => $hash
+  ];
 }
 
 /* OLD CODE
