@@ -18,7 +18,24 @@ function userHasReviewedProduct ($productID) {
 
 //adds a review to the database
 function submitReview ($productID, $rating, $comment) {
-
+  //checks if the user is logged in
+  if (checkLogin()) {
+      if (userHasPurchashedProduct($productID) && ! userHasReviewedProduct($productID)) {
+        $id = getUserID();
+        //check if the ID didnt get an error
+        if (isset($id)) {
+          //create query
+          $sql = "INSERT INTO reviews
+          (Rating, Comment, ProductID, PersonID)
+          VALUES
+          ($rating,'$text',$productID,$id)
+          ";
+          //execute query
+          runQuery($sql);
+          //verify if placing review was succesful
+        }
+    }
+  }
 }
 
 //prints reviews for the product
@@ -28,7 +45,8 @@ function printReviews ($productID) {
   //execute query
   $stmt = runQuery($sql);
   //get each row
-  while ($row => $stmt->fetch()) {
+  if ($stmt->rowCount() > 0) {
+    while ($row => $stmt->fetch()) {
     //print each review
     print ("
       <div class='row review'>
@@ -45,6 +63,14 @@ function printReviews ($productID) {
         </div>
       </div>
     ");
+    }
+  } else {
+    //no reviews for this product
+    print ("<div class='row no-reviews'>
+    <div class='col-md-12'>
+    This product does not have any reviews.
+    </div>
+    </div>");
   }
 }
 

@@ -78,7 +78,7 @@ function verifyUser ($username, $hash) {
 function submitReview ($rating, $text, $productID) {
   //checks if the user is logged in
   if (checkLogin()) {
-      if (userHasPurchashedProduct($productID)) {
+      if (userHasPurchashedProduct($productID) && ! userHasReviewedProduct($productID)) {
         $id = getUserID();
         //check if the ID didnt get an error
         if (isset($id)) {
