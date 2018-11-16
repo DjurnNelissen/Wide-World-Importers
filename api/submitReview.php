@@ -1,6 +1,6 @@
 <?php
 session_start();
-include_once('common.php');
+include_once('../php/review.php');
 //checks if data has been submitted
 if (isset($_POST['rating']) && isset($_POST['comment']) && isset($_POST['productID'])) {
   //checks if the user is logged in

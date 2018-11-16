@@ -13,7 +13,22 @@ function userHasPurchashedProduct ($productID) {
 
 //checks if the currently logged in user has reviewed the product
 function userHasReviewedProduct ($productID) {
-
+  if (checkLogin()) {
+    //setup a query that returns all reviews for the current product
+    //for the currently logged in user
+    $sql = "SELECT * FROM reviews r WHERE ProductID = $productID
+    AND PersonID = (
+      SELECT PersonID FROM people
+      WHERE LogonName = " . $_SESSION['user']['name'] . " )";
+      //executes the query
+      $stmt = runQuery($sql);
+      //if we have 1 or somehow more reviews then the user has reviewed this product
+      if ($stmt->rowCount() > 0) {
+        return true;
+      }
+  }
+  //returns false by default
+  return false;
 }
 
 //adds a review to the database
