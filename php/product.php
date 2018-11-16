@@ -70,7 +70,7 @@ function printProducts () {
     $products = findProducts($_searchtekst,$category,1000);
     if ($products->rowCount() > 0) {
       while ($row = $products->fetch()) {
-      print ("<div class='product'> <a href='product.php/?id=" . $row['StockItemID'] . "'>" .  $row['StockItemName'] .  "</a> </div>");
+      print ("<div class='product'> <a href='product.php?id=" . $row['StockItemID'] . "'>" .  $row['StockItemName'] .  "</a> </div>");
     }
   } else {
     print("No products found");
