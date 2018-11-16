@@ -1,20 +1,22 @@
+//search products based on category
 function searchCategory (categoryID) {
-
+  //get the current url
   var url = new URL(window.location.href);
 
   var query_string = url.search;
-
+  //gets the params from the url
   var search_params = new URLSearchParams(query_string);
-
+  //remove the current category
   search_params.delete('c');
 
 if (categoryID != 'all') {
+  //add category ID to params unless we want to search for all categories
   search_params.append('c',categoryID);
 }
   url.search = search_params.toString();
-
+  //convert to string
   var new_url = url.toString();
-
+  //navigate to new url
   location.href = new_url;
 }
 
@@ -34,12 +36,30 @@ function removeFromCart (ID, amount) {
 }
 
 function setProductAmount (ID) {
-  amount = document.getElementById(ID).value;
+  var amount = document.getElementById(ID).value;
   if (amount > 0) {
   sendPostRequest('api/setAmount.php', 'id=' + ID.toString() + '&amount=' + amount.toString(), function (res) {
     //do stuff with the response
 
     });
+  }
+}
+
+//submits a review
+function submitReview (ID) {
+  //gets the rating the user has given
+  var rating = document.getElementById('rating').value;
+  //gets the comment the user has given
+  var comment = document.getElementById('comment').value;
+  //checks if no fields have been left empty
+  if ((rating > 0 || comment != '') && ID != null) {
+    //sends the data to the server
+    sendPostRequest('api/submitReview.php', 'rating=' + rating.toString() + '&comment=' + comment + '&productID=' + ID.toString(), function (res) {
+      //do stuff with the response
+
+      });
+  } else {
+    //please fill in all fields
   }
 }
 

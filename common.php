@@ -1,4 +1,6 @@
 <?php
+//this file is now split into seperate files
+
 
 //dictionary that stores DB settings
 function getDBsettings () {
@@ -58,6 +60,115 @@ function checkCart() {
   } else {
     return true;
   }
+}
+
+//checks if the given credentials are legit
+function verifyUser ($username, $hash) {
+  //TO-DO
+
+  //if credentials match return true
+
+  //else return false
+
+  //dummy CODE
+  return true;
+}
+
+//adds a new review to the database for a certain product
+function submitReview ($rating, $text, $productID) {
+  //checks if the user is logged in
+  if (checkLogin()) {
+      if (userHasPurchashedProduct($productID) && ! userHasReviewedProduct($productID)) {
+        $id = getUserID();
+        //check if the ID didnt get an error
+        if (isset($id)) {
+          //create query
+          $sql = "INSERT INTO reviews
+          (Rating, Comment, ProductID, PersonID)
+          VALUES
+          ($rating,'$text',$productID,$id)
+          ";
+          //execute query
+          runQuery($sql);
+
+          //verify if placing review was succesful
+        }
+    }
+  }
+}
+
+//checks if a user has previously ordered a product
+function userHasPurchashedProduct ($productID) {
+  //if user is logged in
+  if (checkLogin()) {
+    $userid = getUserID();
+    //get the times this user has purchased this product
+    $sql = "SELECT * FROM orders o join orderlines ol ON o.OrderID = ol.OrderID WHERE ol.StockItemID = $productID AND o.CustomerID = $userid";
+    //execute the query
+    $stmt = runQuery($sql);
+    //check if this user has purchased the product 1 or more times
+    if ($stmt->rowCount() > 0) {
+      //if so return true
+      return true;
+    }
+  }
+  //return false by default
+  return false;
+}
+
+//checks if the user is logged in
+function checkLogin () {
+  //check is session has user
+  if (isset($_SESSION['user'])) {
+    //check if the credentials match
+    if (verifyUser($_SESSION['user']['name'], $_SESSION['user']['hash'])) {
+      return true;
+    }
+  }
+  //returns false by default
+  return false;
+}
+
+//returns the ID of the user thats currently logged in - returns null if something went wrong
+function getPersonID () {
+  if (checkLogin()) {
+    $stmt = runQuery("SELECT PersonID FROM people WHERE LogonName = " . $_SESSION['user']['name']);
+    if ($stmt->rowCount() > 0) {
+      $row = $stmt->fetch();
+      //return the ID
+      return $row['PersonID'];
+    }
+  }
+  //returns null by default
+  return null;
+}
+
+//returns the account ID, returns null if something went wrong
+function getAccountID () {
+  //checks if the user is logged in
+  if (checkLogin()) {
+    //gets the ID
+    $ID = getPersonID();
+    //setup sql query
+    $sql = "SELECT AccountID FROM accounts WHERE PersonID =  $ID";
+    //runs the query
+    $stmt = runQuery($sql);
+    //checks if we found atleast 1 account
+    if ($stmt->rowCount() >  0) {
+      $row = $stmt->fetch();
+      //returns the ID
+      return $row['AccountID'];
+    }
+  }
+  return null;
+}
+
+//sets the current user
+function setUser ($user, $hash) {
+  $_SESSION['user'] = [
+    'name' => $user,
+    'hash' => $hash
+  ];
 }
 
 /* OLD CODE
@@ -272,6 +383,7 @@ function arrayToSQLString ($arr) {
 
 //prints the cart in HTML
 function printCart () {
+  //gets all products from the cart
   $products = fetchProductsFromCartAsArray();
 
   if (count($products) > 0) {
@@ -295,13 +407,13 @@ function printProducts () {
   } else {
        $_searchtekst = $_GET["q"] ;
    }
-
+   //defaults to all categories
    if (isset($_GET['c'])) {
     $category = $_GET['c'];
    } else {
      $category = 'all';
    }
-
+   //finds for all products
     $products = findProducts($_searchtekst,$category,1000);
     if ($products->rowCount() > 0) {
       while ($row = $products->fetch()) {
