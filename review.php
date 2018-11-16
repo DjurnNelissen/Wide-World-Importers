@@ -8,6 +8,7 @@ setUser('henk', '123');
 $hasPurchased = true;
 //var_dump(userHasReviewedProduct($_GET['id']));
  ?>
+ <!-- include main.js for js functions -->
 <script src="js/main.js" charset="utf-8"></script>
 <div class="row review" <?php if (!(checkLogin() && $hasPurchased && ! userHasReviewedProduct($_GET['id']))) {
   print ('hidden');}?> >
