@@ -1,4 +1,6 @@
 <?php
+//this file is now split into seperate files
+
 
 //dictionary that stores DB settings
 function getDBsettings () {
