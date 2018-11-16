@@ -1,6 +1,5 @@
 <?php
-session_start();
-include('db.php');
+include_once('db.php');
 
 //checks if the given credentials are legit
 function verifyUser ($username, $hash) {

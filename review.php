@@ -1,9 +1,11 @@
 <?php
 session_start();
-include_once('common.php');
+include_once('php/review.php');
+setUser('henk', '123');
  ?>
 <script src="js/main.js" charset="utf-8"></script>
-<div class="row review">
+<div class="row review" <?php if (!(checkLogin() && userHasPurchashedProduct($_GET['id']) && ! userHasReviewedProduct($_GET['id']))) {
+  print ('hidden');}?> >
   <!--only show this if the user has logged in and purchased the product -->
   <div class="col-md 12 rating">
     <input id='rating' type="number" name="rating" value="" min="1" max="5" required>
@@ -18,15 +20,4 @@ include_once('common.php');
   }
   ?>)">Submit</button>
 </div>
-<!--only show this if the user isnt logged in -->
-<div class="row login-error">
-  <div class="col-md-12">
-    Login to review this product.
-  </div>
-</div>
-<!--only show this if the user is logged in and hasnt purchased the product -->
-<div class="row not-purchased-error">
-  <div class="col-md-12">
-    Purchase this product to review it.
-  </div>
 </div>

@@ -1,5 +1,4 @@
 <?php
-session_start();
 //includes
 include_once('db.php');
 include_once('account.php');
@@ -9,7 +8,7 @@ include_once('account.php');
 //checks if currently logged in user has purchased the product
 function userHasPurchashedProduct ($productID) {
   //user has  to be logged in before we can access this info
-  if (checkLogin())
+  if (checkLogin()) {
   //setup query
   $sql = "SELECT * FROM people p
    JOIN accounts a  ON p.PersonID = a.PersonID
@@ -79,7 +78,7 @@ function printReviews ($productID) {
   $stmt = runQuery($sql);
   //get each row
   if ($stmt->rowCount() > 0) {
-    while ($row => $stmt->fetch()) {
+    while ($row = $stmt->fetch()) {
     //print each review
     print ("
       <div class='row review'>

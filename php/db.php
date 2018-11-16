@@ -1,6 +1,4 @@
 <?php
-session_start();
-
 //this file includes all database related functions
 
 //dictionary that stores DB settings
