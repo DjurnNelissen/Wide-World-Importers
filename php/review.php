@@ -1,6 +1,6 @@
 <?php
 session_start();
-include_once('../common.php');
+include_once('db.php');
 
 //this file includes all functions related to the reviews
 
