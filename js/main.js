@@ -36,12 +36,30 @@ function removeFromCart (ID, amount) {
 }
 
 function setProductAmount (ID) {
-  amount = document.getElementById(ID).value;
+  var amount = document.getElementById(ID).value;
   if (amount > 0) {
   sendPostRequest('api/setAmount.php', 'id=' + ID.toString() + '&amount=' + amount.toString(), function (res) {
     //do stuff with the response
 
     });
+  }
+}
+
+//submits a review
+function submitReview (ID) {
+  //gets the rating the user has given
+  var rating = document.getElementById('rating').value;
+  //gets the comment the user has given
+  var comment = document.getElementById('comment').value;
+  //checks if no fields have been left empty
+  if ((rating > 0 || comment != '') && ID != null) {
+    //sends the data to the server
+    sendPostRequest('api/submitReview.php', 'rating=' + rating.toString() + '&comment=' + comment + '&productID=' + ID.toString(), function (res) {
+      //do stuff with the response
+
+      });
+  } else {
+    //please fill in all fields
   }
 }
 
