@@ -8,7 +8,25 @@ include_once('account.php');
 
 //checks if currently logged in user has purchased the product
 function userHasPurchashedProduct ($productID) {
+  //user has  to be logged in before we can access this info
+  if (checkLogin())
+  //setup query
+  $sql = "SELECT * FROM people p
+   JOIN accounts a  ON p.PersonID = a.PersonID
+   JOIN orders o ON o.CustomerID = a.CustomerID
+   JOIN orderlines ol ON ol.OrderID = o.OrderID
+   WHERE p.LogonName = '" . $_SESSION['user']['name'] . "' AND ol.StockItemID = $productID";
+   //run query
+   $stmt = runQuery($sql);
+   //check if the customer has bought this product
+   if ($stmt->rowCount() > 0) {
+     //if so return true
+     return true;
+   }
 
+}
+  //return false by default
+  return false;
 }
 
 //checks if the currently logged in user has reviewed the product
