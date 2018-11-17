@@ -50,11 +50,6 @@ $stmt = runQuery($sql);
 
     </form>
 
-      <?php
-        passwordNotEqual($fullname);
-
-
-        ?>
 
   </body>
 </html>
