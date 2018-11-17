@@ -70,8 +70,12 @@ function setUser ($user, $hash) {
 }
 
 // checks whether the repeated password is the same as the password
-function passwordNotEqual($fullname){
-    print($fullname);
+function passwordNotEqual($password,$passwordcheck){
+    if($password == $passwordcheck){
+        return true;
+    }else{
+        return false;
+    }
 }
 
 //checks if the username already exist
