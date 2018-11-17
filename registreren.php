@@ -22,7 +22,7 @@ $stmt = runQuery($sql);
 <html>
   <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="/css/main.css" media="screen" title="no title">
+    <link rel="stylesheet" href="css/main.css" media="screen" title="no title">
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
     <title>WWI Webshop</title>
@@ -30,26 +30,32 @@ $stmt = runQuery($sql);
   <body>
     <?php include("Menu.php") ?>
       <br><br>
-      <h1>Registreer je nu!</h1><br>
-    <form method="post" action="registreren.php">
-        Volledige naam:<br>
-        <input type="text" name="fullname" size="30" required><br><br>
-        Roepnaam:<br>
-        <input type="text" name="prefferedname" size="30" required><br><br>
-        E-mail:<br>
-        <input type="text" name="email" size="30" required><br><br>
-        Telefoonnummer:<br>
-        <input type="text" name="phonenumber" size="30" required><br><br>
-        Wachtwoord:<br>
-        <input type="text" name="password" size="30" required><br><br>
-        Herhaal wachtwoord:<br>
-        <input type="text" name="passwordcheck" size="30" required><br>
-        <br>
-        <input type="submit" value="Aanmelden">
 
 
-    </form>
+        <h1 class="form">Registreer je nu!</h1><br>
+            <form class="form" method="post" action="registreren.php">
+                Volledige naam:<br>
+                <input type="text" name="fullname" size="30" required><br><br>
+
+                Roepnaam:<br>
+                <input type="text" name="prefferedname" size="30" required><br><br>
+
+                E-mail:<br>
+                <input type="text" name="email" size="30" required><br><br>
+
+                Telefoonnummer:<br>
+                <input type="text" name="phonenumber" size="30" required><br><br>
+
+                Wachtwoord:<br>
+                <input type="text" name="password" size="30" required><br><br>
+
+                Herhaal wachtwoord:<br>
+                <input type="text" name="passwordcheck" size="30" required><br>
+                <br>
+                <input type="submit" value="Aanmelden">
+
+            </form>
 
 
-  </body>
+</body>
 </html>

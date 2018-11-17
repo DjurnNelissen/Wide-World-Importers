@@ -1,21 +1,4 @@
-body {
-
-}
-
-.main {
-
-}
-
-
-
-.footer {
-
-}
-
-.main > div {
-
-}
-
+/* nav bar */
 .nav{
     background-color: lightgrey;
     justify-content: center;
@@ -33,4 +16,12 @@ body {
 
 .navbar-brand{
     padding-top: 13px;
+}
+
+
+
+/* registreer pag */
+
+.form h1{
+    text-align: center;
 }
