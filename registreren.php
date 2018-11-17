@@ -2,6 +2,7 @@
 <?php
 include_once ('php/account.php');
 
+// Variable for user input
 $fullname = filter_input(INPUT_POST, 'fullname', FILTER_SANITIZE_STRING);
 $prefferedname = filter_input(INPUT_POST, 'prefferedname', FILTER_SANITIZE_STRING);
 $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_STRING);
@@ -9,16 +10,27 @@ $phonenumber = filter_input(INPUT_POST, 'phonenumber', FILTER_SANITIZE_STRING);
 $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
 $passwordcheck = filter_input(INPUT_POST, 'passwordcheck', FILTER_SANITIZE_STRING);
 
+// Hashed password
 $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
 
+// query data stores data in the database
 $sql = " INSERT INTO people (PersonID, Fullname, PreferredName, SearchName, IsPermittedToLogon, LogonName, HashedPassword, IsSystemUser, PhoneNumber, EmailAddress, LastEditedBy, ValidFrom, ValidTo)
 VALUES ((SELECT MAX(pe.PersonID) + 1 FROM people pe) , '$fullname', '$prefferedname', '" .  $prefferedname . " " .  $fullname . "', 1, '$email', '$password', 1, '$phonenumber', '$email', 1,  '2013-01-01 00:00:00', '9999-12-31 23:59:59')";
 
 $stmt = runQuery($sql);
 
+$sqlCustomer = " INSERT INTO customers ()
+VALUES ()";
+
+$sqlAccount = " INSERT INTO accounts (AccountID, PersoonID, CustomerID)
+VALUES ()";
 ?>
 
+
+<!------------->
+<!--- HTML ---->
+<!------------->
 
 <html>
   <head>
@@ -60,8 +72,7 @@ $stmt = runQuery($sql);
                 <input type="submit" value="Aanmelden">
 
             </form>
-
-    </div>
+        </div>
 
 </body>
 </html>
