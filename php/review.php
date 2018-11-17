@@ -70,10 +70,25 @@ function submitReview ($productID, $rating, $comment) {
   }
 }
 
+//returns the average rating of the reviews for a product
+function getAverageRating ($productID) {
+  //generate sql string
+  $sql = "SELECT AVG(Rating) FROM reviews WHERE StockItemID = $productID";
+  //execute query
+  $stmt = runQuery($sql);
+  //get result
+  $row = $stmt->fetch();
+  if (isset($row['AVG(Rating)'])) {
+    return $row['AVG(Rating)'];
+  }
+  //return 0 by default
+  return 0;
+}
+
 //prints reviews for the product
 function printReviews ($productID) {
   //setup sql
-  $sql = "SELECT * FROM reviews r JOIN people p on r.PersonID = p.PersonID WHERE ProductID = $productID";
+  $sql = "SELECT * FROM reviews r LEFT JOIN people p on r.PersonID = p.PersonID WHERE r.StockItemID = $productID";
   //execute query
   $stmt = runQuery($sql);
   //get each row
@@ -82,11 +97,11 @@ function printReviews ($productID) {
     //print each review
     print ("
       <div class='row review'>
-        <div class='col-md-12 review-head'>
-        <div class='col-md-6  rating'>
+        <div class='row col-md-12 review-head'>
+        <div class='col-md-2  rating'>
             " . $row['Rating'] . "
         </div>
-        <div class='col-md-6 name'>
+        <div class='col-md-10 name'>
           " . $row['PreferredName'] . "
         </div>
         </div>

@@ -1,5 +1,5 @@
 <?php
-include_once('db.php')
+include_once('db.php');
 
 //this file includes all functions related to finding products
 

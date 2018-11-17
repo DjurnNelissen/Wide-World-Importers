@@ -1,6 +1,7 @@
 <?php
   session_start();
-  include_once('common.php');
+  include_once('php/product.php');
+  include_once('php/review.php');
 ?>
 <!DOCTYPE html>
 <html>
@@ -81,7 +82,13 @@
             </div>
         </div>
 
+        <?php
+        print ("<div> Average rating: " . getAverageRating($_GET['id']) . " </div>");
+        printReviews($_GET['id']);
+        ?>
+
       </section>
+
 
 
 
