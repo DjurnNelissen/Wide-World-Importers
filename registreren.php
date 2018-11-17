@@ -34,10 +34,10 @@ $stmt = runQuery($sql);
   <body>
     <?php include("Menu.php") ?>
       <br><br>
-
-
-        <h1 class="form">Registreer je nu!</h1><br>
-            <form class="form" method="post" action="registreren.php">
+      <!--<div class="row">-->
+        <div class="col">
+        <h1>Registreer je nu!</h1><br>
+            <form method="post" action="registreren.php">
                 Volledige naam:<br>
                 <input type="text" name="fullname" size="30" required><br><br>
 
@@ -59,7 +59,8 @@ $stmt = runQuery($sql);
                 <input type="submit" value="Aanmelden">
 
             </form>
-
+        <!--</div>-->
+    </div>
 
 </body>
 </html>
