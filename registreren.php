@@ -13,7 +13,7 @@ $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
 
 $sql = " INSERT INTO people (PersonID, Fullname, PrefferedName, SearchName, IsPermittedToLogon, LogonName, HashedPassword, IsSystemUser, PhoneNumber, EmailAddres, LastEditedBy, ValidFrom, ValidTo)
-VALUES ((SELECT MAX(PersonID) FROM people) + 1, '$fullname', '$prefferedname', '" .  $preferedname + $fullname . "', 1, '$email', '$password', 1, '$phonenumber', '$email', '2013-01-01 00:00:00', '9999-12-31 23:59:59')";
+VALUES ((SELECT MAX(PersonID) FROM people) + 1, '$fullname', '$prefferedname', '" .  $prefferedname + $fullname . "', 1, '$email', '$password', 1, '$phonenumber', '$email', '2013-01-01 00:00:00', '9999-12-31 23:59:59')";
 
 
 ?>
