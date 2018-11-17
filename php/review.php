@@ -93,24 +93,75 @@ function printReviews ($productID) {
   $stmt = runQuery($sql);
   //get each row
   if ($stmt->rowCount() > 0) {
+
+    $isFirstItem = true;
+
     while ($row = $stmt->fetch()) {
     //print each review
-    print ("
-      <div class='row review'>
-        <div class='row col-md-12 review-head'>
-        <div class='col-md-2  rating'>
-            " . $row['Rating'] . "
-        </div>
-        <div class='col-md-10 name'>
-          " . $row['PreferredName'] . "
-        </div>
-        </div>
-        <div class='col-md-12 comment'>
-          " . $row['Comment'] . "
-        </div>
+    if ($isFirstItem) {
+      $isFirstItem = false;
+      print ("
+      <div class='carousel-item col-md-3 active'>
+         <div class='panel panel-default'>
+            <div class='panel-thumbnail'>
+              <div class='row review'>
+                 <div class='col-md-6 rating'>
+                   <div class='stars-outer'>
+                     <div class='stars-inner' style='width: " . getRatingPercentageRounded($row['Rating']) .  "%'>
+
+                     </div>
+                   </div>
+                   <span class='number-rating'>" . round($row['Rating'],1) ."</span>
+                 </div>
+                 <div class='col-md-3 name'>
+                   " . $row['PreferredName'] . "
+                 </div>
+                 <div class='col-md-3 date'>
+                   " . $row['DateAdded'] . "
+                 </div>
+              </div>
+              <div class='row'>
+                <div class='col-md-12 comment'>
+                  " . $row['Comment'] . "
+                </div>
+              </div>
+            </div>
+          </div>
       </div>
+      ");
+    } else {
+
+    print ("
+    <div class='carousel-item col-md-3'>
+       <div class='panel panel-default'>
+          <div class='panel-thumbnail'>
+            <div class='row review'>
+               <div class='col-md-6 rating'>
+                 <div class='stars-outer'>
+                   <div class='stars-inner' style='width: " . getRatingPercentageRounded($row['Rating']) .  "%'>
+
+                   </div>
+                 </div>
+                 <span class='number-rating'>" . round($row['Rating'],1) ."</span>
+               </div>
+               <div class='col-md-3 name'>
+                 " . $row['PreferredName'] . "
+               </div>
+               <div class='col-md-3 date'>
+                 " . $row['DateAdded'] . "
+               </div>
+            </div>
+            <div class='row'>
+              <div class='col-md-12 comment'>
+                " . $row['Comment'] . "
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
     ");
-    }
+  }
+}
   } else {
     //no reviews for this product
     print ("<div class='row no-reviews'>
@@ -119,6 +170,16 @@ function printReviews ($productID) {
     </div>
     </div>");
   }
+}
+
+//turns the rating into a %
+function getRatingPercentage ($rating) {
+  return ($rating / 5) * 100;
+}
+
+//turns the rating into a rounded %
+function getRatingPercentageRounded ($rating) {
+  return round(getRatingPercentage($rating) / 10) * 10;
 }
 
  ?>

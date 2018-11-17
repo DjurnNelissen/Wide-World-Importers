@@ -1,29 +1,40 @@
 <?php
 session_start();
 include_once('php/review.php');
-setUser('henk', '123');
-//var_dump($_SESSION);
-//var_dump(checkLogin());
-//var_dump(userHasPurchashedProduct($_GET['id']));
-$hasPurchased = true;
-//var_dump(userHasReviewedProduct($_GET['id']));
  ?>
  <!-- include main.js for js functions -->
-<script src="js/main.js" charset="utf-8"></script>
-<div class="row review" <?php if (!(checkLogin() && $hasPurchased && ! userHasReviewedProduct($_GET['id']))) {
-  print ('hidden');}?> >
-  <!--only show this if the user has logged in and purchased the product -->
-  <div class="col-md 12 rating">
-    <input id='rating' type="number" name="rating" value="1" min="1" max="5" required>
-  </div>
-  <div class="col-md-12 comment">
-        <textarea name="coment" rows="8" cols="40" required id='comment' placeholder="Tell us about your expierence with the product."></textarea>
-  </div>
-  <button type="submit" name="button" onclick="submitReview(<?php
-  //sets the ID of the current product so we know which product we are reviewing
-  if (isset($_GET['id'])) {
-    print($_GET['id']);
-  }
-  ?>)">Submit</button>
-</div>
-</div>
+ <head>
+
+
+
+   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+
+      <link rel="stylesheet" href="css/review.css" media="screen" title="no title">
+   <script src="js/main.js" charset="utf-8"></script>
+   <script src="js/review.js" charset="utf-8"></script>
+ </head>
+ <body>
+   <div class="container-fluid">
+     <div id="carouselExample" class="carousel slide" data-ride="carousel" data-interval="9000">
+       <div class="carousel-inner row w-100 mx-auto" role="listbox">
+        <?php
+          printReviews(1);
+         ?>
+       </div>
+         <a class="carousel-control-prev" href="#carouselExample" role="button" data-slide="prev">
+             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+             <span class="sr-only">Previous</span>
+         </a>
+         <a class="carousel-control-next text-faded" href="#carouselExample" role="button" data-slide="next">
+             <span class="carousel-control-next-icon" aria-hidden="true"></span>
+             <span class="sr-only">Next</span>
+         </a>
+     </div>
+ </div>
+ </body>
