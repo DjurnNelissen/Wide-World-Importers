@@ -91,6 +91,15 @@ function usernameUsed($email){
 }
 
 // password requirements that the password must need
-//function passwordReq (){
+//function passwordReq ($password){
+//    if (strlen($password) < 8 ) {
+//     return false;
+//    } else if (!preg_match('/^(?=[a-z])(?=[A-Z])[a-zA-Z]{8,}$/',                    $password){
+//            return false;
+//    }else{
+//        return true;
+//    }
+//
+//
 //}
  ?>
