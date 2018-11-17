@@ -23,8 +23,9 @@ $stmt = runQuery($sql);
 $sqlCustomer = " INSERT INTO customers ()
 VALUES ()";
 
-$sqlAccount = " INSERT INTO accounts (AccountID, PersoonID, CustomerID)
-VALUES ()";
+$sqlAccount = " INSERT INTO accounts (PersonID, CusomerID)
+VALUES ((SELECT MAX(PersonID) FROM people),
+        (SELECT MAX(CustomerID) FROM customers))";
 ?>
 
 
