@@ -3,6 +3,7 @@
 include_once ('php/account.php');
 
 $fullname = filter_input(INPUT_POST, 'fullname', FILTER_SANITIZE_STRING);
+$PrefferdName = filter_input(INPUT_POST, 'prefferdname', FILTER_SANITIZE_STRING);
 $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_STRING);
 $phonenumber = filter_input(INPUT_POST, 'phonenumber', FILTER_SANITIZE_STRING);
 $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
@@ -10,8 +11,9 @@ $passwordcheck = filter_input(INPUT_POST, 'passwordcheck', FILTER_SANITIZE_STRIN
 
 $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-$sql = " INSERT INTO people (PersonID, Fullname, PrefferedName, SearchName, IsPermittedToLogon, LogonName, HashedPassword, IsSystemUser, PhoneNumber, FaxNumber, EmailAddres, LastEditedBy, ValidFrom, ValidTo)
-VALUES ((SELECT MAX(PersonID) FROM people) + 1, '$fullname', '$preferredname', '" .  $preferedname + $fullname . "', 1, '$logonname', '$password', 1, '$phonenumber', '$faxnumber', '$email', '2013-01-01 00:00:00', '9999-12-31 23:59:59')"
+
+$sql = " INSERT INTO people (PersonID, Fullname, PrefferedName, SearchName, IsPermittedToLogon, LogonName, HashedPassword, IsSystemUser, PhoneNumber, EmailAddres, LastEditedBy, ValidFrom, ValidTo)
+VALUES ((SELECT MAX(PersonID) FROM people) + 1, '$fullname', '$preferredname', '" .  $preferedname + $fullname . "', 1, '$logonname', '$password', 1, '$phonenumber', '$email', '2013-01-01 00:00:00', '9999-12-31 23:59:59')";
 
 
 ?>
