@@ -19,10 +19,21 @@ function runQuery ($q) {
   $dbSettings = getDBsettings();
   $db = "mysql:host=" . $dbSettings['DBserver'] . ";dbname=" . $dbSettings['DBname'] . ";port=" . $dbSettings['DBport'];
   $pdo = new PDO($db, $dbSettings['DBuser'], $dbSettings['DBpass']);
-  //prepare the SQL string
-  $stmt = $pdo->prepare($q);
-  //execute the SQL
-  $stmt->execute();
+
+  try {
+    //prepare the SQL string
+    $stmt = $pdo->prepare($q);
+    //execute the SQL
+    $stmt->execute();
+    //check for error
+  } catch (PDOException $e) {
+    //close errored connection
+    $pdo = null;
+    //return the error
+    return $e;
+  }
+
+
   //close the conention
   $pdo = null;
   //return the result
