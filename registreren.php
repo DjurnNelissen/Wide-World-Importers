@@ -18,8 +18,6 @@ VALUES ((SELECT MAX(pe.PersonID) + 1 FROM people pe) , '$fullname', '$prefferedn
 $stmt = runQuery($sql);
 
 
-
-
 ?>
 <html>
   <head>
