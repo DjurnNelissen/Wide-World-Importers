@@ -10,7 +10,8 @@ $passwordcheck = filter_input(INPUT_POST, 'passwordcheck', FILTER_SANITIZE_STRIN
 
 $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-$sql = "INSERT INTO people (FullName, LogonName, HashedPassword, PhoneNumber, EmailAddress) VALUES ($fullname, $email, $hashedPassword, $phonenumber, $email)"
+$sql = " INSERT INTO people (PersonID, Fullname, PrefferedName, SearchName, IsPermittedToLogon, LogonName, HashedPassword, IsSystemUser, PhoneNumber, FaxNumber, EmailAddres, LastEditedBy, ValidFrom, ValidTo)
+VALUES ((SELECT MAX(PersonID) FROM people) + 1, '$fullname', '$preferredname', '" .  $preferedname + $fullname . "', 1, '$logonname', '$password', 1, '$phonenumber', '$faxnumber', '$email', '2013-01-01 00:00:00', '9999-12-31 23:59:59')"
 
 
 ?>
@@ -29,7 +30,9 @@ $sql = "INSERT INTO people (FullName, LogonName, HashedPassword, PhoneNumber, Em
     <form method="post" action="registreren.php">
         Volledige naam:<br>
         <input type="text" name="fullname" size="30" required><br><br>
-        E-mail/gebruikersnaam:<br>
+        Roepnaam:<br>
+        <input type="text" name="prefferedname" size="30" required><br><br>
+        E-mail:<br>
         <input type="text" name="email" size="30" required><br><br>
         Telefoonnummer:<br>
         <input type="text" name="phonenumber" size="30" required><br><br>
