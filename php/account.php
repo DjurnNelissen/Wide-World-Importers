@@ -79,9 +79,13 @@ function passwordNotEqual($password,$passwordcheck){
 }
 
 //checks if the username already exist
-//function usernameUsed(){
-
-//}
+function usernameUsed($email){
+    if($email != ){
+        return true
+    }else{
+        return false
+    }
+}
 
 // password requirements that the password must need
 //function passwordReq (){

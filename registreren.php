@@ -17,16 +17,20 @@ VALUES ((SELECT MAX(pe.PersonID) + 1 FROM people pe) , '$fullname', '$prefferedn
 
 $stmt = runQuery($sql);
 
-
 ?>
+
+
 <html>
   <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="css/main.css" media="screen" title="no title">
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="css/main.css" media="screen" title="no title" type="text/css">
+
     <title>WWI Webshop</title>
   </head>
+
   <body>
     <?php include("Menu.php") ?>
       <br><br>
