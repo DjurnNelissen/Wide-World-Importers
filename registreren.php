@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <?php
-//include_once ('account.php');
+include_once ('php/account.php');
 
 $fullname = filter_input(INPUT_POST, 'fullname', FILTER_SANITIZE_STRING);
 $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_STRING);
@@ -9,8 +9,6 @@ $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
 $passwordcheck = filter_input(INPUT_POST, 'passwordcheck', FILTER_SANITIZE_STRING);
 
 $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-
-
 
 $sql = "INSERT INTO people (FullName, LogonName, HashedPassword, PhoneNumber, EmailAddress) VALUES ($fullname, $email, $hashedPassword, $phonenumber, $email)"
 
