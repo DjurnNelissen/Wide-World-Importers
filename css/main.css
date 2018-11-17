@@ -22,6 +22,8 @@
 
 /* registreer pag */
 
-.form{
-    text-align: center;
+.form {
+    text-align: left;
+    padding-left: 100px;
 }
+
