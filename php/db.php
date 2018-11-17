@@ -1,5 +1,5 @@
 <?php
-session_start();
+//session_start();
 
 //this file includes all database related functions
 

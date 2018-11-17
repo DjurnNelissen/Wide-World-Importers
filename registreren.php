@@ -43,15 +43,11 @@ $sql = "INSERT INTO people (FullName, LogonName, HashedPassword, PhoneNumber, Em
 
     </form>
 
+      <?php
+        passwordNotEqual($fullname);
 
 
-
-
-
-
-
-
-
+        ?>
 
   </body>
 </html>

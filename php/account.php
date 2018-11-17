@@ -70,17 +70,16 @@ function setUser ($user, $hash) {
 }
 
 // checks whether the repeated password is the same as the password
-function passwordNotEqual{
-
+function passwordNotEqual($fullname){
+    print($fullname);
 }
 
 //checks if the username already exist
-function usernameUsed{
+//function usernameUsed(){
 
-}
+//}
 
 // password requirements that the password must need
-function passwordReq {
-
-}
+//function passwordReq (){
+//}
  ?>
