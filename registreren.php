@@ -3,7 +3,7 @@
 include_once ('php/account.php');
 
 $fullname = filter_input(INPUT_POST, 'fullname', FILTER_SANITIZE_STRING);
-$prefferedname = filter_input(INPUT_POST, 'prefferdname', FILTER_SANITIZE_STRING);
+$prefferedname = filter_input(INPUT_POST, 'prefferedname', FILTER_SANITIZE_STRING);
 $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_STRING);
 $phonenumber = filter_input(INPUT_POST, 'phonenumber', FILTER_SANITIZE_STRING);
 $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
