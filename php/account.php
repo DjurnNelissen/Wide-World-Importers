@@ -1,4 +1,4 @@
-<?php
+ <?php
 session_start();
 include('db.php');
 
@@ -69,4 +69,18 @@ function setUser ($user, $hash) {
   ];
 }
 
+// checks whether the repeated password is the same as the password
+function passwordNotEqual{
+
+}
+
+//checks if the username already exist
+function usernameUsed{
+
+}
+
+// password requirements that the password must need
+function passwordReq {
+
+}
  ?>
