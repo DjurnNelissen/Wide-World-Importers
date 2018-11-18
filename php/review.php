@@ -36,7 +36,7 @@ function userHasReviewedProduct ($productID) {
     $sql = "SELECT * FROM reviews r WHERE StockItemID = $productID
     AND PersonID = (
       SELECT PersonID FROM people
-      WHERE LogonName = " . $_SESSION['user']['name'] . " )";
+      WHERE LogonName = '" . $_SESSION['user']['name'] . "' )";
       //executes the query
       $stmt = runQuery($sql);
       //if we have 1 or somehow more reviews then the user has reviewed this product
@@ -199,6 +199,12 @@ function productHasReviews ($id) {
   }
   //return false by default
   return false;
+}
+
+function printDisabled ($id) {
+  if (! checkLogin() || ! userHasPurchashedProduct($id) || userHasReviewedProduct($id)) {
+    print('disabled');
+  }
 }
 
  ?>
