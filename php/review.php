@@ -33,7 +33,7 @@ function userHasReviewedProduct ($productID) {
   if (checkLogin()) {
     //setup a query that returns all reviews for the current product
     //for the currently logged in user
-    $sql = "SELECT * FROM reviews r WHERE ProductID = $productID
+    $sql = "SELECT * FROM reviews r WHERE StockItemID = $productID
     AND PersonID = (
       SELECT PersonID FROM people
       WHERE LogonName = " . $_SESSION['user']['name'] . " )";
@@ -58,13 +58,14 @@ function submitReview ($productID, $rating, $comment) {
         if (isset($id)) {
           //create query
           $sql = "INSERT INTO reviews
-          (Rating, Comment, ProductID, PersonID)
+          (Rating, Comment, StockItemID, PersonID)
           VALUES
-          ($rating,'$text',$productID,$id)
+          ($rating,'$comment',$productID,$id)
           ";
           //execute query
-          runQuery($sql);
+          $stmt = runQuery($sql);
           //verify if placing review was succesful
+
         }
     }
   }

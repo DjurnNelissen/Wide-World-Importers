@@ -6,7 +6,7 @@ if (isset($_POST['rating']) && isset($_POST['comment']) && isset($_POST['product
   //checks if the user is logged in
   if (checkLogin()) {
     //submits the review to the database
-    submitReview($_POST['rating'], $_POST['comment'], $_POST['productID']);
+    submitReview($_POST['productID'], $_POST['rating'], $_POST['comment']);
     print('success');
   } else {
     print('error');

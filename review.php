@@ -1,6 +1,9 @@
 <?php
 session_start();
 include_once('php/review.php');
+include_once('php/account.php');
+
+setUser('kaylaw@wideworldimporters.com','123');
  ?>
  <!-- include main.js for js functions -->
  <head>

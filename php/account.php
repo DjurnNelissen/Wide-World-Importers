@@ -29,7 +29,7 @@ function checkLogin () {
 //returns the ID of the user thats currently logged in - returns null if something went wrong
 function getPersonID () {
   if (checkLogin()) {
-    $stmt = runQuery("SELECT PersonID FROM people WHERE LogonName = " . $_SESSION['user']['name']);
+    $stmt = runQuery("SELECT PersonID FROM people WHERE LogonName = '" . $_SESSION['user']['name'] . "'");
     if ($stmt->rowCount() > 0) {
       $row = $stmt->fetch();
       //return the ID
