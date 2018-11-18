@@ -21,20 +21,42 @@ include_once('php/review.php');
  </head>
  <body>
    <div class="container-fluid">
-     <div id="carouselExample" class="carousel slide" data-ride="carousel" data-interval="9000">
-       <div class="carousel-inner row w-100 mx-auto" role="listbox">
-        <?php
-          printReviews(1);
-         ?>
-       </div>
-         <a class="carousel-control-prev" href="#carouselExample" role="button" data-slide="prev">
-             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-             <span class="sr-only">Previous</span>
-         </a>
-         <a class="carousel-control-next text-faded" href="#carouselExample" role="button" data-slide="next">
-             <span class="carousel-control-next-icon" aria-hidden="true"></span>
-             <span class="sr-only">Next</span>
-         </a>
+     <div class="row">
+      <div class="col-md-9">
+        <div id="carouselExample" class="carousel slide" data-ride="carousel" data-interval="9000">
+          <div class="carousel-inner row w-100 mx-auto" role="listbox">
+           <?php
+             printReviews($_GET['id']);
+            ?>
+          </div>
+            <a class="carousel-control-prev" href="#carouselExample" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next text-faded" href="#carouselExample" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+      </div>
+      <div class="col-md-3 place-review">
+        <form class="form-group" action="" method="post">
+          <div class="row">
+            <div class="col-md-3">
+              <label for="formControlRange" >Rating</label>
+            </div>
+            <div class="col-md-6">
+              <input type="range" class="form-control-range" id="formControlRange" name="rating" min="1" max="5" step="0.1" onchange="updateRating()" value="1">
+            </div>
+            <div class="col-md-3">
+              <span id='givenRating'>1</span>
+            </div>
+          </div>
+          <textarea class="form-control" name="comment" rows="5" cols="30" id="reviewComment"></textarea>
+          <button class="btn btn-success" type="button" name="button" onclick="submitReview(<?php print($_GET['id']) ?>)">Place review</button>
+        </form>
+      </div>
      </div>
+
  </div>
  </body>

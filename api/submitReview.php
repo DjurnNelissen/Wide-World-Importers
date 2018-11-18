@@ -7,6 +7,11 @@ if (isset($_POST['rating']) && isset($_POST['comment']) && isset($_POST['product
   if (checkLogin()) {
     //submits the review to the database
     submitReview($_POST['rating'], $_POST['comment'], $_POST['productID']);
+    print('success');
+  } else {
+    print('error');
   }
+} else {
+  print('error');
 }
  ?>

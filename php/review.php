@@ -101,11 +101,11 @@ function printReviews ($productID) {
     if ($isFirstItem) {
       $isFirstItem = false;
       print ("
-      <div class='carousel-item col-md-3 active'>
+      <div class='carousel-item col-md-3 review active'>
          <div class='panel panel-default'>
             <div class='panel-thumbnail'>
-              <div class='row review'>
-                 <div class='col-md-6 rating'>
+              <div class='row review-rating'>
+                 <div class='col-md-4 rating'>
                    <div class='stars-outer'>
                      <div class='stars-inner' style='width: " . getRatingPercentageRounded($row['Rating']) .  "%'>
 
@@ -113,15 +113,15 @@ function printReviews ($productID) {
                    </div>
                    <span class='number-rating'>" . round($row['Rating'],1) ."</span>
                  </div>
-                 <div class='col-md-3 name'>
+                 <div class='col-md-2 name'>
                    " . $row['PreferredName'] . "
                  </div>
-                 <div class='col-md-3 date'>
+                 <div class='col-md-6 date'>
                    " . $row['DateAdded'] . "
                  </div>
               </div>
               <div class='row'>
-                <div class='col-md-12 comment'>
+                <div class='col-md-12 pt-2 pb-2 comment'>
                   " . $row['Comment'] . "
                 </div>
               </div>
@@ -132,11 +132,11 @@ function printReviews ($productID) {
     } else {
 
     print ("
-    <div class='carousel-item col-md-3'>
+    <div class='carousel-item col-md-3 review'>
        <div class='panel panel-default'>
           <div class='panel-thumbnail'>
-            <div class='row review'>
-               <div class='col-md-6 rating'>
+            <div class='row review-rating'>
+               <div class='col-md-4 rating'>
                  <div class='stars-outer'>
                    <div class='stars-inner' style='width: " . getRatingPercentageRounded($row['Rating']) .  "%'>
 
@@ -144,15 +144,15 @@ function printReviews ($productID) {
                  </div>
                  <span class='number-rating'>" . round($row['Rating'],1) ."</span>
                </div>
-               <div class='col-md-3 name'>
+               <div class='col-md-2 name'>
                  " . $row['PreferredName'] . "
                </div>
-               <div class='col-md-3 date'>
+               <div class='col-md-6 date'>
                  " . $row['DateAdded'] . "
                </div>
             </div>
             <div class='row'>
-              <div class='col-md-12 comment'>
+              <div class='col-md-12 pt-2 pb-2 comment'>
                 " . $row['Comment'] . "
               </div>
             </div>
@@ -180,6 +180,21 @@ function getRatingPercentage ($rating) {
 //turns the rating into a rounded %
 function getRatingPercentageRounded ($rating) {
   return round(getRatingPercentage($rating) / 10) * 10;
+}
+
+//checks if there are reviews for a product
+function productHasReviews ($id) {
+  //create query
+  $sql = "SELECT * FROM reviews WHERE StockItemID = $id";
+  //execute query
+  $stmt = runQuery($sql);
+  //check if we found any reviews
+  if ($stmt->rowCount > 0) {
+    //if so return true
+    return true;
+  }
+  //return false by default
+  return false;
 }
 
  ?>
