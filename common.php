@@ -190,21 +190,43 @@ function printCart () {
   $products = fetchProductsFromCartAsArray();
 
   if (count($products) > 0) {
-  for ($i=0; $i < count($products) ; $i++) {
-    print("<div class='col-md-12 cartItem'> ". $products[$i]['StockItemName']  ." - " . $products[$i]['amount'] . "X <form class='' action='winkelwagen.php' method='post'>
-      <input type='number' name='ID' value='" . $products[$i]['StockItemID'] . "' hidden>
-      <input type='number' name='amount' value=" . (string)$products[$i]['amount'] . " hidden>
-      <input type='submit' name='RemoveItem' value='Remove'>
-    </form>
-    <form class='' action='winkelwagen.php' method='post'>
-      <input type='number' name='ID' value='" . $products[$i]['StockItemID'] . "' hidden>
-      <input type='number' name='amount' value=1 hidden>
-      <input type='submit' name='RemoveItem' value='Remove one'>
-    </form></div>");
-  }
-} else {
-  print("Cart is empty");
-}
+		for ($i=0; $i < count($products) ; $i++) {
+			print("<div class='row p-3 ml-2 cartItem'>
+							 <!-- Afbeelding product -->
+							 <div class='col-2'>
+							 	 <img class='img-fluid rounded img-thumbnail' src='https://sc02.alicdn.com/kf/HTB1wYdzPFXXXXaXapXXq6xXFXXX2/USB-Flash-Drive-8-GB-Memory-Stick.jpg_350x350.jpg' />
+							 </div>
+
+							 <!-- Naam product -->
+							 <div class='col-4'>
+							 	 <span class='badge-pill badge-primary mr-2'>" . $products[$i]['amount'] . "</span><b><a clas='cart-title' href='product.php?id=" . $products[$i]['StockItemID'] . "'>" . $products[$i]['StockItemName'] . "</a></b>
+							 </div>
+
+							 <!-- Naam product -->
+							 <div class='col-3'>
+							 	 <p>€ " . $products[$i]['RecommendedRetailPrice'] * $products[$i]['amount'] . "</p>
+							 </div>
+
+							 <!-- Verwijder knoppen -->
+							 <div class='col-3'>
+								 <form class='' action='winkelwagen.php' method='post'>
+									 <input type='number' name='ID' value='" . $products[$i]['StockItemID'] . "' hidden>
+									 <input type='number' name='amount' value=" . (string)$products[$i]['amount'] . " hidden>
+									 <button type='submit' class='btn btn-danger' name='RemoveItem'><i class='fas fa-trash'></i> Remove all</button>
+									</form>
+									<form class='' action='winkelwagen.php' method='post'>
+										<input type='number' name='ID' value='" . $products[$i]['StockItemID'] . "' hidden>
+										<input type='number' name='amount' value=1 hidden>
+									 <button type='submit' class='btn btn-danger' name='RemoveItem'><i class='fas fa-trash'></i> Remove one</button>
+									</form>
+								</div>
+							</div>");
+		}
+	} else {
+  	print("<div class='alert alert-danger mx-auto my-5' role='alert'>
+  				   <strong>Oh snap!</strong> Your cart is empty. <i class='far fa-frown'></i>
+					 </div>");
+	}
 }
 
 //used  for index.php
@@ -227,11 +249,11 @@ function printProducts () {
       while ($row = $products->fetch()) {
 			print ("<div class='col col-sm-6 col-md-4 col-lg-3 p-2'>
 								<div class='card shadow-sm'>
-									<img class='card-img-top' src='img/favicon.png' alt='Card image cap'>
+									<img class='card-img-top' src='https://sc02.alicdn.com/kf/HTB1wYdzPFXXXXaXapXXq6xXFXXX2/USB-Flash-Drive-8-GB-Memory-Stick.jpg_350x350.jpg' alt='Card image cap'>
 									<div class='card-body'>
 										<h5 class='card-title'>" .  $row['StockItemName'] .  "</h5>
 										<p class='card-text'>" .  $row['StockItemName'] .  "</p>
-										<a href='product.php/?id=" . $row['StockItemID'] . "' class='btn btn-primary'>View</a>
+										<a href='product.php?id=" . $row['StockItemID'] . "' class='btn btn-primary'>View</a>
 									</div>
 								</div>
   						</div>");

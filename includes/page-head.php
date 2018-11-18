@@ -18,6 +18,8 @@
 
 		<!-- Wide World Importers stylesheet -->
 		<link rel="stylesheet" href="css/main.css">
+		<link rel="stylesheet" href="css/product.css">
+		<link rel="stylesheet" href="css/cart.css">
 
 		<!-- Wide World Importers scripts -->
 		<script src="js/main.js" charset="utf-8"></script>
