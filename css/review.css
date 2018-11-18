@@ -108,8 +108,9 @@
 
 .review {
   border-radius: 10px;
-  border-bottom: 1px solid black;
-  border-left: 1px solid black;
+  border-bottom: 1px solid #a2a9b5;
+  border-left: 1px solid #a2a9b5;
+  border-right: 1px solid #a2a9b5;
 }
 
 .comment {
@@ -117,7 +118,7 @@
 }
 
 .review-rating {
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid #a2a9b5;
 }
 
 .place-review {
