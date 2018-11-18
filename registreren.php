@@ -10,11 +10,9 @@ $phonenumber = filter_input(INPUT_POST, 'phonenumber', FILTER_SANITIZE_STRING);
 $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
 $passwordcheck = filter_input(INPUT_POST, 'passwordcheck', FILTER_SANITIZE_STRING);
 
-$deliverycity = filter_input(INPUT_POST, 'city', FILTER_SANITIZE_STRING);
-$toevoeging = filter_input(INPUT_POST, 'toevoeging', FILTER_SANITIZE_STRING);
+$city = filter_input(INPUT_POST, 'city', FILTER_SANITIZE_STRING);
 $street = filter_input(INPUT_POST, 'street', FILTER_SANITIZE_STRING);
-$streetnumber = filter_input(INPUT_POST, 'streetnumber', FILTER_SANITIZE_STRING);
-$address = $street + $streetnumber;
+$housenumber = filter_input(INPUT_POST, 'housenumber', FILTER_SANITIZE_STRING);
 $postalcode = filter_input(INPUT_POST, 'postalcode', FILTER_SANITIZE_STRING);
 
 
@@ -24,17 +22,21 @@ $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
 // query data stores data in the database
 $sqlPeople = " INSERT INTO people (PersonID, Fullname, PreferredName, SearchName, IsPermittedToLogon, LogonName, HashedPassword, IsSystemUser, PhoneNumber, EmailAddress, LastEditedBy, ValidFrom, ValidTo)
-VALUES ((SELECT MAX(pe.PersonID) + 1 FROM people pe) , '$fullname', '$prefferedname', '" .  $prefferedname . " " .  $fullname . "', 1, '$email', '$password', 1, '$phonenumber', '$email', 1,  '2013-01-01 00:00:00', '9999-12-31 23:59:59')";
+VALUES ((SELECT MAX(pe.PersonID) + 1 FROM people pe) , '$fullname', '$prefferedname', '" .  $prefferedname . " " .  $fullname . "', 1, '$email', '$password', 1, '$phonenumber', '$email', 1, (SELECT CURDATE()), '9999-12-31 23:59:59')";
 
 $stmt = runQuery($sqlPeople);
 
-$sqlCustomer = " INSERT INTO customers (CustomerID, CustomerName, BillToCustomerID, CustomerCategoryID, BuyingGroupID, PrimaryContactPersonID, AlternateContactPersonID, DeliveryMethodID, DeliveryCityID, PostalCityID, CreditLimit, AccountOpenedDate, StandardDiscountPercentage, IsStatementSent, IsOnCreditHold, PaymentDays, PhoneNumber, DeliveryAddressLine1, DeliveryAddressLine2, DeliveryPostalCode, DeliveryLocation, PostalAddressLine1, PostalAddressLine2, PostalPostalCode, LastEditedBy, ValidFrom, ValidTo)
-VALUES ((SELECT MAX(c.CustomerID) + 1 FROM customers c) , '$fullname', ?, 9, ?, ?, ?, ?, ?, ‘$postalcity’, ?, ?, 0, ?, ?, 7, ‘$phonenumber’, ‘$toevoeging’, ‘$address’, ‘$postalcode’, ?, ?, ?, ‘$postalcode’, 1, ‘2016-05-07 00:00:00’, '9999-12-31 23:59:59')";
+$sqlCustomer = " INSERT INTO customers (CustomerID, CustomerName, BillToCustomerID, CustomerCategoryID, PrimaryContactPersonID, DeliveryMethodID, DeliveryCityID, PostalCityID, CreditLimit, AccountOpenedDate, StandardDiscountPercentage, IsStatementSent, IsOnCreditHold, PaymentDays, PhoneNumber, DeliveryAddressLine1, DeliveryAddressLine2, DeliveryPostalCode, LastEditedBy, ValidFrom, ValidTo)
+VALUES ((SELECT MAX(c.CustomerID) + 1 FROM customers c) , '$fullname', (SELECT MAX(cu.CustomerID) + 1 FROM customers cu), 9, (SELECT MAX(PersonID) FROM people), 1, 1, '$postalcode', 0, (SELECT CURDATE()), 0, 0, 0, 7, '$phonenumber', '$housenumber', '$street', '$postalcode', 1, (SELECT CURDATE()), '9999-12-31 23:59:59')";
 
 
-$sqlAccount = " INSERT INTO accounts (PersonID, CusomerID)
+runQuery($sqlCustomer);
+
+$sqlAccount = " INSERT INTO accounts (PersonID, CustomerID)
 VALUES ((SELECT MAX(PersonID) FROM people),
         (SELECT MAX(CustomerID) FROM customers))";
+
+runQuery($sqlAccount);
 ?>
 
 
@@ -67,10 +69,10 @@ VALUES ((SELECT MAX(PersonID) FROM people),
                 Roepnaam<br>
                 <input type="text" name="prefferedname" size="30" required><br><br>
 
-                Straat + Huisnr + toevoeging<br>
+                Straat + Huisnr<br>
                 <input type="text" name="street" size="30" required>
-                <input type="text" name="streetnumber" size="4" required>
-                <input type="text" name="toevoeging" size="2" required><br><br>
+                <input type="text" name="housenumber" size="4" required><br><br>
+
 
                 Postcode + Plaats<br>
                 <input type="text" name="postalcode" size="10" required>
