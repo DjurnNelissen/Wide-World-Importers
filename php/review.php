@@ -89,7 +89,10 @@ function getAverageRating ($productID) {
 //prints reviews for the product
 function printReviews ($productID) {
   //setup sql
-  $sql = "SELECT * FROM reviews r LEFT JOIN people p on r.PersonID = p.PersonID WHERE r.StockItemID = $productID";
+  $sql = "SELECT * FROM reviews r
+   LEFT JOIN people p on r.PersonID = p.PersonID
+    WHERE r.StockItemID = $productID
+     ORDER BY Rating desc";
   //execute query
   $stmt = runQuery($sql);
   //get each row
