@@ -2,15 +2,23 @@
 include_once('db.php');
 
 //checks if the given credentials are legit
-function verifyUser ($username, $hash) {
-  //TO-DO
+function verifyUser ($username, $pass) {
+  //setup our query
+  $sql = "SELECT * FROM people
+  WHERE LogonName = '$username'
+  AND IsPermittedToLogon = 1";
 
-  //if credentials match return true
+  $stmt = runQuery($sql);
 
-  //else return false
+  if ($stmt->rowCount() > 0) {
+    $row = $stmt->fetch();
+    if (password_verify($pass, $row['HashedPassword'])) {
+      return true;
+    }
+  }
 
-  //dummy CODE
-  return true;
+  //return false by default
+  return false;
 }
 
 //checks if the user is logged in
@@ -18,7 +26,7 @@ function checkLogin () {
   //check is session has user
   if (isset($_SESSION['user'])) {
     //check if the credentials match
-    if (verifyUser($_SESSION['user']['name'], $_SESSION['user']['hash'])) {
+    if (verifyUser($_SESSION['user']['name'], $_SESSION['user']['pass'])) {
       return true;
     }
   }
@@ -61,10 +69,10 @@ function getAccountID () {
 }
 
 //sets the current user
-function setUser ($user, $hash) {
+function setUser ($user, $pass) {
   $_SESSION['user'] = [
     'name' => $user,
-    'hash' => $hash
+    'pass' => $pass
   ];
 }
 

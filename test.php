@@ -13,5 +13,6 @@ var_dump(userHasReviewedProduct(1));
 
 var_dump(getPersonID());
 
-submitReview(1,5,'loool');
+var_dump(password_hash('123', PASSWORD_DEFAULT));
+
 ?>

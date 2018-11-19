@@ -45,7 +45,33 @@ function setProductAmount (ID) {
   }
 }
 
+function login () {
+  var user = document.getElementById('name').value;
 
+  if (user == null || user == '') {
+    //error
+  } else {
+    var password = document.getElementById('pass').value;
+
+    if (password == null || password == '') {
+      //error
+    } else {
+      //try to login
+      sendPostRequest('api/login.php', 'name=' + user + "&pass=" + password, function (res) {
+        if (res == 'success') {
+          //login succesful
+          alert('success');
+        } else {
+          //name and password do not match
+          alert('Credentials do not match');
+          document.getElementById('pass').value = "";
+        }
+      });
+    }
+  }
+
+
+}
 
 function sendPostRequest (url, params, callback) {
   var http = new XMLHttpRequest();
