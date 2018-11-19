@@ -387,7 +387,6 @@ function printCart () {
   $products = fetchProductsFromCartAsArray();
 
   if (count($products) > 0) {
-<<<<<<< HEAD
 		for ($i=0; $i < count($products) ; $i++) {
 			print("<div class='row p-3 ml-2 cartItem'>
 							 <!-- Afbeelding product -->
@@ -425,18 +424,6 @@ function printCart () {
   				   <strong>Oh snap!</strong> Your cart is empty. <i class='far fa-frown'></i>
 					 </div>");
 	}
-=======
-  for ($i=0; $i < count($products) ; $i++) {
-    print("<div class='col-md-12 cartItem'> ". $products[$i]['StockItemName']  ." - aantal <input min=1 id='" . $products[$i]['StockItemID'] . "' type='number' onChange='setProductAmount(" . $products[$i]['StockItemID'] .")' value='" . $products[$i]['amount'] . "'><form class='' action='winkelwagen.php' method='post'>
-      <input type='number' name='ID' value='" . $products[$i]['StockItemID'] . "' hidden>
-      <input type='number' name='amount' value=" . (string)$products[$i]['amount'] . " hidden>
-      <input type='submit' name='RemoveItem' value='Remove'>
-    </form>");
-  }
-} else {
-  print("Cart is empty");
-}
->>>>>>> master
 }
 
 //used  for index.php
