@@ -49,29 +49,29 @@ function login () {
   var user = document.getElementById('name').value;
 
   if (user == null || user == '') {
-    //error
+    alert('Please fill in all fields.');
   } else {
     var password = document.getElementById('pass').value;
 
     if (password == null || password == '') {
-      //error
+      alert('Please fill in all fields.');
     } else {
       //try to login
       sendPostRequest('api/login.php', 'name=' + user + "&pass=" + password, function (res) {
         if (res == 'success') {
           //login succesful
-          alert('success');
+          window.location.href = "/";
         } else {
           //name and password do not match
           alert('Credentials do not match');
           document.getElementById('pass').value = "";
+          document.getElementById('pass').focus();
         }
       });
     }
   }
-
-
 }
+
 
 function sendPostRequest (url, params, callback) {
   var http = new XMLHttpRequest();
