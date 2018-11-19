@@ -93,6 +93,7 @@ runQuery($sqlAccount);
                 <input type="submit" value="Aanmelden">
 
             </form>
+            <?php passwordNotEqual($password, $passwordcheck); ?>
         </div>
 
 </body>

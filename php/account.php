@@ -83,7 +83,8 @@ function setUser ($user, $pass) {
 // checks whether the repeated password is the same as the password
 function passwordNotEqual($password,$passwordcheck){
     if($password == $passwordcheck){
-        return true;
+        //return true;
+        print("GELIJK");
     }else{
         //return false;
         print("NIET GELIJK");
