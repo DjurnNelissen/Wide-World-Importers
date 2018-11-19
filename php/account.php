@@ -7,12 +7,14 @@ function verifyUser ($username, $pass) {
   $sql = "SELECT * FROM people
   WHERE LogonName = '$username'
   AND IsPermittedToLogon = 1";
-
+  //execute the query
   $stmt = runQuery($sql);
-
+  //check if the user exists
   if ($stmt->rowCount() > 0) {
     $row = $stmt->fetch();
+    //compare the passwords
     if (password_verify($pass, $row['HashedPassword'])) {
+      //if they match return true
       return true;
     }
   }
