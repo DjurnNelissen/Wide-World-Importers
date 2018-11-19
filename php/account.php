@@ -76,4 +76,22 @@ function setUser ($user, $pass) {
   ];
 }
 
+//returns the preferredname of the currently logged in user
+function getLoggedInName () {
+  if (checkLogin()) {
+    //setup the query
+    $sql = "SELECT PreferredName FROM people WHERE LogonName = '" . $_SESSION['name'] . "'";
+    //execute the query
+    $stmt = runQuery($sql);
+    //fetch the result
+    $row = $stmt-fetch();
+    if ($row) {
+        //return the name
+        return $row['PreferredName'];
+    }
+  }
+  //return nothing by default
+  return '';
+}
+
  ?>
