@@ -1,6 +1,7 @@
 <?php
 include_once('db.php');
 
+
 //checks if the given credentials are legit
 function verifyUser ($username, $pass) {
   //setup our query
@@ -78,6 +79,41 @@ function setUser ($user, $pass) {
   ];
 }
 
+
+// checks whether the repeated password is the same as the password
+function passwordNotEqual($password,$passwordcheck){
+    if($password == $passwordcheck){
+        return true;
+    }else{
+        return false;
+    }
+}
+
+//checks if the username already exist
+function usernameUsed($email){
+
+    $sql = "SELECT LogonName FROM people";
+
+    if($email != runQuery($sql)){
+        return true;
+    }else{
+        return false;
+    }
+}
+
+// password requirements that the password must need
+//function passwordReq ($password){
+//    if (strlen($password) < 8 ) {
+//     return false;
+//    } else if (!preg_match('/^(?=[a-z])(?=[A-Z])[a-zA-Z]{8,}$/',                    $password){
+//            return false;
+//    }else{
+//        return true;
+//    }
+//
+//
+//}
+
 //returns the preferredname of the currently logged in user
 function getLoggedInName () {
   if (checkLogin()) {
@@ -95,5 +131,6 @@ function getLoggedInName () {
   //return nothing by default
   return '';
 }
+
 
  ?>
