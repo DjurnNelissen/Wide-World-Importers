@@ -1,12 +1,18 @@
 <?php
 session_start();
-include_once('common.php');
+include_once('php/review.php');
+include_once('php/account.php');
 
-//session_destroy();
+setUser('kaylaw@wideworldimporters.com','123');
 
-addToCart(1,1);
+var_dump(checkLogin());
 
-setProductInCartCount(18,20);
+var_dump(userHasPurchashedProduct(1));
 
-var_dump(fetchProductsFromCartAsArray());
+var_dump(userHasReviewedProduct(1));
+
+var_dump(getPersonID());
+
+var_dump(password_hash('123', PASSWORD_DEFAULT));
+
 ?>
