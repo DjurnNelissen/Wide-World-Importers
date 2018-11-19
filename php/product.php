@@ -76,5 +76,16 @@ function printProducts () {
   }
 }
 
+//returns the amount in stock for given product
+function getStockSupply ($id) {
+  //setup query
+  $sql = "SELECT SUM(QuantityOnHand) FROM stockitemholdings WHERE StockItemID = $id";
+  //execute query
+  $stmt = runQuery($sql);
+  //fetch result
+  $row = $stmt->fetch();
+  //return result
+  return $row['QuantityOnHand'];
+}
 
  ?>
