@@ -1,4 +1,6 @@
 <?php
+//this file is now split into seperate files
+
 
 //dictionary that stores DB settings
 function getDBsettings () {
@@ -60,6 +62,116 @@ function checkCart() {
   }
 }
 
+//checks if the given credentials are legit
+function verifyUser ($username, $hash) {
+  //TO-DO
+
+  //if credentials match return true
+
+  //else return false
+
+  //dummy CODE
+  return true;
+}
+
+//adds a new review to the database for a certain product
+function submitReview ($rating, $text, $productID) {
+  //checks if the user is logged in
+  if (checkLogin()) {
+      if (userHasPurchashedProduct($productID) && ! userHasReviewedProduct($productID)) {
+        $id = getUserID();
+        //check if the ID didnt get an error
+        if (isset($id)) {
+          //create query
+          $sql = "INSERT INTO reviews
+          (Rating, Comment, ProductID, PersonID)
+          VALUES
+          ($rating,'$text',$productID,$id)
+          ";
+          //execute query
+          runQuery($sql);
+
+          //verify if placing review was succesful
+        }
+    }
+  }
+}
+
+//checks if a user has previously ordered a product
+function userHasPurchashedProduct ($productID) {
+  //if user is logged in
+  if (checkLogin()) {
+    $userid = getUserID();
+    //get the times this user has purchased this product
+    $sql = "SELECT * FROM orders o join orderlines ol ON o.OrderID = ol.OrderID WHERE ol.StockItemID = $productID AND o.CustomerID = $userid";
+    //execute the query
+    $stmt = runQuery($sql);
+    //check if this user has purchased the product 1 or more times
+    if ($stmt->rowCount() > 0) {
+      //if so return true
+      return true;
+    }
+  }
+  //return false by default
+  return false;
+}
+
+//checks if the user is logged in
+function checkLogin () {
+  //check is session has user
+  if (isset($_SESSION['user'])) {
+    //check if the credentials match
+    if (verifyUser($_SESSION['user']['name'], $_SESSION['user']['hash'])) {
+      return true;
+    }
+  }
+  //returns false by default
+  return false;
+}
+
+//returns the ID of the user thats currently logged in - returns null if something went wrong
+function getPersonID () {
+  if (checkLogin()) {
+    $stmt = runQuery("SELECT PersonID FROM people WHERE LogonName = " . $_SESSION['user']['name']);
+    if ($stmt->rowCount() > 0) {
+      $row = $stmt->fetch();
+      //return the ID
+      return $row['PersonID'];
+    }
+  }
+  //returns null by default
+  return null;
+}
+
+//returns the account ID, returns null if something went wrong
+function getAccountID () {
+  //checks if the user is logged in
+  if (checkLogin()) {
+    //gets the ID
+    $ID = getPersonID();
+    //setup sql query
+    $sql = "SELECT AccountID FROM accounts WHERE PersonID =  $ID";
+    //runs the query
+    $stmt = runQuery($sql);
+    //checks if we found atleast 1 account
+    if ($stmt->rowCount() >  0) {
+      $row = $stmt->fetch();
+      //returns the ID
+      return $row['AccountID'];
+    }
+  }
+  return null;
+}
+
+//sets the current user
+function setUser ($user, $hash) {
+  $_SESSION['user'] = [
+    'name' => $user,
+    'hash' => $hash
+  ];
+}
+
+/* OLD CODE
 //adds the given product ID to the cart of the current session
 function addToCart($productID, $amount) {
   if (checkCart()) {
@@ -83,7 +195,88 @@ function addToCart($productID, $amount) {
     }
   }
 }
+*/
 
+//adds product to the cart
+function addToCart ($productID, $amount) {
+  //make sure a cart exist within the session
+  if (checkCart()) {
+    //check if the product already is in the cart
+    if (array_key_exists($productID,$_SESSION['cart'])) {
+      //only add the amount
+      $_SESSION['cart'][$productID]['amount'] = $_SESSION['cart'][$productID]['amount'] + $amount;
+    } else {
+      //add the product entirely
+      $_SESSION['cart'][$productID] = [
+        'ID' => $productID, // ID isnt really needed since its already in the key
+        'amount' => $amount
+      ];
+    }
+  }
+}
+
+//removes a product from the cart
+function removeFromCart ($productID, $amount) {
+  if (checkCart()) {
+    if (array_key_exists($productID, $_SESSION['cart'])) {
+      if ($amount >= $_SESSION['cart'][$productID]['amount'] || $amount == 'all') {
+        //remove item completely
+        unset($_SESSION['cart'][$productID]);
+      } else {
+        //remove item partially
+        $_SESSION['cart'][$productID]['amount'] = $_SESSION['cart'][$productID]['amount'] - $amount;
+      }
+    }
+  }
+}
+
+//returns a statement object with all products currently in the cart
+function fetchProductsFromCart () {
+  if (checkCart()) {
+    $sql = "SELECT * FROM stockitems WHERE StockItemID IN (" . arrayToSQLString(array_keys($_SESSION['cart'])) . ")";
+    return runQuery($sql);
+  }
+}
+
+function fetchProductsFromCartAsArray () {
+  if (checkCart()) {
+    //gets all products currently in the cart
+    $stmt = fetchProductsFromCart();
+    //creates a new array to store all products
+    $result = [];
+    //adds each product, also includes the amount in the array
+    while ($row = $stmt->fetch()) {
+      $id = $row['StockItemID'];
+      if (array_key_exists($id, $_SESSION['cart'])) {
+        $input = $row;
+        $input['amount'] = $_SESSION['cart'][$id]['amount'];
+        array_push($result,$input);
+      }
+    }
+    return $result;
+  }
+}
+
+//sets the amount of items in the cart of a certain item
+function setProductInCartCount ($id, $amount) {
+  //ensures that the cart exists within the session
+  if (checkCart()) {
+    //checks if the product is actually in the cart
+    if (array_key_exists($id, $_SESSION['cart'])) {
+      if ($amount > 0) {
+        $_SESSION['cart'][$id]['amount'] = $amount;
+      } else {
+        //remove product
+        unset($_SESSION['cart'][$id]);
+      }
+    } else {
+      //if not add the product to the cart
+      addToCart($id, $amount);
+    }
+  }
+}
+
+/* OLD CODE
 //removes a product from the cart -  use 'all' to remove all of the product
 function removeFromCart ($productID, $amount) {
   if (checkCart()) {
@@ -102,6 +295,7 @@ function removeFromCart ($productID, $amount) {
     }
   }
 }
+*/
 
 //empties the entire cart
 function emptyCart () {
@@ -109,6 +303,7 @@ function emptyCart () {
   checkCart(); // creates a new cart just in case
 }
 
+/* OLD CODE
 //retrieves all products from the database that are currently in the cart
 function fetchProductsFromCart() {
   if (checkCart()) {
@@ -123,7 +318,9 @@ function fetchProductsFromCart() {
     return runQuery($sql); //runs the SQL query
   }
 }
+*/
 
+/* OLD CODE
 //turns the returned products into an array, also includes the amount that is in the cart
 function fetchProductsFromCartAsArray () {
   $stmt = fetchProductsFromCart();
@@ -140,6 +337,7 @@ function fetchProductsFromCartAsArray () {
 
   return $result;
 }
+*/
 
 //fetches a single product based on its product ID
 function fetchProduct($id) {
@@ -176,20 +374,20 @@ function findProducts ($text, $category, $limit) {
 //turns a single dimension array into a string with a comma between each element
 function arrayToSQLString ($arr) {
   $sql = "";
-  for ($i=0; $i < count($arr) ; $i++) {
-    $sql = $sql . (string)$arr[$i];
-    if (! $i = count($arr) - 1) {
-      $sql = $sql . ',';
-    }
+  foreach ($arr as $key => $value) {
+    $sql = $sql . $value . ',';
   }
+  $sql = rtrim($sql,',');
   return $sql;
 }
 
 //prints the cart in HTML
 function printCart () {
+  //gets all products from the cart
   $products = fetchProductsFromCartAsArray();
 
   if (count($products) > 0) {
+<<<<<<< HEAD
 		for ($i=0; $i < count($products) ; $i++) {
 			print("<div class='row p-3 ml-2 cartItem'>
 							 <!-- Afbeelding product -->
@@ -227,6 +425,18 @@ function printCart () {
   				   <strong>Oh snap!</strong> Your cart is empty. <i class='far fa-frown'></i>
 					 </div>");
 	}
+=======
+  for ($i=0; $i < count($products) ; $i++) {
+    print("<div class='col-md-12 cartItem'> ". $products[$i]['StockItemName']  ." - aantal <input min=1 id='" . $products[$i]['StockItemID'] . "' type='number' onChange='setProductAmount(" . $products[$i]['StockItemID'] .")' value='" . $products[$i]['amount'] . "'><form class='' action='winkelwagen.php' method='post'>
+      <input type='number' name='ID' value='" . $products[$i]['StockItemID'] . "' hidden>
+      <input type='number' name='amount' value=" . (string)$products[$i]['amount'] . " hidden>
+      <input type='submit' name='RemoveItem' value='Remove'>
+    </form>");
+  }
+} else {
+  print("Cart is empty");
+}
+>>>>>>> master
 }
 
 //used  for index.php
@@ -237,13 +447,13 @@ function printProducts () {
   } else {
        $_searchtekst = $_GET["q"] ;
    }
-
+   //defaults to all categories
    if (isset($_GET['c'])) {
     $category = $_GET['c'];
    } else {
      $category = 'all';
    }
-
+   //finds for all products
     $products = findProducts($_searchtekst,$category,1000);
     if ($products->rowCount() > 0) {
       while ($row = $products->fetch()) {

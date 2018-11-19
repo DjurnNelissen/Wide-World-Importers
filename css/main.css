@@ -1,3 +1,4 @@
+
 /* Navbar */
 nav {
 	background-color: white;
@@ -46,4 +47,13 @@ nav {
 .page-content {
 	box-shadow: inset 0 .125rem .25rem rgba(0,0,0,.075);
 	background-color: #eef0f2;
+}
+
+
+
+/* registreer pag */
+
+.form {
+    text-align: left;
+    padding-left: 100px;
 }
