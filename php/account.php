@@ -85,7 +85,8 @@ function passwordNotEqual($password,$passwordcheck){
     if($password == $passwordcheck){
         return true;
     }else{
-        return false;
+        //return false;
+        print("NIET GELIJK");
     }
 }
 
