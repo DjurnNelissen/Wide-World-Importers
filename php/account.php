@@ -79,60 +79,23 @@ function setUser ($user, $pass) {
   ];
 }
 
-//queries add to database
-function addDataToDatabase () {
-    // Variable for user input
-    $fullname = filter_input(INPUT_POST, 'fullname', FILTER_SANITIZE_STRING);
-    $prefferedname = filter_input(INPUT_POST, 'prefferedname', FILTER_SANITIZE_STRING);
-    $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_STRING);
-    $phonenumber = filter_input(INPUT_POST, 'phonenumber', FILTER_SANITIZE_STRING);
-    $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
-    $passwordcheck = filter_input(INPUT_POST, 'passwordcheck', FILTER_SANITIZE_STRING);
-
-    $city = filter_input(INPUT_POST, 'city', FILTER_SANITIZE_STRING);
-    $street = filter_input(INPUT_POST, 'street', FILTER_SANITIZE_STRING);
-    $housenumber = filter_input(INPUT_POST, 'housenumber', FILTER_SANITIZE_STRING);
-    $postalcode = filter_input(INPUT_POST, 'postalcode', FILTER_SANITIZE_STRING);
-
-
-// Hashed password
-    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-
-    $sqlPeople = " INSERT INTO people (PersonID, Fullname, PreferredName, SearchName, IsPermittedToLogon, LogonName, HashedPassword, IsSystemUser, PhoneNumber, EmailAddress, LastEditedBy, ValidFrom, ValidTo)
-    VALUES ((SELECT MAX(pe.PersonID) + 1 FROM people pe) , '$fullname', '$prefferedname', '" .  $prefferedname . " " .  $fullname . "', 1, '$email', '$hashedPassword', 1, '$phonenumber', '$email', 1, (SELECT CURDATE()), '9999-12-31 23:59:59')";
-
-    $stmt = runQuery($sqlPeople);
-
-    $sqlCustomer = " INSERT INTO customers (CustomerID, CustomerName, BillToCustomerID, CustomerCategoryID, PrimaryContactPersonID, DeliveryMethodID, DeliveryCityID, PostalCityID, CreditLimit, AccountOpenedDate, StandardDiscountPercentage, IsStatementSent, IsOnCreditHold, PaymentDays, PhoneNumber, DeliveryAddressLine1, DeliveryAddressLine2, DeliveryPostalCode, LastEditedBy, ValidFrom, ValidTo)
-    VALUES ((SELECT MAX(c.CustomerID) + 1 FROM customers c) , '$fullname', (SELECT MAX(cu.CustomerID) + 1 FROM customers cu), 9, (SELECT MAX(PersonID) FROM people), 1, 1, '$postalcode', 0, (SELECT CURDATE()), 0, 0, 0, 7, '$phonenumber', '$housenumber', '$street', '$postalcode', 1, (SELECT CURDATE()), '9999-12-31 23:59:59')";
-
-
-    runQuery($sqlCustomer);
-
-    $sqlAccount = " INSERT INTO accounts (PersonID, CustomerID)
-    VALUES ((SELECT MAX(PersonID) FROM people),
-        (SELECT MAX(CustomerID) FROM customers))";
-
-    runQuery($sqlAccount);
-}
 // checks whether the repeated password is the same as the password
 function passwordNotEqual($a,$b){
-    if($a == $b){
+    if($a != $b){
         //return true;
-        addDataToDatabase ();
-        print("Je wachtwoord is gelijk");
-    }else{
+        return true;
+    } else {
         //return false;
-        print("Nope... Try again");
+        return false;
     }
 }
 
 //checks if the username already exist
-function usernameUsed($email){
+function usernameUsed($i){
 
     $sql = "SELECT LogonName FROM people";
 
-    if($email != runQuery($sql)){
+    if($i != runQuery($sql)){
         return true;
     }else{
         return false;
