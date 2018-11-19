@@ -1,12 +1,14 @@
 <?php
   session_start();
-  include_once('common.php');
+  include_once('php/product.php');
+  include_once('php/review.php');
 ?>
 <!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="/css/main.css" media="screen" title="no title">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
     <title>WWI Webshop</title>
@@ -81,14 +83,13 @@
             </div>
         </div>
 
-        <div class="row">
-          <textarea name="name" rows="8" cols="40"></textarea>
-        </div>
-
-
-
+        <?php
+        print ("<div> Average rating: " . round(getAverageRating($_GET['id']),1) . " </div>");
+        printReviews($_GET['id']);
+        ?>
 
       </section>
+
 
 
 
