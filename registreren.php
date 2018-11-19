@@ -85,10 +85,10 @@ runQuery($sqlAccount);
                 <input type="text" name="phonenumber" size="30" required><br><br><br>
 
                 Wachtwoord:<br>
-                <input type="text" name="password" size="30" required><br><br>
+                <input type="password" name="password" size="30" required><br><br>
 
                 Herhaal wachtwoord:<br>
-                <input type="text" name="passwordcheck" size="30" required><br>
+                <input type="password" name="passwordcheck" size="30" required><br>
                 <br>
                 <input type="submit" value="Aanmelden">
 
