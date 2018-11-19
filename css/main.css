@@ -34,3 +34,11 @@ body {
 .navbar-brand{
     padding-top: 13px;
 }
+
+.login-box {
+    width: 300px;
+    position: absolute;
+    top: 35%;
+    left: 35%;
+
+}

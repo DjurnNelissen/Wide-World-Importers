@@ -63,15 +63,22 @@ function checkCart() {
 }
 
 //checks if the given credentials are legit
-function verifyUser ($username, $hash) {
-  //TO-DO
-
-  //if credentials match return true
-
-  //else return false
-
-  //dummy CODE
-  return true;
+/**
+ * @param $username
+ * @param $hash
+ * @return bool
+ */
+function verifyUser ($username, $hash)
+{
+    //TO-DO
+    $checksql = "select LogonName,HashedPassword,IsPermittedToLogon from people
+          where LogonName=$username AND HashedPassword=$hash";
+    $lala = runQuery($checksql);
+    //if credentials match return true
+    if ($lala->rowCount() > 0) {
+        return true;
+    }
+    return false;
 }
 
 //adds a new review to the database for a certain product
