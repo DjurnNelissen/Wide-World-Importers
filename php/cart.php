@@ -112,19 +112,28 @@ function printCart () {
 							 </div>
 
 							 <!-- Naam product -->
-							 <div class='col-4'>
+							 <div class='col-3'>
 							 	 <b><a clas='cart-title' href='product.php?id=" . $products[$i]['StockItemID'] . "'>" . $products[$i]['StockItemName'] . "</a></b>
 							 </div>
 
-							 <!-- Naam product -->
-							 <div class='col-3'>
-							 	 <p>€ " . $products[$i]['RecommendedRetailPrice'] * $products[$i]['amount'] . "</p>
+							 <!-- Prijs product -->
+							 <div class='col-1'>
+							 	 <p>€ " . $products[$i]['RecommendedRetailPrice'] . "</p>
 							 </div>
 
                <!-- aantal aanpassen -->
+               <div class='col-2'>
+                <input type='number' min='1' value='" . $products[$i]['amount'] . "' id='" . $products[$i]['StockItemID'] . "' onchange=setProductAmount(" . $products[$i]['StockItemID'] . ")>
+               </div>
+
+               <!-- totaal prijs -->
+
+               <div class='col-2'>
+                <p id='" . $products[$i]['StockItemID'] . "-total'>€ " . $products[$i]["RecommendedRetailPrice"] * $products[$i]['amount'] . " </p>
+               </div>
 
 							 <!-- Verwijder knoppen -->
-							 <div class='col-3'>
+							 <div class='col-2'>
 								 <form class='' action='winkelwagen.php' method='post'>
 									 <input type='number' name='ID' value='" . $products[$i]['StockItemID'] . "' hidden>
 									 <input type='number' name='amount' value=" . (string)$products[$i]['amount'] . " hidden>
