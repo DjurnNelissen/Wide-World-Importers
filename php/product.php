@@ -64,17 +64,21 @@ function printProducts () {
       while ($row = $products->fetch()) {
 			print ("<div class='col col-sm-6 col-md-4 col-lg-3 p-2'>
 								<div class='card shadow-sm'>
-									<img class='card-img-top' src='https://sc02.alicdn.com/kf/HTB1wYdzPFXXXXaXapXXq6xXFXXX2/USB-Flash-Drive-8-GB-Memory-Stick.jpg_350x350.jpg' alt='Card image cap'>
+									<img class='card-img-top product-card-img' src='https://sc02.alicdn.com/kf/HTB1wYdzPFXXXXaXapXXq6xXFXXX2/USB-Flash-Drive-8-GB-Memory-Stick.jpg_350x350.jpg' alt='Card image cap'>
 									<div class='card-body'>
-										<h5 class='card-title'>" .  $row['StockItemName'] . " " . $row['RecommendedRetailPrice'] .  "$</h5>
-										<p class='card-text'>" .  $row['StockItemName'] .  "</p>
-                    <a href='product.php?id=" . $row['StockItemID'] . "' class='btn btn-primary'>View</a>
-                    <button class='btn btn-success' onclick='addToCart(" . $row['StockItemID'] . ", 1)'>Add to cart</button>
+										<h5 class='card-title'>" . $row['StockItemName'] . "</h5>
+										<div class='row'>
+											<h5 class='card-title col-6'>€ " . $row['RecommendedRetailPrice'] . "</h5>
+											<button class='btn btn-success col-4' onclick='addToCart(" . $row['StockItemID'] . ", 1)'>
+												<i class='fas fa-cart-plus'></i>
+											</button>
+										</div>
                     <section class='stars-outer'>
                       <p class='stars-inner' style='width: " . getRatingPercentageRounded(getAverageRating($row['StockItemID'])) . "%'></p>
                     </section>
-                    <p> " . getReviewCount($row['StockItemID']) . " review(s) </p>
-                    " . getSupplyLevelDiv($row['StockItemID']) . "
+                    <p class='review-count'>" . getReviewCount($row['StockItemID']) . " review(s)</p>
+                    <p class='card-text supply-level'>" . getSupplyLevelDiv($row['StockItemID']) . "</p>
+										<a href='product.php?id=" . $row['StockItemID'] . "' class='btn btn-primary col-12'>View</a>
 									</div>
 								</div>
   						</div>");
@@ -122,16 +126,19 @@ function getSupplyLevelDiv ($id) {
 
   if ($supply > 75) {
     //green good supply
-    $div = $div . " green; ";
+    $div = $div . "#28a745;";
   } else if ($supply > 25) {
     //orange ok supply
-    $div = $div . " orange; ";
-  } else {
+    $div = $div . "#ffc107;";
+  } else if ($supply > 0) {
     //red - low supply
-    $div = $div . " red; ";
-  }
+    $div = $div . "#dc3545;";
+  } else {
+    //grey - no supply
+    $div = $div . "#6c757d;";
+	}
 
-  $div = $div . "'> </i> <span>" . $supplyText . "</span> </div>";
+  $div = $div . "'></i> <span>" . $supplyText . "</span></div>";
 
   return $div;
 

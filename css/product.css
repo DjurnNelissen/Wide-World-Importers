@@ -1,3 +1,8 @@
+/* Product thumbnails */
+.product-image > iframe {
+	width: 100%; !important
+}
+
 /* Beschrijvings labels */
 label {
 	color: #9f9f9f;

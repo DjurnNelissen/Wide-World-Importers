@@ -1,4 +1,3 @@
-
 /* Navbar */
 nav {
 	background-color: white;
@@ -49,7 +48,9 @@ nav {
 	background-color: #eef0f2;
 }
 
-
+.product-card-img {
+	border-bottom: 1px solid #dfdfdf;
+}
 
 /* registreer pag */
 
