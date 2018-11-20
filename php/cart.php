@@ -128,11 +128,6 @@ function printCart () {
 									 <input type='number' name='amount' value=" . (string)$products[$i]['amount'] . " hidden>
 									 <button type='submit' class='btn btn-danger' name='RemoveItem'><i class='fas fa-trash'></i> Remove all</button>
 									</form>
-									<form class='' action='winkelwagen.php' method='post'>
-										<input type='number' name='ID' value='" . $products[$i]['StockItemID'] . "' hidden>
-										<input type='number' name='amount' value=1 hidden>
-									 <button type='submit' class='btn btn-danger' name='RemoveItem'><i class='fas fa-trash'></i> Remove one</button>
-									</form>
 								</div>
 							</div>");
 		}
