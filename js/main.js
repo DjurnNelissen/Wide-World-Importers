@@ -72,6 +72,18 @@ function login () {
   }
 }
 
+//returns the price of a product
+function getProductPrice (ID) {
+  sendPostRequest('api/removeFromCart.php', 'id=' + ID.toString() , function (res) {
+    //do stuff with the response
+    if (res = "") {
+      return null;
+    } else {
+      return res;
+    }
+  });
+}
+
 
 function sendPostRequest (url, params, callback) {
   var http = new XMLHttpRequest();
