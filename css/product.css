@@ -64,3 +64,8 @@ label {
 .product-select {
 	text-align-last: center;
 }
+
+/* Product rating */
+.rating-date {
+	float: right;
+}

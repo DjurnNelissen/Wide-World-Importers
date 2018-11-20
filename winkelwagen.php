@@ -1,7 +1,7 @@
 <?php
   //load libs
   include("includes/page-head.php");
-
+include_once("php/cart.php");
 
 
   //handle adding items to cart

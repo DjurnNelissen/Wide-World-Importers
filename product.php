@@ -127,16 +127,12 @@
 
 										</div><!-- .col -->
 									</div><!-- .row -->
+									<div class="row">
+										<?php include_once("review.php"); ?>
+									</div>
 								</div><!-- .row -->
 							</div><!-- .card -->
 						</div><!-- .row -->
-
-
-					<!-- Leeg form wat origineel op deze pagina stond
-						<div class="row">
-							<form class="" action="../winkelwagen.php" method="post">
-						</div>
-					-->
 
 <!-- include the footer of the page -->
 <?php include("includes/page-foot.php") ?>

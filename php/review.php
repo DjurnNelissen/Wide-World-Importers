@@ -102,77 +102,41 @@ function printReviews ($productID) {
 
     while ($row = $stmt->fetch()) {
     //print each review
-    if ($isFirstItem) {
-      $isFirstItem = false;
-      print ("
-      <div class='carousel-item col-md-3 review active'>
-         <div class='panel panel-default'>
-            <div class='panel-thumbnail'>
-              <div class='row review-rating'>
-                 <div class='col-md-4 rating'>
-                   <div class='stars-outer'>
-                     <div class='stars-inner' style='width: " . getRatingPercentageRounded($row['Rating']) .  "%'>
-
-                     </div>
-                   </div>
-                   <span class='number-rating'>" . round($row['Rating'],1) ."</span>
-                 </div>
-                 <div class='col-md-2 name'>
-                   " . $row['PreferredName'] . "
-                 </div>
-                 <div class='col-md-6 date'>
-                   " . $row['DateAdded'] . "
-                 </div>
-              </div>
-              <div class='row'>
-                <div class='col-md-12 pt-2 pb-2 comment'>
-                  " . $row['Comment'] . "
-                </div>
-              </div>
-            </div>
-          </div>
-      </div>
-      ");
-    } else {
-
-    print ("
-    <div class='carousel-item col-md-3 review'>
-       <div class='panel panel-default'>
-          <div class='panel-thumbnail'>
-            <div class='row review-rating'>
-               <div class='col-md-4 rating'>
-                 <div class='stars-outer'>
-                   <div class='stars-inner' style='width: " . getRatingPercentageRounded($row['Rating']) .  "%'>
-
-                   </div>
-                 </div>
-                 <span class='number-rating'>" . round($row['Rating'],1) ."</span>
-               </div>
-               <div class='col-md-2 name'>
-                 " . $row['PreferredName'] . "
-               </div>
-               <div class='col-md-6 date'>
-                 " . $row['DateAdded'] . "
-               </div>
-            </div>
-            <div class='row'>
-              <div class='col-md-12 pt-2 pb-2 comment'>
-                " . $row['Comment'] . "
-              </div>
-            </div>
-          </div>
-        </div>
-    </div>
-    ");
-  }
-}
+			if ($isFirstItem) {
+				$isFirstItem = false;
+				print ("<div class='card'>
+									<div class='card-header'>
+										<b>" . $row['PreferredName'] . "</b><span class='rating-date'>" . $row['DateAdded'] . "</span>
+									</div>
+									<div class='card-body'>
+										<div class='stars-outer'>
+											<div class='stars-inner' style='width:
+												"	. getRatingPercentageRounded($row['Rating']) . "%'>
+											</div>
+										</div>
+										<h5 class='card-title'>"	. round($row['Rating'],1) . "/5 stars!</h5>
+										<p class='card-title'>" . $row['Comment'] . "</p>
+									</div>
+								</div>");
+			}
+		}
   } else {
     //no reviews for this product
-    print ("<div class='row no-reviews'>
-    <div class='col-md-12'>
-    This product does not have any reviews.
-    </div>
-    </div>");
+		$today = date("Y-m-d, H:i");
+    print ("<div class='card'>
+							<div class='card-header'>
+								<b>Your name here!</b><span class='rating-date'>" . $currentDate . "</span>
+							</div>
+							<div class='card-body'>
+								<div class='stars-outer'>
+									<div class='stars-inner' style='width:
+										100%'>
+									</div>
+								</div>
+								<h5 class='card-title'>5/5 stars!</h5>
+								<p class='card-title'>Submit your review about " . $row['StockItemName'] . " now!</p>
+							</div>
+						</div>");
   }
 }
 
