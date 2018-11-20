@@ -74,6 +74,7 @@ function printProducts () {
                       <p class='stars-inner' style='width: " . getRatingPercentageRounded(getAverageRating($row['StockItemID'])) . "%'></p>
                     </section>
                     <p> " . getReviewCount($row['StockItemID']) . " review(s) </p>
+                    " . getSupplyLevelDiv($row['StockItemID']) . "
 									</div>
 								</div>
   						</div>");
@@ -104,7 +105,30 @@ function getStockSupply ($id) {
   //fetch result
   $row = $stmt->fetch();
   //return result
-  return $row['QuantityOnHand'];
+  return $row['SUM(QuantityOnHand)'];
+}
+
+//prints the level of the supply for a specific product
+function getSupplyLevelDiv ($id) {
+  $supply = getStockSupply($id);
+
+  $div = "<div class='supply-level' style='background-color: ";
+
+  if ($supply > 10) {
+    //green good supply
+    $div = $div . " green; ";
+  } else if ($supply > 5) {
+    //orange ok supply
+    $div = $div . " orange; ";
+  } else {
+    //red - low supply
+    $div = $div . " red; ";
+  }
+
+  $div = $div . "'> </div>";
+
+  return $div;
+
 }
 
  ?>
