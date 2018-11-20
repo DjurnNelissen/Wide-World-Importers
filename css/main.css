@@ -86,9 +86,6 @@ nav {
   color: #f8ce0b;
 }
 
-.supply-level {
-	width: 20px;
-	height: 20px;
-	border-radius: 10px;
-
+.supply-box > span {
+	margin-left: 5px;
 }

@@ -112,12 +112,18 @@ function getStockSupply ($id) {
 function getSupplyLevelDiv ($id) {
   $supply = getStockSupply($id);
 
-  $div = "<div class='supply-level' style='background-color: ";
+  $supplyText = $supply;
 
-  if ($supply > 10) {
+  if ($supply > 100) {
+    $supplyText = "100+";
+  }
+
+  $div = "<div class='supply-box'><i class='fas fa-box' style='color: ";
+
+  if ($supply > 75) {
     //green good supply
     $div = $div . " green; ";
-  } else if ($supply > 5) {
+  } else if ($supply > 25) {
     //orange ok supply
     $div = $div . " orange; ";
   } else {
@@ -125,7 +131,7 @@ function getSupplyLevelDiv ($id) {
     $div = $div . " red; ";
   }
 
-  $div = $div . "'> </div>";
+  $div = $div . "'> </i> <span>" . $supplyText . "</span> </div>";
 
   return $div;
 
