@@ -142,4 +142,15 @@ function printCart () {
 					 </div>");
 	}
 }
+
+//checks if a product is in the cart
+function isInCart ($id) {
+  if (checkCart()) {
+    if (array_key_exists($id, $_SESSION['cart'])) {
+      return true;
+    }
+  }
+  return false;
+}
+
  ?>

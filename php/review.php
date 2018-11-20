@@ -207,4 +207,15 @@ function printDisabled ($id) {
   }
 }
 
+//returns how often a product has been reviewed
+function getReviewCount ($productID) {
+  $sql = "SELECT COUNT(*) FROM reviews WHERE StockItemID = $productID";
+
+  $stmt = runQuery($sql);
+
+  $row = $stmt->fetch();
+
+  return $row['COUNT(*)'];
+}
+
  ?>

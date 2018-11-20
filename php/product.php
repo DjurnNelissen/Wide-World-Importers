@@ -1,5 +1,7 @@
 <?php
 include_once('db.php');
+include_once('cart.php');
+include_once('php/review.php');
 
 //this file includes all functions related to finding products
 
@@ -64,9 +66,14 @@ function printProducts () {
 								<div class='card shadow-sm'>
 									<img class='card-img-top' src='https://sc02.alicdn.com/kf/HTB1wYdzPFXXXXaXapXXq6xXFXXX2/USB-Flash-Drive-8-GB-Memory-Stick.jpg_350x350.jpg' alt='Card image cap'>
 									<div class='card-body'>
-										<h5 class='card-title'>" .  $row['StockItemName'] .  "</h5>
+										<h5 class='card-title'>" .  $row['StockItemName'] . " " . $row['RecommendedRetailPrice'] .  "$</h5>
 										<p class='card-text'>" .  $row['StockItemName'] .  "</p>
-										<a href='product.php?id=" . $row['StockItemID'] . "' class='btn btn-primary'>View</a>
+                    <a href='product.php?id=" . $row['StockItemID'] . "' class='btn btn-primary'>View</a>
+                    <button class='btn btn-success' onclick='addToCart(" . $row['StockItemID'] . ", 1)'>Add to cart</button>
+                    <section class='stars-outer'>
+                      <p class='stars-inner' style='width: " . getRatingPercentageRounded(getAverageRating($row['StockItemID'])) . "%'></p>
+                    </section>
+                    <p> " . getReviewCount($row['StockItemID']) . " review(s) </p>
 									</div>
 								</div>
   						</div>");
