@@ -1,7 +1,8 @@
 <?php
   //load libs
   include("includes/page-head.php");
-  
+include_once("php/cart.php");
+
   //handle adding items to cart
   if (isset($_POST['addToCart'])) {
     addToCart($_POST['ProductID'], $_POST['quantity']);
