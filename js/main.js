@@ -40,9 +40,14 @@ function setProductAmount (ID) {
   if (amount > 0) {
   sendPostRequest('api/setAmount.php', 'id=' + ID.toString() + '&amount=' + amount.toString(), function (res) {
     //do stuff with the response
+      getProductPrice(ID, function (res) {
+        document.getElementById(ID + '-total').innerHTML = "€ " + (res * amount).toFixed(2);
+      })
 
     });
   }
+
+
 }
 
 function login () {
@@ -70,6 +75,11 @@ function login () {
       });
     }
   }
+}
+
+//returns the price of a product
+function getProductPrice (ID, callback) {
+  sendPostRequest('api/getProductPrice.php', 'id=' + ID.toString() , callback);
 }
 
 
