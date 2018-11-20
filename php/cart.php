@@ -113,13 +113,15 @@ function printCart () {
 
 							 <!-- Naam product -->
 							 <div class='col-4'>
-							 	 <span class='badge-pill badge-primary mr-2'>" . $products[$i]['amount'] . "</span><b><a clas='cart-title' href='product.php?id=" . $products[$i]['StockItemID'] . "'>" . $products[$i]['StockItemName'] . "</a></b>
+							 	 <b><a clas='cart-title' href='product.php?id=" . $products[$i]['StockItemID'] . "'>" . $products[$i]['StockItemName'] . "</a></b>
 							 </div>
 
 							 <!-- Naam product -->
 							 <div class='col-3'>
 							 	 <p>€ " . $products[$i]['RecommendedRetailPrice'] * $products[$i]['amount'] . "</p>
 							 </div>
+
+               <!-- aantal aanpassen -->
 
 							 <!-- Verwijder knoppen -->
 							 <div class='col-3'>
