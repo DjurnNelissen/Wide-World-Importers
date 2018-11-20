@@ -57,7 +57,7 @@ function runQueryWithParams ($q, $p) {
     //close errored connection
     $pdo = null;
     //return the error
-    return $e
+    return $e;
   }
 
   $pdo = null;
