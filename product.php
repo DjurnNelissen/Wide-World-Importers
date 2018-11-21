@@ -13,12 +13,12 @@
 									<div class="row">
 										<div class="col">
 											<!-- Afbeelding product -->
-											<div class="row product-image">
+											<div class="row">
 												<img class="img-fluid rounded img-thumbnail mx-auto" src="https://sc02.alicdn.com/kf/HTB1wYdzPFXXXXaXapXXq6xXFXXX2/USB-Flash-Drive-8-GB-Memory-Stick.jpg_350x350.jpg" />
 											</div>
 
 											<!-- Miniatuur afbeelding product -->
-											<div class="row mx-auto">
+											<div class="row row-product-image">
 												<div class="col-4 product-image">
 													<img class="rounded img-thumbnail" src="https://sc02.alicdn.com/kf/HTB1wYdzPFXXXXaXapXXq6xXFXXX2/USB-Flash-Drive-8-GB-Memory-Stick.jpg_350x350.jpg" />
 												</div>
@@ -28,7 +28,7 @@
 												</div>
 
 												<div class="col-4 product-image">
-													<iframe frameborder="0" src="https://www.dailymotion.com/embed/video/x2ijrr4" allowfullscreen allow="autoplay">
+													<iframe class="rounded img-thumbnail" frameborder="0" src="https://www.dailymotion.com/embed/video/x2ijrr4" allowfullscreen allow="autoplay">
 
 													</iframe>
 												</div>
@@ -85,7 +85,7 @@
 											<!-- Maat product -->
 											<?php
 												if ($row['Size']) {
-													print('<div class="col-12">
+													print('<div class="col-12 my-2">
 																	 <label>Size:</label><br>
 																	 <select class="custom-select col col-md-3 product-select">
 																		 <option value="' . $row['Size'] . '">' . $row['Size'] . '</option>
@@ -97,27 +97,23 @@
 											<!-- Kleur product -->
 											<?php
 												if ($row['ColorName']) {
-													print('<div class="col-12 my-4">
+													print('<div class="col-12 my-2">
 																	 <label>Color:</label><br>
-																	 <input type="checkbox" class="product-checkbox ' . $row['ColorName'] . '">
+																	 <input type="checkbox" class="product-checkbox"  style="background-color: ' . $row['ColorName'] . ';">
 																 </div>');
 												}
 											 ?>
 
 											<!-- Winkelwagen knop -->
-											<div class="row">
+											<form action="winkelwagen.php" method="post">
+												<div class="form-group my-2">
+													<input type="number" name="ProductID" value="<?php print($_GET['id']) ?>" hidden>
+													<label class="col-12" for="quantity">Quantity:</label>
+													<input type="number" name="quantity" id="quantity" class="form-control col-2 ml-3 product-number" value="1" min="1">
 
-												<form class="" action="winkelwagen.php" method="post">
-													<div class="form-group">
-														<input type="number" name="ProductID" value="<?php print($_GET['id']) ?>" hidden>
-														<label for="quantity">Quantity:</label>
-														<input type="number" name="quantity" id="quantity" class="form-control col-4 product-number" value="1" min="1">
-
-														<button type="submit" name="addToCart" class="btn btn-primary col-7"><i class="fas fa-shopping-cart"></i> Add to cart</button>
-													</div>
-												</form>
-
-											</div>
+													<button type="submit" name="addToCart" class="btn btn-primary col-4 mb-1"><i class="fas fa-shopping-cart"></i> Add to cart</button>
+												</div>
+											</form>
 
 											<!-- Specificaties product -->
 											<!--
