@@ -105,7 +105,7 @@ function printReviews ($productID) {
 
 
 				print ("
-								<div class='card'>
+								<div class='card mb-1'>
 									<div class='card-header'>
 										<b>" . $row['PreferredName'] . "</b><span class='rating-date'>" . $row['DateAdded'] . "</span>
 									</div>
@@ -124,7 +124,7 @@ function printReviews ($productID) {
   } else {
     //no reviews for this product
 		$today = date("Y-m-d, H:i");
-    print ("<h5>Reviews:</h5>
+    print ("
 						<div class='card'>
 							<div class='card-header'>
 								<b>Your name here!</b><span class='rating-date'>" . $today . "</span>
