@@ -166,7 +166,7 @@ function printCartFooter () {
 
       <!-- prijs -->
       <div class='col-1'>
-        <button class='btn btn-success'>Buy</button>
+        <button class='btn btn-success' " . returnDisabledIfCartEmpty() . ">Buy</button>
       </div>
 
       <!-- aantal -->
@@ -176,12 +176,12 @@ function printCartFooter () {
 
       <!-- totaal -->
       <div class='col-2'>
-          <p>Totaal: €" . getTotalCartPrice() . "</p>
+          <p id='cart-totaal-prijs'>Totaal: €" . getTotalCartPrice() . "</p>
       </div>
 
       <!-- remove -->
       <div class='col-2'>
-        <button class='btn btn-danger'><i class='fas fa-trash'></i> Empty cart</button>
+        <button class='btn btn-danger'  onclick='emptyCart()' " . returnDisabledIfCartEmpty() . "><i class='fas fa-trash'></i> Empty cart</button>
       </div>
     </div>
     ");
@@ -195,6 +195,15 @@ function isInCart ($id) {
     }
   }
   return false;
+}
+
+function returnDisabledIfCartEmpty () {
+  if (checkCart()) {
+    if (count($_SESSION['cart']) == 0) {
+      return 'disabled';
+    }
+  }
+  return '';
 }
 
 function getTotalCartPrice () {
