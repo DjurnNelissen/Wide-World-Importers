@@ -90,9 +90,9 @@ function getAverageRating ($productID) {
 function printReviews ($productID) {
   //setup sql
   $sql = "SELECT * FROM reviews r
-   LEFT JOIN people p on r.PersonID = p.PersonID
-    WHERE r.StockItemID = $productID
-     ORDER BY Rating desc";
+   				LEFT JOIN people p on r.PersonID = p.PersonID
+    			WHERE r.StockItemID = $productID
+     			ORDER BY Rating desc";
   //execute query
   $stmt = runQuery($sql);
   //get each row
@@ -104,7 +104,8 @@ function printReviews ($productID) {
     //print each review
 			if ($isFirstItem) {
 				$isFirstItem = false;
-				print ("<div class='card'>
+				print ("<h5>Reviews:</h5>
+								<div class='card'>
 									<div class='card-header'>
 										<b>" . $row['PreferredName'] . "</b><span class='rating-date'>" . $row['DateAdded'] . "</span>
 									</div>
@@ -123,9 +124,10 @@ function printReviews ($productID) {
   } else {
     //no reviews for this product
 		$today = date("Y-m-d, H:i");
-    print ("<div class='card'>
+    print ("<h5>Reviews:</h5>
+						<div class='card'>
 							<div class='card-header'>
-								<b>Your name here!</b><span class='rating-date'>" . $currentDate . "</span>
+								<b>Your name here!</b><span class='rating-date'>" . $today . "</span>
 							</div>
 							<div class='card-body'>
 								<div class='stars-outer'>
