@@ -91,14 +91,16 @@ function passwordNotEqual($a,$b){
 }
 
 //checks if the username already exist
-function usernameUsed($i){
+function usernameNotUsed($i){
 
-    $sql = "SELECT LogonName FROM people";
+    $sql = "SELECT LogonName FROM people WHERE LogonNamw = $i";
 
-    if($i != runQuery($sql)){
-        return true;
-    }else{
+   $stmt = runQuery($sql);
+
+    If($stmt->rowCount() > 0) {
         return false;
+    } else {
+        return true;
     }
 }
 
