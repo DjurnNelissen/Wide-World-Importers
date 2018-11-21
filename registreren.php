@@ -21,7 +21,8 @@ $postalcode = filter_input(INPUT_POST, 'postalcode', FILTER_SANITIZE_STRING);
 // Hashed password
 $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-        // query data stores data in the database
+if(usernameNotUsed($email) && passwordNotEqual($password, $passwordcheck)) {
+    // query data stores data in the database
         $sqlPeople = " INSERT INTO people (PersonID, Fullname, PreferredName, SearchName, IsPermittedToLogon, LogonName, HashedPassword, IsSystemUser, PhoneNumber, EmailAddress, LastEditedBy, ValidFrom, ValidTo)
         VALUES ((SELECT MAX(pe.PersonID) + 1 FROM people pe) , '$fullname', '$prefferedname', '" .  $prefferedname . " " .  $fullname . "', 1, '$email', '$hashedPassword', 1, '$phonenumber', '$email', 1, (SELECT CURDATE()), '9999-12-31 23:59:59')";
 
@@ -38,7 +39,7 @@ $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
         runQuery($sqlAccount);
 
-
+}
 ?>
 
 
