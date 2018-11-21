@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <?php
 include_once ('php/account.php');
 
@@ -26,18 +25,17 @@ if(usernameNotUsed($email) && passwordEqual($password, $passwordcheck)) {
         $sqlPeople = " INSERT INTO people (PersonID, Fullname, PreferredName, SearchName, IsPermittedToLogon, LogonName, HashedPassword, IsSystemUser, PhoneNumber, EmailAddress, LastEditedBy, ValidFrom, ValidTo)
         VALUES ((SELECT MAX(pe.PersonID) + 1 FROM people pe) , '$fullname', '$prefferedname', '" .  $prefferedname . " " .  $fullname . "', 1, '$email', '$hashedPassword', 1, '$phonenumber', '$email', 1, (SELECT CURDATE()), '9999-12-31 23:59:59')";
 
-        $stmt = runQuery($sqlPeople);
 
         $sqlCustomer = " INSERT INTO customers (CustomerID, CustomerName, BillToCustomerID, CustomerCategoryID, PrimaryContactPersonID, DeliveryMethodID, DeliveryCityID, PostalCityID, CreditLimit, AccountOpenedDate, StandardDiscountPercentage, IsStatementSent, IsOnCreditHold, PaymentDays, PhoneNumber, DeliveryAddressLine1, DeliveryAddressLine2, DeliveryPostalCode, LastEditedBy, ValidFrom, ValidTo)
         VALUES ((SELECT MAX(c.CustomerID) + 1 FROM customers c) , '$fullname', (SELECT MAX(cu.CustomerID) + 1 FROM customers cu), 9, (SELECT MAX(PersonID) FROM people), 1, 1, '$postalcode', 0, (SELECT CURDATE()), 0, 0, 0, 7, '$phonenumber', '$housenumber', '$street', '$postalcode', 1, (SELECT CURDATE()), '9999-12-31 23:59:59')";
 
-        runQuery($sqlCustomer);
-
         $sqlAccount = " INSERT INTO accounts (PersonID, CustomerID)
         VALUES ((SELECT MAX(PersonID) FROM people),
-        //(SELECT MAX(CustomerID) FROM customers))";
+        (SELECT MAX(CustomerID) FROM customers))";
 
-        runQuery($sqlAccount);
+        $stmt = runQuery($sqlPeople);
+        $stmt = runQuery($sqlCustomer);
+        $stmt = runQuery($sqlAccount);
 
 }
 ?>
