@@ -1,105 +1,141 @@
-<?php
-  session_start();
-  include_once('php/product.php');
-  include_once('php/review.php');
-?>
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="/css/main.css" media="screen" title="no title">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-    <title>WWI Webshop</title>
-  </head>
-  <body>
-    <?php include("Menu.php") ?>
-    <section class="container">
+<!-- include the header of the page -->
+<?php include("includes/page-head.php") ?>
+						<div class="row px-5 py-4">
+							<div class="card col shadow-sm">
+								<div class="row p-3">
+									<!-- Gegevens product uit url halen -->
+									<?php
+										$product = fetchProduct($_GET['id']);
+										$row = $product->fetch();
+									?>
 
-        <div class="row">
-        <figure class="col-sm-6">
-            <img  class="img-responsive" src="https://sc02.alicdn.com/kf/HTB1wYdzPFXXXXaXapXXq6xXFXXX2/USB-Flash-Drive-8-GB-Memory-Stick.jpg_350x350.jpg"/>
-            </figure>
-        <div class="col-sm-6">
-            <div class="row">
-                <?php
-                    $product = fetchProduct($_GET['id']);
-                    $row = $product->fetch(); ?>
-                <h1><?php print($row['StockItemName']); ?> </h1>
-                 </div>
-            <div class="row">
-                <p>Gewicht:  <?php print($row['TypicalWeightPerUnit']); ?></p>
-            </div>
-            <div class="row">
-                <p>Prijs: € <?php  print($row['RecommendedRetailPrice']); ?></p>
-            </div>
-            <div class="row">
-                <p>Belasting: <?php print($row['TaxRate']); ?> %</p>
-            </div>
-            <div class="row">
-                <p><?php if ($row['MarketingComments'] != "") {
-                  print("Beschrijving: " . $row['MarketingComments']);
-              }
-               ?></p>
-            </div>
+									<div class="row">
+										<div class="col">
+											<!-- Afbeelding product -->
+											<div class="row product-image">
+												<img class="img-fluid rounded img-thumbnail mx-auto" src="https://sc02.alicdn.com/kf/HTB1wYdzPFXXXXaXapXXq6xXFXXX2/USB-Flash-Drive-8-GB-Memory-Stick.jpg_350x350.jpg" />
+											</div>
 
-            <div class="row">
-                <p><?php
+											<!-- Miniatuur afbeelding product -->
+											<div class="row mx-auto">
+												<div class="col-4 product-image">
+													<img class="rounded img-thumbnail" src="https://sc02.alicdn.com/kf/HTB1wYdzPFXXXXaXapXXq6xXFXXX2/USB-Flash-Drive-8-GB-Memory-Stick.jpg_350x350.jpg" />
+												</div>
 
-              if ($row['ColorName'] != "") {
-                  print("Kleur: " . $row['ColorName']);
-              }
-              ?>
+												<div class="col-4 product-image">
+													<img class="rounded img-thumbnail" src="https://sc02.alicdn.com/kf/HTB1wYdzPFXXXXaXapXXq6xXFXXX2/USB-Flash-Drive-8-GB-Memory-Stick.jpg_350x350.jpg" />
+												</div>
 
-                </p>
-            </div>
-            <div class="row">
-                <p><?php
-              if ($row['Brand'] != "") {
-                  print("Merk: " . $row['Brand']);
-              }
-              ?>
-                </p>
-            </div>
-            <div class="row">
-                <form class="" action="../winkelwagen.php" method="post">
-            </div>
-            <div class="row">
-              <?php
-              if ($row['Size'] != "") {
-                  print("Maat: " . $row['Size']);
-              }
-               ?>
-            </div>
-          </div>
+												<div class="col-4 product-image">
+													<iframe frameborder="0" src="https://www.dailymotion.com/embed/video/x2ijrr4" allowfullscreen allow="autoplay">
 
+													</iframe>
+												</div>
+											</div>
+										</div>
 
-            <form class="" action="../winkelwagen.php" method="post">
-              <input type="number" name="ProductID" value="<?php print($_GET['id']) ?>" hidden>
-              <input type="number" name="quantity" value="1" min="1">
-              <input type="submit" name="addToCart" value="Add to Cart">
-            </form>
-            </div>
-        </div>
+										<div class="col">
+											<!-- Naam product -->
+											<div class="col-12">
+												<h1><?php print($row['StockItemName']); ?></h1>
+											</div>
 
-        <?php
-        print ("<div> Average rating: " . round(getAverageRating($_GET['id']),1) . " </div>");
-        printReviews($_GET['id']);
-        ?>
+											<!-- Merk product -->
+											<?php
+												if ($row['Brand']) {
+													print('<div class="col-12">
+																	 <label>Brand:</label>
+																	 <p>' . $row['Brand'] . '</p>
+																 </div>');
+												}
+											 ?>
 
-      </section>
+											<!-- Beschrijving product -->
+											<?php
+												if ($row['MarketingComments']) {
+													print('<div class="col-12">
+																	 <label>Description:</label>
+																	 <p>' . $row['MarketingComments'] . '</p>
+																 </div>');
+												}
+											 ?>
 
+											<!-- Gewicht product -->
+											<div class="col-12">
+												<label>Weight:</label>
+												<p><?php print($row['TypicalWeightPerUnit']); ?> Kg</p>
+											</div>
 
+											<!-- Voorraad product -->
+											<!--
+												if ($row['ProductStock']) {
+													print('<div class="col-12 my-4">
+																	 <span class="badge badge-light p-2">' . $row['ProductStock'] . ' in stock</span>
+																 </div>');
+												}
+											 -->
 
+											<!-- Prijs product -->
+											<div class="col-12">
+												<label>Price:</label>
+												<p><b>€ <?php print($row['RecommendedRetailPrice']); ?></b></p>
+											</div>
 
+											<!-- Maat product -->
+											<?php
+												if ($row['Size']) {
+													print('<div class="col-12">
+																	 <label>Size:</label><br>
+																	 <select class="custom-select col col-md-3 product-select">
+																		 <option value="' . $row['Size'] . '">' . $row['Size'] . '</option>
+																	 </select>
+																 </div>');
+												}
+											?>
 
+											<!-- Kleur product -->
+											<?php
+												if ($row['ColorName']) {
+													print('<div class="col-12 my-4">
+																	 <label>Color:</label><br>
+																	 <input type="checkbox" class="product-checkbox ' . $row['ColorName'] . '">
+																 </div>');
+												}
+											 ?>
 
+											<!-- Winkelwagen knop -->
+											<div class="row">
 
+												<form class="" action="winkelwagen.php" method="post">
+													<div class="form-group">
+														<input type="number" name="ProductID" value="<?php print($_GET['id']) ?>" hidden>
+														<label for="quantity">Quantity:</label>
+														<input type="number" name="quantity" id="quantity" class="form-control col-4 product-number" value="1" min="1">
 
+														<button type="submit" name="addToCart" class="btn btn-primary col-7"><i class="fas fa-shopping-cart"></i> Add to cart</button>
+													</div>
+												</form>
 
+											</div>
 
+											<!-- Specificaties product -->
+											<!--
+												if ($row['ProductSpecifications']) {
+													print('<div class="col-12">
+																	 <p>' . $row['ProductSpecifications'] . '</p>
+																 </div>');
+												}
+											 -->
 
+										</div><!-- .col -->
+									</div><!-- .row -->
+									<div class="row">
+										<?php include_once("review.php"); ?>
+									</div>
+								</div><!-- .row -->
+							</div><!-- .card -->
+						</div><!-- .row -->
 
-  </body>
-</html>
+<!-- include the footer of the page -->
+<?php include("includes/page-foot.php") ?>
