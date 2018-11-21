@@ -181,7 +181,7 @@ function printCartFooter () {
 
       <!-- remove -->
       <div class='col-2'>
-        <button class='btn btn-danger'><i class='fas fa-trash'></i> Empty cart</button>
+        <button class='btn btn-danger'  onclick='emptyCart()'><i class='fas fa-trash'></i> Empty cart</button>
       </div>
     </div>
     ");

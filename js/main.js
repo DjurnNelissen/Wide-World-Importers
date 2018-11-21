@@ -48,9 +48,6 @@ function setProductAmount (ID) {
       })
     });
   }
-
-
-
 }
 
 function login () {
@@ -88,6 +85,13 @@ function getProductPrice (ID, callback) {
 //returns the total price of the shopping cart
 function getCartTotalPrice (callback) {
   sendPostRequest('api/getCartTotalPrice.php','',callback);
+}
+
+//empties the cart
+function emptyCart() {
+  sendPostRequest('/api/emptyCart.php','',function (res) {
+    location.reload();
+  });
 }
 
 
