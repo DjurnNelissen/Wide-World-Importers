@@ -43,9 +43,12 @@ function setProductAmount (ID) {
       getProductPrice(ID, function (res) {
         document.getElementById(ID + '-total').innerHTML = "€ " + (res * amount).toFixed(2);
       })
-
+      getCartTotalPrice(function (res) {
+        document.getElementById('cart-totaal-prijs').innerHTML = "Totaal: € " + res;
+      })
     });
   }
+
 
 
 }
@@ -80,6 +83,11 @@ function login () {
 //returns the price of a product
 function getProductPrice (ID, callback) {
   sendPostRequest('api/getProductPrice.php', 'id=' + ID.toString() , callback);
+}
+
+//returns the total price of the shopping cart
+function getCartTotalPrice (callback) {
+  sendPostRequest('api/getCartTotalPrice.php','',callback);
 }
 
 
