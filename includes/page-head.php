@@ -1,14 +1,14 @@
 <?php
   session_start();
   include_once('php/product.php');
-?>
+?><!DOCTYPE HTML>
 <html>
 	<head>
-		<title>Home<!-- De pagina naam moet variabel worden --> | Wide World Importers</title>
-
+    <!-- De pagina naam moet variabel worden -->
+		<title>Home | Wide World Importers</title>
+    <meta charset="utf-8"></meta>
 		<!-- Bootstrap 4.1.3 -->
 		<link rel="stylesheet" href="css/bootstrap.min.css">
-
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 
 		<!-- Font Awesome 5.5 -->

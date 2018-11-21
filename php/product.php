@@ -69,7 +69,7 @@ function printProducts () {
 										<h5 class='card-title'>" . $row['StockItemName'] . "</h5>
 										<div class='row'>
 											<h5 class='card-title col-6'>€ " . $row['RecommendedRetailPrice'] . "</h5>
-											<button class='btn btn-success col-4' onclick='addToCart(" . $row['StockItemID'] . ", 1)'data-trigger='focus' data-toggle='popover' data-placement='top' data-content='Product added to cart'>
+											<button class='btn btn-success col-4' onclick=" . '"' . "addToCart(" . $row['StockItemID'] .  ", 1)" . '"' . "'data-trigger='focus' data-toggle='popover' data-placement='top' data-content='Product added to cart'>
 												<i class='fas fa-cart-plus'></i>
 											</button>
 										</div>
