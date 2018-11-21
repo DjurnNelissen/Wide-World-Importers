@@ -24,7 +24,11 @@ if (categoryID != 'all') {
 function addToCart (ID, amount) {
   sendPostRequest('api/addToCart.php', 'id=' + ID.toString() + '&amount=' + amount.toString(), function (res) {
     //do stuff with the response
+    setTimeout(function(){
 
+        $('.add-to-cart-button').popover('hide');
+
+      }, 5000);
   });
 }
 
@@ -110,3 +114,9 @@ function sendPostRequest (url, params, callback) {
 
   http.send(params);
 }
+
+$(function () {
+  $('.add-to-cart-button').popover({
+    container: 'body'
+  })
+})
