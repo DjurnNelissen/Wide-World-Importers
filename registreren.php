@@ -2,7 +2,7 @@
 <?php
 include_once ('php/account.php');
 
-session_start();
+//session_start();
 
 // Variable for user input
 $fullname = filter_input(INPUT_POST, 'fullname', FILTER_SANITIZE_STRING);
@@ -47,23 +47,15 @@ if(usernameNotUsed($email) && passwordEqual($password, $passwordcheck)) {
 <!--- HTML ---->
 <!------------->
 
-<html>
-  <head>
-    <meta charset="utf-8">
-
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-
-    <link rel="stylesheet" href="css/main.css" media="screen" title="no title" type="text/css">
-
-    <title>WWI Webshop</title>
-  </head>
-
-  <body>
-    <?php include("Menu.php") ?>
-      <br><br>
 
 
-        <div class="col form">
+<!-- include the header of the page -->
+<?php include("includes/page-head.php");
+ ?>
+						<div class="row px-5 py-4">
+							<div class="card col shadow-sm">
+								<div class="row p-3">
+									<div class="col form">
         <h1>Registreer je nu!</h1><br>
             <form method="post" action="registreren.php">
                 Volledige naam<br>
@@ -96,8 +88,9 @@ if(usernameNotUsed($email) && passwordEqual($password, $passwordcheck)) {
                 <input type="submit" value="Aanmelden">
 
             </form>
-
         </div>
-
-</body>
-</html>
+								</div>
+							</div>
+						</div>
+<!-- include the footer of the page -->
+<?php include("includes/page-foot.php") ?>
