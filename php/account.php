@@ -80,8 +80,8 @@ function setUser ($user, $pass) {
 }
 
 // checks whether the repeated password is the same as the password
-function passwordNotEqual($a,$b){
-    if($a != $b){
+function passwordEqual($a,$b){
+    if($a == $b){
         return true;
     } else {
         return false;
