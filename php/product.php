@@ -69,7 +69,7 @@ function printProducts () {
 										<h5 class='card-title'>" . $row['StockItemName'] . "</h5>
 										<div class='row'>
 											<h5 class='card-title col-6'>€ " . $row['RecommendedRetailPrice'] . "</h5>
-											<button class='btn btn-success col-4' onclick=" . '"' . "addToCart(" . $row['StockItemID'] .  ", 1)" . '"' . "'data-trigger='focus' data-toggle='popover' data-placement='top' data-content='Product added to cart'>
+											<button class='btn btn-success col-4' onclick=" . '"' . "addToCart(" . $row['StockItemID'] .  ", 1)" . '"' . " data-trigger='focus' data-toggle='popover' data-placement='top' data-content='Product added to cart'>
 												<i class='fas fa-cart-plus'></i>
 											</button>
 										</div>
@@ -77,7 +77,7 @@ function printProducts () {
                       <p class='stars-inner' style='width: " . getRatingPercentageRounded(getAverageRating($row['StockItemID'])) . "%'></p>
                     </section>
                     <p class='review-count'>" . getReviewCount($row['StockItemID']) . " review(s)</p>
-                    <p class='card-text supply-level'>" . getSupplyLevelDiv($row['StockItemID']) . "</p>
+                  " . getSupplyLevelDiv($row['StockItemID']) . "
 										<a href='product.php?id=" . $row['StockItemID'] . "' class='btn btn-primary col-12'>View</a>
 									</div>
 								</div>
@@ -122,7 +122,7 @@ function getSupplyLevelDiv ($id) {
     $supplyText = "100+";
   }
 
-  $div = "<div class='supply-box'><i class='fas fa-box' style='color: ";
+  $div = "<div class='supply-box mb-2'><i class='fas fa-box' style='color: ";
 
   if ($supply > 75) {
     //green good supply

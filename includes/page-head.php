@@ -2,7 +2,7 @@
   session_start();
   include_once('php/product.php');
 ?><!DOCTYPE HTML>
-<html>
+<html lang='en'>
 	<head>
     <!-- De pagina naam moet variabel worden -->
 		<title>Home | Wide World Importers</title>
