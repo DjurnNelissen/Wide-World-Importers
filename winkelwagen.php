@@ -20,6 +20,7 @@ include_once("php/cart.php");
 									<?php
 										//prints the HTML code to generate the items in the cart
 										printCart();
+                    printCartFooter()
 									?>
 								</div>
 							</div>

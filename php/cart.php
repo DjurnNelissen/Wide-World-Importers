@@ -137,7 +137,7 @@ function printCart () {
 								 <form class='' action='winkelwagen.php' method='post'>
 									 <input type='number' name='ID' value='" . $products[$i]['StockItemID'] . "' hidden>
 									 <input type='number' name='amount' value=" . (string)$products[$i]['amount'] . " hidden>
-									 <button type='submit' class='btn btn-danger' name='RemoveItem'><i class='fas fa-trash'></i> Remove all</button>
+									 <button type='submit' class='btn btn-danger' name='RemoveItem'><i class='fas fa-trash'></i> Remove</button>
 									</form>
 								</div>
 							</div>");
@@ -149,6 +149,44 @@ function printCart () {
 	}
 }
 
+
+//prints the total price, place order button and empty cart button
+function printCartFooter () {
+    print ("
+    <div class='row p-3 ml-2 cartItem'>
+      <!-- afbeelding -->
+      <div class='col-2'>
+      <img class='img-fluid rounded img-thumbnail' src='https://sc02.alicdn.com/kf/HTB1wYdzPFXXXXaXapXXq6xXFXXX2/USB-Flash-Drive-8-GB-Memory-Stick.jpg_350x350.jpg' />
+      </div>
+
+      <!-- naam -->
+      <div class='col-3'>
+
+      </div>
+
+      <!-- prijs -->
+      <div class='col-1'>
+        <button class='btn btn-success'>Buy</button>
+      </div>
+
+      <!-- aantal -->
+      <div class='col-2'>
+
+      </div>
+
+      <!-- totaal -->
+      <div class='col-2'>
+          <p>Totaal: €" . getTotalCartPrice() . "</p>
+      </div>
+
+      <!-- remove -->
+      <div class='col-2'>
+        <button class='btn btn-danger'><i class='fas fa-trash'></i> Empty cart</button>
+      </div>
+    </div>
+    ");
+}
+
 //checks if a product is in the cart
 function isInCart ($id) {
   if (checkCart()) {
@@ -157,6 +195,22 @@ function isInCart ($id) {
     }
   }
   return false;
+}
+
+function getTotalCartPrice () {
+  //make sure a cart exists
+  if (checkCart()) {
+    //get all products
+    $cart = fetchProductsFromCartAsArray();
+    //set total
+    $totaal = 0;
+    //calculate total
+    foreach ($cart as $key => $row) {
+      $totaal = $totaal + ($row['amount'] * $row['RecommendedRetailPrice']);
+    }
+    //return total
+    return $totaal;
+  }
 }
 
  ?>
