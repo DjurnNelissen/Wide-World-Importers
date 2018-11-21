@@ -7,6 +7,11 @@ include_once('php/account.php');
 <script src="js/review.js" charset="utf-8"></script>
 
 <div class="col-12 my-5 mx-3">
+  <h5><?php
+  if (productHasReviews($_GET['id'])) {
+      print("rating: " . getAverageRating($_GET['id'])  . " out of 5, ");
+  }
+   print(getReviewCount($_GET['id'])); ?> Review(s):</h5>
 	<?php printReviews($_GET['id']); ?>
 </div>
 

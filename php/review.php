@@ -80,7 +80,7 @@ function getAverageRating ($productID) {
   //get result
   $row = $stmt->fetch();
   if (isset($row['AVG(Rating)'])) {
-    return $row['AVG(Rating)'];
+    return round($row['AVG(Rating)'],1);
   }
   //return 0 by default
   return 0;
@@ -98,13 +98,13 @@ function printReviews ($productID) {
   //get each row
   if ($stmt->rowCount() > 0) {
 
-    $isFirstItem = true;
+
 
     while ($row = $stmt->fetch()) {
     //print each review
-			if ($isFirstItem) {
-				$isFirstItem = false;
-				print ("<h5>Reviews:</h5>
+
+
+				print ("
 								<div class='card'>
 									<div class='card-header'>
 										<b>" . $row['PreferredName'] . "</b><span class='rating-date'>" . $row['DateAdded'] . "</span>
@@ -119,7 +119,7 @@ function printReviews ($productID) {
 										<p class='card-title'>" . $row['Comment'] . "</p>
 									</div>
 								</div>");
-			}
+
 		}
   } else {
     //no reviews for this product
@@ -159,7 +159,7 @@ function productHasReviews ($id) {
   //execute query
   $stmt = runQuery($sql);
   //check if we found any reviews
-  if ($stmt->rowCount > 0) {
+  if ($stmt->rowCount() > 0) {
     //if so return true
     return true;
   }
