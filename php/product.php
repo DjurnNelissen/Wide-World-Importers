@@ -62,14 +62,14 @@ function printProducts () {
     $products = findProducts($_searchtekst,$category,1000);
     if ($products->rowCount() > 0) {
       while ($row = $products->fetch()) {
-			print ("<div class='col col-sm-6 col-md-4 col-lg-3 p-2'>
+			print ("<div class='col col-sm-6 col-md-4 col-lg-3 p-2 product-card'>
 								<div class='card shadow-sm'>
 									<img class='card-img-top product-card-img' src='https://sc02.alicdn.com/kf/HTB1wYdzPFXXXXaXapXXq6xXFXXX2/USB-Flash-Drive-8-GB-Memory-Stick.jpg_350x350.jpg' alt='Card image cap'>
 									<div class='card-body'>
 										<h5 class='card-title'>" . $row['StockItemName'] . "</h5>
 										<div class='row'>
 											<h5 class='card-title col-6'>€ " . $row['RecommendedRetailPrice'] . "</h5>
-											<button class='btn btn-success col-4' onclick='addToCart(" . $row['StockItemID'] . ", 1)'>
+											<button class='btn btn-success col-4' onclick='addToCart(" . $row['StockItemID'] . ", 1)'data-trigger='focus' data-toggle='popover' data-placement='top' data-content='Product added to cart'>
 												<i class='fas fa-cart-plus'></i>
 											</button>
 										</div>
