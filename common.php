@@ -387,16 +387,43 @@ function printCart () {
   $products = fetchProductsFromCartAsArray();
 
   if (count($products) > 0) {
-  for ($i=0; $i < count($products) ; $i++) {
-    print("<div class='col-md-12 cartItem'> ". $products[$i]['StockItemName']  ." - aantal <input min=1 id='" . $products[$i]['StockItemID'] . "' type='number' onChange='setProductAmount(" . $products[$i]['StockItemID'] .")' value='" . $products[$i]['amount'] . "'><form class='' action='winkelwagen.php' method='post'>
-      <input type='number' name='ID' value='" . $products[$i]['StockItemID'] . "' hidden>
-      <input type='number' name='amount' value=" . (string)$products[$i]['amount'] . " hidden>
-      <input type='submit' name='RemoveItem' value='Remove'>
-    </form>");
-  }
-} else {
-  print("Cart is empty");
-}
+		for ($i=0; $i < count($products) ; $i++) {
+			print("<div class='row p-3 ml-2 cartItem'>
+							 <!-- Afbeelding product -->
+							 <div class='col-2'>
+							 	 <img class='img-fluid rounded img-thumbnail' src='https://sc02.alicdn.com/kf/HTB1wYdzPFXXXXaXapXXq6xXFXXX2/USB-Flash-Drive-8-GB-Memory-Stick.jpg_350x350.jpg' />
+							 </div>
+
+							 <!-- Naam product -->
+							 <div class='col-4'>
+							 	 <span class='badge-pill badge-primary mr-2'>" . $products[$i]['amount'] . "</span><b><a clas='cart-title' href='product.php?id=" . $products[$i]['StockItemID'] . "'>" . $products[$i]['StockItemName'] . "</a></b>
+							 </div>
+
+							 <!-- Naam product -->
+							 <div class='col-3'>
+							 	 <p>€ " . $products[$i]['RecommendedRetailPrice'] * $products[$i]['amount'] . "</p>
+							 </div>
+
+							 <!-- Verwijder knoppen -->
+							 <div class='col-3'>
+								 <form class='' action='winkelwagen.php' method='post'>
+									 <input type='number' name='ID' value='" . $products[$i]['StockItemID'] . "' hidden>
+									 <input type='number' name='amount' value=" . (string)$products[$i]['amount'] . " hidden>
+									 <button type='submit' class='btn btn-danger' name='RemoveItem'><i class='fas fa-trash'></i> Remove all</button>
+									</form>
+									<form class='' action='winkelwagen.php' method='post'>
+										<input type='number' name='ID' value='" . $products[$i]['StockItemID'] . "' hidden>
+										<input type='number' name='amount' value=1 hidden>
+									 <button type='submit' class='btn btn-danger' name='RemoveItem'><i class='fas fa-trash'></i> Remove one</button>
+									</form>
+								</div>
+							</div>");
+		}
+	} else {
+  	print("<div class='alert alert-danger mx-auto my-5' role='alert'>
+  				   <strong>Oh snap!</strong> Your cart is empty. <i class='far fa-frown'></i>
+					 </div>");
+	}
 }
 
 //used  for index.php
@@ -417,10 +444,22 @@ function printProducts () {
     $products = findProducts($_searchtekst,$category,1000);
     if ($products->rowCount() > 0) {
       while ($row = $products->fetch()) {
-      print ("<div class='product'> <a href='product.php/?id=" . $row['StockItemID'] . "'>" .  $row['StockItemName'] .  "</a> </div>");
+			print ("<div class='col col-sm-6 col-md-4 col-lg-3 p-2'>
+								<div class='card shadow-sm'>
+									<img class='card-img-top' src='https://sc02.alicdn.com/kf/HTB1wYdzPFXXXXaXapXXq6xXFXXX2/USB-Flash-Drive-8-GB-Memory-Stick.jpg_350x350.jpg' alt='Card image cap'>
+									<div class='card-body'>
+										<h5 class='card-title'>" .  $row['StockItemName'] .  "</h5>
+										<p class='card-text'>" .  $row['StockItemName'] .  "</p>
+										<a href='product.php?id=" . $row['StockItemID'] . "' class='btn btn-primary'>View</a>
+									</div>
+								</div>
+  						</div>");
+      //print ("<div class='product'> <a href='product.php/?id=" . $row['StockItemID'] . "'>" .  $row['StockItemName'] .  "</a> </div>");
     }
   } else {
-    print("No products found");
+    print("<div class='alert alert-danger mx-auto my-5' role='alert'>
+  				   <strong>Oh snap!</strong> No products found. <i class='far fa-frown'></i>
+					 </div>");
   }
 }
 
@@ -433,9 +472,9 @@ function getProductCategories () {
 //prints the product categories
 function printProductCategories () {
   $stmt = getProductCategories();
-  print("<div class='productgroup'> <input type='radio' name='category' value='all' onchange=searchCategory('all')>all</div>");
+  print("<div class='p-2 productgroup'> <a href='#' value='all' onclick=searchCategory('all') class='px-3'>All</a></div>");
   while ($row = $stmt->fetch()) {
-    print("<div class='productgroup'> <input type='radio' name='category' value='" . $row['StockGroupID'] . "' onchange=searchCategory(" . $row['StockGroupID'] . ")>" . $row['StockGroupName'] . "</div>");
+    print("<div class='p-2 productgroup'> <a href='#' value='" . $row['StockGroupID'] . "' onclick=searchCategory(" . $row['StockGroupID'] . ") class='px-3'>" . $row['StockGroupName'] . "</a></div>");
   }
 }
 

@@ -1,24 +1,56 @@
-/* nav bar */
-.nav{
-    background-color: lightgrey;
-    justify-content: center;
-    height: 4rem;
-
+/* Navbar */
+nav {
+	background-color: white;
+	justify-content: center;
+	height: 4rem;
+	margin: 0 -15px;
 }
 
-.Search{
-    padding-top: 15px;
+.navbar-brand {
+	padding-top: 13px;
 }
 
-.ul{
-    padding-top: 10px;
+.nav-logo {
+	position: relative;
+	height: 100%;
 }
 
-.navbar-brand{
-    padding-top: 13px;
+.btn-nav-search {
+	height: calc(2.25rem + 2px);
 }
 
+/* Sidebar */
+.sidebar {
+	padding: 3rem 0;
+}
 
+.sidebar-title {
+	text-align: center;
+	border-top: 1px solid lightgrey;
+	border-bottom: 1px solid lightgrey;
+}
+
+.productgroup {
+	border-bottom: 1px solid lightgrey;
+}
+
+.productgroup:first-child {
+	border-top: 1px solid lightgrey;
+}
+
+.ul {
+	padding-top: 10px;
+}
+
+/* Page */
+.page-content {
+	box-shadow: inset 0 .125rem .25rem rgba(0,0,0,.075);
+	background-color: #eef0f2;
+}
+
+.product-card-img {
+	border-bottom: 1px solid #dfdfdf;
+}
 
 /* registreer pag */
 
@@ -27,3 +59,34 @@
     padding-left: 100px;
 }
 
+.stars-outer {
+  position: relative;
+  display: inline-block;
+}
+
+.stars-inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 0;
+}
+
+.stars-outer::before {
+  content: "\f005 \f005 \f005 \f005 \f005";
+  font-family: 'Font Awesome 5 free';
+  font-weight: 900;
+  color: #ccc;
+}
+
+.stars-inner::before {
+  content: "\f005 \f005 \f005 \f005 \f005";
+  font-family: 'Font Awesome 5 free';
+  font-weight: 900;
+  color: #f8ce0b;
+}
+
+.supply-box > span {
+	margin-left: 5px;
+}
