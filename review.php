@@ -7,12 +7,26 @@ include_once('php/account.php');
 <script src="js/review.js" charset="utf-8"></script>
 
 <div class="col-12 my-5 mx-3">
-  <h5> <?php print(getAverageRating($_GET['id'])) ?> / 5 stars </h5>
-  <div class='stars-outer'>
-    <div class='stars-inner' style='width:<?php print(getRatingPercentageRounded(getAverageRating($_GET['id'])) . "%") ?>'>
+  <div class="row my-2 px-2">
+    <div class="col-2">
+      <h5> <?php print(getAverageRating($_GET['id'])) ?> / 5 stars </h5>
+    </div>
+    <div class="col-2">
+      <div class='stars-outer'>
+        <div class='stars-inner' style='width:<?php print(getRatingPercentageRounded(getAverageRating($_GET['id'])) . "%") ?>'>
+        </div>
+      </div>
+    </div>
+    <div class="col-2">
+      <h5>  Review(s): <?php print(getReviewCount($_GET['id'])) ?> </h5>
+    </div>
+    <div class="col-6">
+
     </div>
   </div>
-  <h5>  Review(s): <?php print(getReviewCount($_GET['id'])) ?> </h5>
+
+
+
 	<?php printReviews($_GET['id']); ?>
 </div>
 
