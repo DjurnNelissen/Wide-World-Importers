@@ -1,30 +1,48 @@
-//search products based on category
-function searchCategory (categoryID) {
-  //get the current url
+function searchProducts (cat) {
+  
+  var order = document.getElementById('orderSelect').value;
+  var search = document.getElementById('search').value;
+
   var url = new URL(window.location.href);
 
   var query_string = url.search;
   //gets the params from the url
   var search_params = new URLSearchParams(query_string);
-  //remove the current category
-  search_params.delete('c');
 
-if (categoryID != 'all') {
-  //add category ID to params unless we want to search for all categories
-  search_params.append('c',categoryID);
-}
+  search_params.delete('q');
+  if (search != '') {
+    search_params.append('q',search);
+  }
+
+  search_params.delete('o');
+  if (order != '') {
+    search_params.append('o', order);
+  }
+
+  if (cat) {
+    search_params.delete('c');
+    if (cat != 'all') {
+      search_params.append('c', cat);
+    }
+  }
+
   url.search = search_params.toString();
   //convert to string
   var new_url = url.toString();
   //navigate to new url
   location.href = new_url;
+
 }
 
 //adds a product to the cart
 function addToCart (ID, amount) {
   sendPostRequest('api/addToCart.php', 'id=' + ID.toString() + '&amount=' + amount.toString(), function (res) {
     //do stuff with the response
+    setTimeout(function(){
 
+        $('.add-to-cart-button').popover('hide');
+
+      }, 5000);
   });
 }
 
@@ -43,11 +61,11 @@ function setProductAmount (ID) {
       getProductPrice(ID, function (res) {
         document.getElementById(ID + '-total').innerHTML = "€ " + (res * amount).toFixed(2);
       })
-
+      getCartTotalPrice(function (res) {
+        document.getElementById('cart-totaal-prijs').innerHTML = "Totaal: € " + res;
+      })
     });
   }
-
-
 }
 
 function login () {
@@ -82,6 +100,18 @@ function getProductPrice (ID, callback) {
   sendPostRequest('api/getProductPrice.php', 'id=' + ID.toString() , callback);
 }
 
+//returns the total price of the shopping cart
+function getCartTotalPrice (callback) {
+  sendPostRequest('api/getCartTotalPrice.php','',callback);
+}
+
+//empties the cart
+function emptyCart() {
+  sendPostRequest('/api/emptyCart.php','',function (res) {
+    location.reload();
+  });
+}
+
 
 function sendPostRequest (url, params, callback) {
   var http = new XMLHttpRequest();
@@ -98,3 +128,9 @@ function sendPostRequest (url, params, callback) {
 
   http.send(params);
 }
+
+$(function () {
+  $('.add-to-cart-button').popover({
+    container: 'body'
+  })
+})

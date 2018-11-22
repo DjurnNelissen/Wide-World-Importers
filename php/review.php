@@ -80,7 +80,7 @@ function getAverageRating ($productID) {
   //get result
   $row = $stmt->fetch();
   if (isset($row['AVG(Rating)'])) {
-    return $row['AVG(Rating)'];
+    return round($row['AVG(Rating)'],1);
   }
   //return 0 by default
   return 0;
@@ -90,21 +90,22 @@ function getAverageRating ($productID) {
 function printReviews ($productID) {
   //setup sql
   $sql = "SELECT * FROM reviews r
-   LEFT JOIN people p on r.PersonID = p.PersonID
-    WHERE r.StockItemID = $productID
-     ORDER BY Rating desc";
+   				LEFT JOIN people p on r.PersonID = p.PersonID
+    			WHERE r.StockItemID = $productID
+     			ORDER BY Rating desc";
   //execute query
   $stmt = runQuery($sql);
   //get each row
   if ($stmt->rowCount() > 0) {
 
-    $isFirstItem = true;
+
 
     while ($row = $stmt->fetch()) {
     //print each review
-			if ($isFirstItem) {
-				$isFirstItem = false;
-				print ("<div class='card'>
+
+
+				print ("
+								<div class='card mb-1'>
 									<div class='card-header'>
 										<b>" . $row['PreferredName'] . "</b><span class='rating-date'>" . $row['DateAdded'] . "</span>
 									</div>
@@ -118,14 +119,15 @@ function printReviews ($productID) {
 										<p class='card-title'>" . $row['Comment'] . "</p>
 									</div>
 								</div>");
-			}
+
 		}
   } else {
     //no reviews for this product
 		$today = date("Y-m-d, H:i");
-    print ("<div class='card'>
+    print ("
+						<div class='card'>
 							<div class='card-header'>
-								<b>Your name here!</b><span class='rating-date'>" . $currentDate . "</span>
+								<b>Your name here!</b><span class='rating-date'>" . $today . "</span>
 							</div>
 							<div class='card-body'>
 								<div class='stars-outer'>
@@ -157,7 +159,7 @@ function productHasReviews ($id) {
   //execute query
   $stmt = runQuery($sql);
   //check if we found any reviews
-  if ($stmt->rowCount > 0) {
+  if ($stmt->rowCount() > 0) {
     //if so return true
     return true;
   }
