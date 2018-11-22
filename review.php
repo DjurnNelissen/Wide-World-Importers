@@ -39,7 +39,7 @@ include_once('php/account.php');
 			<form class="form-group" action="" method="post">
 				<h5 class='card-title'><span id='givenRating'>0</span>/5 stars</h5>
 
-				<input type="range" class="form-control-range my-3 mx-auto" id="formControlRange" name="rating" min="1" max="5" step="0.5" onchange="updateRating()" value="1" <?php printDisabled($_GET['id']); ?>>
+				<input type="range" class="form-control-range my-3 mx-auto" id="formControlRange" name="rating" min="0" max="5" step="0.5" onchange="updateRating()" value="0" <?php printDisabled($_GET['id']); ?>>
 
 				<textarea class="form-control" name="comment" rows="5" cols="30" id="reviewComment" <?php printDisabled($_GET['id']); ?>></textarea>
 

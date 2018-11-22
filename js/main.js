@@ -1,6 +1,5 @@
 function searchProducts (cat) {
-  console.log(cat);
-
+  
   var order = document.getElementById('orderSelect').value;
   var search = document.getElementById('search').value;
 
