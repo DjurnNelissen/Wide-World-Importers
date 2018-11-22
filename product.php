@@ -103,6 +103,12 @@
 																 </div>');
 												}
 											 ?>
+											 <!-- voorraad -->
+											 <?php
+											 	print("<div class='col-12 my-2'>
+													" . getSupplyLevelDiv($row['StockItemID']) . "
+												</div>")
+											  ?>
 
 											<!-- Winkelwagen knop -->
 											<form action="winkelwagen.php" method="post">
