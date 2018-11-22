@@ -11,6 +11,7 @@ function fetchProduct($id) {
   return runQuery($sql);
 }
 
+/*
 //returns products based on name and categories (categories being a stockgroupID array)
 function findProducts ($text, $category, $limit) {
     $sql =   "SELECT * FROM stockitems";
@@ -36,6 +37,71 @@ function findProducts ($text, $category, $limit) {
 
     return runQuery($sql);
 }
+*/
+
+//searches for products in the database
+function findProducts ($name, $category, $order) {
+
+  //create variable to store final sql string
+  $sqlFinal  = "SELECT * FROM stockitems";
+
+  //create an empty array to store parameters
+  $params = [];
+
+  //adds the where if needed
+  if (isset($name) || isset($category)) {
+    $sqlFinal = $sqlFinal . " WHERE";
+  }
+
+  //adds the query for the name
+  if (isset($name)) {
+      //splits the name at spaces
+      $words = explode(' ',$name);
+      $sql = '';
+
+      //adds each seperate word as a LIKE %word%
+      for ($i=0; $i < count($words) ; $i++) {
+        $sql = $sql . " StockItemName LIKE ?";
+        array_push($params, "%" . $words[$i] . "%" );
+        if ($i != count($words) - 1) {
+          $sql = $sql . " AND";
+        }
+      }
+
+      $sqlFinal = $sqlFinal . $sql;
+  }
+
+  //adds the category
+  if (isset($category)) {
+    if (isset($name)) {
+      $sqlFinal = $sqlFinal . " AND";
+    }
+
+    $sqlFinal = $sqlFinal . " StockItemID IN (SELECT StockItemID FROM stockitemstockgroups WHERE StockGroupID = ?)";
+    array_push($params, $category);
+  }
+
+  //adds the order by
+  if (isset($order)) {
+    $sql = '';
+    if ($order == 'priceA') {
+      $sql = ' ORDER BY RecommendedRetailPrice ASC';
+    } else if ($order == 'priceD') {
+      $sql = ' ORDER BY RecommendedRetailPrice DESC';
+    } else if ($order == 'nameA') {
+      $sql = ' ORDER BY StockItemName ASC';
+    } else if ($order == 'nameZ') {
+      $sql = ' ORDER BY StockItemName DESC';
+    }
+
+    $sqlFinal = $sqlFinal . $sql;
+  } else {
+    $sqlFinal = $sqlFinal . " ORDER BY StockItemID DESC";
+  }
+
+  //returns the query result
+  return runQueryWithParams($sqlFinal, $params);
+}
 
 
 //runs and SQL query to fetch all categories
@@ -56,10 +122,10 @@ function printProducts () {
    if (isset($_GET['c'])) {
     $category = $_GET['c'];
    } else {
-     $category = 'all';
+     $category = null;
    }
    //finds for all products
-    $products = findProducts($_searchtekst,$category,1000);
+    $products = findProducts($_searchtekst,$category, null);
     if ($products->rowCount() > 0) {
       while ($row = $products->fetch()) {
 			print ("<div class='col col-sm-6 col-md-4 col-lg-3 p-2 product-card'>

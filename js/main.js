@@ -20,6 +20,28 @@ if (categoryID != 'all') {
   location.href = new_url;
 }
 
+function sortSearch () {
+  var s = document.getElementById('orderSelect').value;
+
+  var url = new URL(window.location.href);
+
+  var query_string = url.search;
+  //gets the params from the url
+  var search_params = new URLSearchParams(query_string);
+  //remove the current category
+  search_params.delete('o');
+
+if (s != '') {
+  //add category ID to params unless we want to search for all categories
+  search_params.append('o',s);
+}
+  url.search = search_params.toString();
+  //convert to string
+  var new_url = url.toString();
+  //navigate to new url
+  location.href = new_url;
+}
+
 //adds a product to the cart
 function addToCart (ID, amount) {
   sendPostRequest('api/addToCart.php', 'id=' + ID.toString() + '&amount=' + amount.toString(), function (res) {
