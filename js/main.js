@@ -30,7 +30,7 @@ function searchProducts (cat) {
     }
   }
 
-
+  search_params.delete('id');
 
   url.search = search_params.toString();
   //convert to string
