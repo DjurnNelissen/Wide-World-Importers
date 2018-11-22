@@ -52,6 +52,7 @@ function userHasReviewedProduct ($productID) {
 function submitReview ($productID, $rating, $comment) {
   //checks if the user is logged in
   if (checkLogin()) {
+      
       if (userHasPurchashedProduct($productID) && ! userHasReviewedProduct($productID)) {
         $id = getPersonID();
         //check if the ID didnt get an error
