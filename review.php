@@ -35,11 +35,23 @@ include_once('php/account.php');
 		<div class='card-header'>
 			<b>Write your own review:</b>
 		</div>
+    <!-- alert for already reviewed -->
+    <div class="alert alert-success mx-5 my-2" role="alert" <?php if (! userHasReviewedProduct($_GET['id']) ||  ! userHasPurchashedProduct($_GET['id'])) print('hidden') ?>>
+      You have already reviewed this product.
+    </div>
+    <!-- alert for login -->
+    <div class="alert alert-danger mx-5 my-2" role="alert" <?php if (checkLogin()) print('hidden') ?>>
+      You need to login to review this product.
+    </div>
+    <!-- alert for not purchased -->
+    <div class="alert alert-danger mx-5 my-2" role="alert" <?php if (userHasPurchashedProduct($_GET['id']) || ! checkLogin()) print('hidden') ?>>
+      You need to have purchased this product, before you can review it.
+    </div>
 		<div class='card-body'>
 			<form class="form-group" action="" method="post">
 				<h5 class='card-title'><span id='givenRating'>0</span>/5 stars</h5>
 
-				<input type="range" class="form-control-range my-3 mx-auto" id="formControlRange" name="rating" min="1" max="5" step="0.5" onchange="updateRating()" value="1" <?php printDisabled($_GET['id']); ?>>
+				<input type="range" class="form-control-range my-3 mx-auto" id="formControlRange" name="rating" min="0" max="5" step="0.5" onchange="updateRating()" value="0" <?php printDisabled($_GET['id']); ?>>
 
 				<textarea class="form-control" name="comment" rows="5" cols="30" id="reviewComment" <?php printDisabled($_GET['id']); ?>></textarea>
 

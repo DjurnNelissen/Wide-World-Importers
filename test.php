@@ -1,10 +1,6 @@
 <?php
   session_start();
-  include_once('php/account.php');
-  include_once('php/order.php');
-  include_once('php/db.php');
+  include_once('php/product.php');
 
-  setUser('kaylaw@wideworldimporters.com','123');
-
-  printOrders();
+  DumpSQl(findProducts2('Dev Mug WHITE', null, 'priceD'));
  ?>

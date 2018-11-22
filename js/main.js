@@ -1,23 +1,45 @@
-//search products based on category
-function searchCategory (categoryID) {
-  //get the current url
+function searchProducts (cat) {
+  var orderElement = document.getElementById('orderSelect');
+
+  if (orderElement != null) {
+    var order = orderElement.value;
+  }
+
+  var search = document.getElementById('search').value;
+
   var url = new URL(window.location.href);
 
   var query_string = url.search;
   //gets the params from the url
   var search_params = new URLSearchParams(query_string);
-  //remove the current category
-  search_params.delete('c');
 
-if (categoryID != 'all') {
-  //add category ID to params unless we want to search for all categories
-  search_params.append('c',categoryID);
-}
+  search_params.delete('q');
+  if (search != '') {
+    search_params.append('q',search);
+  }
+
+  search_params.delete('o');
+  if (order != '' && order != null) {
+    search_params.append('o', order);
+  }
+
+  if (cat) {
+    search_params.delete('c');
+    if (cat != 'all') {
+      search_params.append('c', cat);
+    }
+  }
+
+  search_params.delete('id');
+
   url.search = search_params.toString();
   //convert to string
+  url.pathname = '/index.php';
   var new_url = url.toString();
+
   //navigate to new url
   location.href = new_url;
+
 }
 
 //adds a product to the cart

@@ -176,7 +176,7 @@ function printCartFooter () {
 
       <!-- totaal -->
       <div class='col-2'>
-          <p id='cart-totaal-prijs'>Totaal: €" . getTotalCartPrice() . "</p>
+          <p id='cart-totaal-prijs'>Total: €" . getTotalCartPrice() . "</p>
       </div>
 
       <!-- remove -->

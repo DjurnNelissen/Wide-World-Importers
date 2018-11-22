@@ -7,10 +7,10 @@
 	</button>
 
 	<div class="collapse navbar-collapse" id="navbarSupportedContent">
-		<form class="form-inline my-2 my-lg-0 mr-auto" action="index.php" method="get">
-			<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="q" value="<?php if (isset($_GET['q'])) print($_GET['q']) ?>">
-			<button class="btn btn-outline-info my-2 my-sm-0 btn-nav-search" type="submit"><i class="fas fa-search"></i></button>
-		</form>
+
+		<input id='search' class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="q" value="<?php if (isset($_GET['q'])) print($_GET['q']) ?>">
+		<button class="btn btn-outline-info my-2 my-sm-0 btn-nav-search" type="button" onclick="searchProducts()"><i class="fas fa-search"></i></button>
+
 
 		<ul class="navbar-nav">
 			<li class="nav-item active">
