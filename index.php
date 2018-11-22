@@ -5,10 +5,10 @@
 								<div class="row p-3">
 									<select id='orderSelect' class="" name="order" onchange='searchProducts()'>
 										<option value="">Sort</option>
-										<option value="nameA">Name A-Z</option>
-										<option value="nameZ">Name Z-A</option>
-										<option value="priceA">Price ascending</option>
-										<option value="priceD">Price descending</option>
+										<option value="nameA" <?php printSelectedOption('nameA') ?> >Name A-Z</option>
+										<option value="nameZ" <?php printSelectedOption('nameZ') ?> >Name Z-A</option>
+										<option value="priceA" <?php printSelectedOption('priceA') ?> >Price ascending</option>
+										<option value="priceD" <?php printSelectedOption('priceD') ?> >Price descending</option>
 									</select>
 								</div>
 								<div class="row p-3">

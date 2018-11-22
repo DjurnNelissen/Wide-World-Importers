@@ -124,8 +124,16 @@ function printProducts () {
    } else {
      $category = null;
    }
+
+   //default order
+   if (isset($_GET['o'])) {
+     $order = $_GET['o'];
+   } else {
+     $order = null;
+   }
+
    //finds for all products
-    $products = findProducts($_searchtekst,$category, null);
+    $products = findProducts($_searchtekst,$category, $order);
     if ($products->rowCount() > 0) {
       while ($row = $products->fetch()) {
 			print ("<div class='col col-sm-6 col-md-4 col-lg-3 p-2 product-card'>
@@ -208,6 +216,14 @@ function getSupplyLevelDiv ($id) {
 
   return $div;
 
+}
+
+function printSelectedOption ($or) {
+  if (isset($_GET['o'])) {
+    if ($_GET['o'] == $or) {
+      print('selected');
+    }
+  }
 }
 
  ?>
