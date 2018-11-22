@@ -160,9 +160,9 @@ function printProducts () {
 //prints the product categories
 function printProductCategories () {
   $stmt = getProductCategories();
-  print("<div class='p-2 productgroup'> <a href='#' value='all' onclick=searchCategory('all') class='px-3'>All</a></div>");
+  print("<div class='p-2 productgroup'> <a href='#' onclick='searchProducts(" . '"all"' . ")' class='px-3'>All</a></div>");
   while ($row = $stmt->fetch()) {
-    print("<div class='p-2 productgroup'> <a href='#' value='" . $row['StockGroupID'] . "' onclick=searchCategory(" . $row['StockGroupID'] . ") class='px-3'>" . $row['StockGroupName'] . "</a></div>");
+    print("<div class='p-2 productgroup'> <a href='#' onclick='searchProducts(" . $row['StockGroupID'] . ")' class='px-3'>" . $row['StockGroupName'] . "</a></div>");
   }
 }
 

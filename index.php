@@ -3,7 +3,7 @@
 						<div class="row px-5 py-4">
 							<div class="card col shadow-sm">
 								<div class="row p-3">
-									<select id='orderSelect' class="" name="order" onchange='sortSearch()'>
+									<select id='orderSelect' class="" name="order" onchange='searchProducts()'>
 										<option value="">Sort</option>
 										<option value="nameA">Name A-Z</option>
 										<option value="nameZ">Name Z-A</option>
