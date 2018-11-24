@@ -1,7 +1,10 @@
+<!-- include libs -->
 <?php
-  //load libs
-  include("includes/page-head.php");
-include_once("php/cart.php");
+	$title = "Cart";
+	$stylesheet = "css/cart.css";
+	$sidebar = FALSE;
+	include("includes/page-head.php");
+	include_once("php/cart.php");
 
   //handle adding items to cart
   if (isset($_POST['addToCart'])) {
