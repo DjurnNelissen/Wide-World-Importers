@@ -16,11 +16,16 @@
             <div class="accordion col-12" id="accordionExample">
                 <div class="card">
                     <div class="card-header" id="headingOne">
-                        <h5 class="mb-0">
-                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                Collapsible Group Item #1
+                        <div class="row">
+                        <h6 class="col-2">15</h6>
+                        <h6 class="col-3"> 03-01-1997</h6>
+                        <h6 class="col-3">97,12</h6>
+                        <h6 class="col-2">Verwerkt</h6>
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                Open
                             </button>
                         </h5>
+                        </div>
                     </div>
 
                     <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
