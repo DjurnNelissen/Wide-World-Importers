@@ -21,10 +21,10 @@
                         <h6 class="col-3 my-auto"> 03-01-1997</h6>
                         <h6 class="col-3 my-auto">€97,12</h6>
                         <h6 class="col-3 my-auto">Verwerkt</h6>
-                        <button class="btn btn-link col-1" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        <button class="btn btn-link col-1" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="True" aria-controls="collapseOne">
                                 Open
                             </button>
-                        </h5>
+
                         </div>
                     </div>
 
@@ -41,11 +41,10 @@
                         <h6 class="col-3 my-auto">03-05-2017</h6>
                         <h6 class="col-3 my-auto">€97,23</h6>
                         <h6 class="col-3 my-auto">Verwerkt</h6>
-                        <div class="col-1"><h6 class="mb-0">
-                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                v
+                            <button class="btn btn-link col-1 collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                Open
                             </button>
-                            </h6></div>
+
                 </div>
                     </div>
                     <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
