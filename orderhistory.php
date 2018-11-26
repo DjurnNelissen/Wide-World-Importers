@@ -10,6 +10,9 @@
     <div class="card col shadow-sm">
         <div class="row p-3">
             <h1>Orderhistory</h1>
+        </div>
+
+        <div class="row p-3">
             <div class="accordion" id="accordionExample">
                 <div class="card">
                     <div class="card-header" id="headingOne">
@@ -55,7 +58,7 @@
                     </div>
                 </div>
             </div>
-
+            </div>
 
 
 
