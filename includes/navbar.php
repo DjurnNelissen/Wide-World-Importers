@@ -13,15 +13,28 @@
 
 
 		<ul class="navbar-nav">
-			<li class="nav-item active">
+			<li id="Home" class="nav-item">
 				<a class="nav-link" href="index.php"><i class="fas fa-store"></i> Home<span class="sr-only">(current)</span></a>
 			</li>
-			<li class="nav-item">
+			<li id="Cart" class="nav-item">
 				<a class="nav-link" href="winkelwagen.php"><i class="fas fa-shopping-cart"></i> Cart</a>
 			</li>
-			<li class="nav-item">
+			<li id="Login" class="nav-item">
 				<a class="nav-link" href="login.php"><i class="fas fa-user"></i> Login</a>
 			</li>
 		</ul>
 	</div>
 </nav>
+<script>
+	var page = "<?php echo $title ?>";
+	if (page == "Home"){
+		var navItem = document.getElementById("Home");
+		navItem.className += " " + "active";
+	} else if (page == "Cart"){
+		var navItem = document.getElementById("Cart");
+		navItem.className += " " + "active";
+	} else if (page == "Login"){
+		var navItem = document.getElementById("Login");
+		navItem.className += " " + "active";
+	}
+</script>

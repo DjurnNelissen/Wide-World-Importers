@@ -1,6 +1,10 @@
 function searchProducts (cat) {
-  
-  var order = document.getElementById('orderSelect').value;
+  var orderElement = document.getElementById('orderSelect');
+
+  if (orderElement != null) {
+    var order = orderElement.value;
+  }
+
   var search = document.getElementById('search').value;
 
   var url = new URL(window.location.href);
@@ -15,7 +19,7 @@ function searchProducts (cat) {
   }
 
   search_params.delete('o');
-  if (order != '') {
+  if (order != '' && order != null) {
     search_params.append('o', order);
   }
 
@@ -26,9 +30,13 @@ function searchProducts (cat) {
     }
   }
 
+  search_params.delete('id');
+
   url.search = search_params.toString();
   //convert to string
+  url.pathname = '/index.php';
   var new_url = url.toString();
+
   //navigate to new url
   location.href = new_url;
 
