@@ -37,10 +37,10 @@
                 <div class="card">
                     <div class="card-header" id="headingTwo">
                         <div class="row">
-                        <h6 class="col-2">15</h6>
-                        <h6 class="col-3">03-05-2017</h6>
-                        <h6 class="col-3">€97,23</h6>
-                        <h6 class="col-3">Verwerkt</h6>
+                        <h6 class="col-2 my-auto">15</h6>
+                        <h6 class="col-3 my-auto">03-05-2017</h6>
+                        <h6 class="col-3 my-auto">€97,23</h6>
+                        <h6 class="col-3 my-auto">Verwerkt</h6>
                         <div class="col-1"><h6 class="mb-0">
                             <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                                 v
