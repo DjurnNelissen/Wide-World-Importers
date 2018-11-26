@@ -127,13 +127,13 @@ function getLastOrderID () {
 
 //gets the weight of your order
 function getOrderWeight () {
+  $total = 0;
   if (checkCart()) {
-    $total = 0;
     foreach ($_SESSION['cart'] as $key => $value) {
-      $total = $total + getProductWeight($key);
+      $total = $total + (getProductWeight($value['ID']) * $value['amount']);
     }
-    return $total;
   }
+  return $total;
 }
 
 
