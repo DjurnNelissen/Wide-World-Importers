@@ -11,7 +11,7 @@ function fetchProduct($id) {
   return runQuery($sql);
 }
 
-/*
+/* OLD FUNCTION
 //returns products based on name and categories (categories being a stockgroupID array)
 function findProducts ($text, $category, $limit) {
     $sql =   "SELECT * FROM stockitems";
@@ -218,12 +218,53 @@ function getSupplyLevelDiv ($id) {
 
 }
 
+//used for the dropdown in index.php
 function printSelectedOption ($or) {
   if (isset($_GET['o'])) {
     if ($_GET['o'] == $or) {
       print('selected');
     }
   }
+}
+
+//used to show current category, sorted and stuff in index.html
+function printNowShowing ($get) {
+
+  //order
+  if (isset($get['c'])) {
+    print(" Category: " .  getCategoryName($get['c']));
+  }
+
+  //query
+  if (isset($get['q'])) {
+    print(" Search: '" . $get['q'] . "'");
+  }
+
+
+
+  //category
+  if (isset($get['o'])) {
+    if ($get['o'] == 'priceA') {
+      print(' Ordered by price ascending');
+    } else if ($get['o'] == 'priceD') {
+      print(' Ordered by price descending');
+    } else if ($get['o'] == 'nameA') {
+      print(' Ordered by name A-Z');
+    } else if ($get['o'] == 'nameZ') {
+      print(' Ordered by name Z-A');
+    }
+  }
+}
+
+//return the name of the category with the id
+function getCategoryName($id) {
+  $sql = "SELECT * FROM stockgroups WHERE StockGroupID = ?";
+
+  $stmt = runQueryWithParams($sql, array($id));
+
+  $row = $stmt->fetch();
+
+  return $row['StockGroupName'];
 }
 
  ?>
