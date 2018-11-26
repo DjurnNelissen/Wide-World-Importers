@@ -48,39 +48,44 @@ if(usernameNotUsed($email) && passwordEqual($password, $passwordcheck)) {
 
 
 <!-- include the header of the page -->
-<?php include("includes/page-head.php");
- ?>
+<?php
+    $title = "Product";
+    $stylesheet = "css/product.css";
+    $sidebar = TRUE;
+    include("includes/page-head.php");
+?>
+
 						<div class="row px-5 py-4">
 							<div class="card col shadow-sm">
 								<div class="row p-3">
 									<div class="col form">
-        <h1>Registreer je nu!</h1><br>
+        <h1>Register now!</h1><br>
             <form method="post" action="registreren.php">
-                Volledige naam<br>
+                Fullname<br>
                 <input type="text" name="fullname" size="30" required><br><br>
 
-                Roepnaam<br>
+                Preffered name<br>
                 <input type="text" name="prefferedname" size="30" required><br><br>
 
-                Straat + Huisnr<br>
+                Street + Housenumber<br>
                 <input type="text" name="street" size="30" required>
                 <input type="text" name="housenumber" size="4" required><br><br>
 
 
-                Postcode + Plaats<br>
+                Postalcode + City<br>
                 <input type="text" name="postalcode" size="10" required>
                 <input type="text" name="city" size="25" required><br><br>
 
-                E-mail:<br>
+                E-mail<br>
                 <input type="text" name="email" size="30" required><br><br>
 
-                Telefoonnummer:<br>
+                Phonenumber<br>
                 <input type="text" name="phonenumber" size="30" required><br><br><br>
 
-                Wachtwoord:<br>
+                Password<br>
                 <input type="password" name="password" size="30" required><br><br>
 
-                Herhaal wachtwoord:<br>
+                Repeat password<br>
                 <input type="password" name="passwordcheck" size="30" required><br>
                 <br>
                 <input type="submit" value="Aanmelden">
