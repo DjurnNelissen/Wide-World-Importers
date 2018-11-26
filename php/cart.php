@@ -166,7 +166,7 @@ function printCartFooter () {
 
       <!-- prijs -->
       <div class='col-1'>
-        <button class='btn btn-success' " . returnDisabledIfCartEmpty() . ">Checkout</button>
+        <button class='btn btn-success' " . returnDisabledIfCartEmpty() . " onclick='placeOrder()'>Checkout</button>
       </div>
 
       <!-- aantal -->

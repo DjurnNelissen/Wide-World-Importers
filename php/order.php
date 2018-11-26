@@ -55,21 +55,24 @@ function createOrder () {
       //if the cart has more then 1 item
       if (count($_SESSION['cart']) > 0) {
         $params = [];
+        //current date
+        $date = date("Y/m/d");
+
         //get last placed order
         $newOrderID = getLastOrderID() + 1;
         array_push($params, $newOrderID);
         //fetch the account ID
         $accID = getAccountID();
-        array_push($params, $accID, $accID,$newOrderID);
+        array_push($params, $accID, $accID,$date,$newOrderID,$date);
 
         //create an order
         $sql = "INSERT INTO orders (
-          OrderID, CustomerID, SalesPersonID, PickedByPersonID,
+          OrderID, CustomerID, SalespersonPersonID,ContactPersonID, PickedByPersonID,
           OrderDate, CustomerPurchaseOrderNumber, IsUnderSupplyBackordered, Comments,
           DeliveryInstructions, LastEditedBy, LastEditedWhen
         )
-        VALUES (?,(SELECT CustomerID FROM accounts WHERE AccountID = ?),1,(SELECT PersonID FROM accounts WHERE AccountID = ?),
-        NOW(),?, 0, '', '', 1, NOW ()
+        VALUES (?,(SELECT CustomerID FROM accounts WHERE AccountID = ?),1,1,(SELECT PersonID FROM accounts WHERE AccountID = ?),
+        ?,?, 0, '', '', 1, ?
       )";
 
         //execute the query
@@ -77,7 +80,7 @@ function createOrder () {
 
         //add order lines
         foreach ($_SESSION['cart'] as $key => $value) {
-          createOrderLine($value, $newOrderID);
+          createOrderLine($value, $newOrderID, $date);
         }
       }
     }
@@ -85,10 +88,10 @@ function createOrder () {
 }
 
 //generates an order line for a product
-function createOrderLine ($item, $orderID) {
+function createOrderLine ($item, $orderID, $time) {
   if (checkLogin()) {
     //setup values
-    $params = array($orderID, $item['id'], $item['id'],$item['id'], $item['amount'], $item['id'], $item['id'], $item['amount'] );
+    $params = array($orderID, $item['ID'], $item['ID'],$item['ID'], $item['amount'], $item['ID'], $item['ID'], $item['amount'], $time, $time );
     //setup query
     $sql = "INSERT INTO orderlines (
       OrderLineID, OrderID, StockItemID, Description,
@@ -96,13 +99,13 @@ function createOrderLine ($item, $orderID) {
       PickingCompletedWhen, LastEditedBy, LastEditedWhen
       )
       VALUES (
-        (SELECT MAX(OrderLineID) + 1 FROM orderlines),
+        (SELECT MAX(o.OrderLineID) + 1 FROM orderlines o),
         ?, ?, (SELECT StockItemName FROM stockitems WHERE StockItemID = ?),
         (SELECT UnitPackageID FROM stockitems Where StockItemID = ?),
         ?,
         (SELECT UnitPrice FROM stockitems WHERE StockItemID = ?),
         (SELECT TaxRate FROM stockitems WHERE StockItemID = ?),
-        ?, NOW(), 1,1
+        ?, ?, 1, ?
       )";
       //execute query
       $stmt = runQueryWithParams($sql, $params);

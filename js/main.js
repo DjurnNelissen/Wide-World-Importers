@@ -42,6 +42,13 @@ function searchProducts (cat) {
 
 }
 
+//places an order
+function placeOrder () {
+  sendPostRequest('api/placeOrder.php', '', function (res) {
+
+  })
+}
+
 //adds a product to the cart
 function addToCart (ID, amount) {
   sendPostRequest('api/addToCart.php', 'id=' + ID.toString() + '&amount=' + amount.toString(), function (res) {

@@ -19,6 +19,7 @@ function runQuery ($q) {
   $dbSettings = getDBsettings();
   $db = "mysql:host=" . $dbSettings['DBserver'] . ";dbname=" . $dbSettings['DBname'] . ";port=" . $dbSettings['DBport'];
   $pdo = new PDO($db, $dbSettings['DBuser'], $dbSettings['DBpass']);
+  $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
   try {
     //prepare the SQL string
