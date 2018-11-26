@@ -88,7 +88,7 @@ if(usernameNotUsed($email) && passwordEqual($password, $passwordcheck)) {
                 Repeat password<br>
                 <input type="password" name="passwordcheck" size="30" required><br>
                 <br>
-                <input type="submit" value="Aanmelden">
+                <input type="submit" value="Register">
 
             </form>
         </div>
