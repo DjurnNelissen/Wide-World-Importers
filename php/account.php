@@ -132,5 +132,13 @@ function getLoggedInName () {
   return '';
 }
 
+//returns a customer Row with the given ID
+function getCustomer ($id) {
+  $sql = "SELECT * FROM customers WHERE CustomerID = ?";
+
+  $stmt = runQueryWithParams($sql, array($id));
+
+  return $stmt->fetch();
+}
 
  ?>
