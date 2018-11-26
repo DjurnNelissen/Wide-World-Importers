@@ -166,7 +166,7 @@ function printCartFooter () {
 
       <!-- prijs -->
       <div class='col-1'>
-        <button class='btn btn-success' " . returnDisabledIfCartEmpty() . ">Buy</button>
+        <button class='btn btn-success' " . returnDisabledIfCartEmpty() . ">Checkout</button>
       </div>
 
       <!-- aantal -->
@@ -176,7 +176,7 @@ function printCartFooter () {
 
       <!-- totaal -->
       <div class='col-2'>
-          <p id='cart-totaal-prijs'>Total: €" . getTotalCartPrice() . "</p>
+          <p id='cart-totaal-prijs'>Total: € " . getTotalCartPrice() . "</p>
       </div>
 
       <!-- remove -->
