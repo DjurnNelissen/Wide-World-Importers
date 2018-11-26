@@ -31,11 +31,17 @@
                 </div>
                 <div class="card">
                     <div class="card-header" id="headingTwo">
-                        <h5 class="mb-0">
+                        <div class="row">
+                        <h6 class="col-2">15</h6>
+                        <h6 class="col-3">03-05-2017</h6>
+                        <h6 class="col-3">€97,23</h6>
+                        <h6 class="col-3">Verwerkt</h6>
+                        <div class="col-1"><h6 class="mb-0">
                             <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                Collapsible Group Item #2
+                                v
                             </button>
-                        </h5>
+                            </h6></div>
+                </div>
                     </div>
                     <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
                         <div class="card-body">
