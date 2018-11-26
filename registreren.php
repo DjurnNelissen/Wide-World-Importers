@@ -49,9 +49,9 @@ if(usernameNotUsed($email) && passwordEqual($password, $passwordcheck)) {
 
 <!-- include the header of the page -->
 <?php
-    $title = "Product";
-    $stylesheet = "css/product.css";
-    $sidebar = TRUE;
+    $title = "Register";
+    $stylesheet = FALSE;
+    $sidebar = FALSE;
     include("includes/page-head.php");
 ?>
 
