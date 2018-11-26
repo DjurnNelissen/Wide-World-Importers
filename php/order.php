@@ -4,6 +4,7 @@
 //includes
 include_once('db.php');
 include_once('account.php');
+include_once('cart.php');
 
 //functions
 
@@ -44,5 +45,94 @@ function printOrders() {
     print('<br> ---------------------------- <br>');
   }
 }
+
+//turns the users current cart into an order
+function createOrder () {
+  //we can only create an order if the user is logged in
+  if (checkLogin()) {
+    //make sure we have a cart
+    if (checkCart()) {
+      //if the cart has more then 1 item
+      if (count($_SESSION['cart']) > 0) {
+        $params = [];
+        //get last placed order
+        $newOrderID = getLastOrderID() + 1;
+        array_push($params, $newOrderID);
+        //fetch the account ID
+        $accID = getAccountID();
+        array_push($params, $accID, $accID,$newOrderID);
+
+        //create an order
+        $sql = "INSERT INTO orders (
+          OrderID, CustomerID, SalesPersonID, PickedByPersonID,
+          OrderDate, CustomerPurchaseOrderNumber, IsUnderSupplyBackordered, Comments,
+          DeliveryInstructions, LastEditedBy, LastEditedWhen
+        )
+        VALUES (?,(SELECT CustomerID FROM accounts WHERE AccountID = ?),1,(SELECT PersonID FROM accounts WHERE AccountID = ?),
+        NOW(),?, 0, '', '', 1, NOW ()
+      )";
+
+        //execute the query
+        $stmt = runQueryWithParams($sql, $params);
+
+        //add order lines
+        foreach ($_SESSION['cart'] as $key => $value) {
+          createOrderLine($value, $newOrderID);
+        }
+      }
+    }
+  }
+}
+
+//generates an order line for a product
+function createOrderLine ($item, $orderID) {
+  if (checkLogin()) {
+    //setup values
+    $params = array($orderID, $item['id'], $item['id'],$item['id'], $item['amount'], $item['id'], $item['id'], $item['amount'] );
+    //setup query
+    $sql = "INSERT INTO orderlines (
+      OrderLineID, OrderID, StockItemID, Description,
+      PackageTypeID, Quantity, UnitPrice, TaxRate, PickedQuantity,
+      PickingCompletedWhen, LastEditedBy, LastEditedWhen
+      )
+      VALUES (
+        (SELECT MAX(OrderLineID) + 1 FROM orderlines),
+        ?, ?, (SELECT StockItemName FROM stockitems WHERE StockItemID = ?),
+        (SELECT UnitPackageID FROM stockitems Where StockItemID = ?),
+        ?,
+        (SELECT UnitPrice FROM stockitems WHERE StockItemID = ?),
+        (SELECT TaxRate FROM stockitems WHERE StockItemID = ?),
+        ?, NOW(), 1,1
+      )";
+      //execute query
+      $stmt = runQueryWithParams($sql, $params);
+  }
+
+}
+
+//returns the last placed order
+function getLastOrderID () {
+  //setup query
+  $sql = "SELECT MAX(OrderID) FROM orders";
+  //execute query
+  $stmt = runQuery($sql);
+  //fetch result
+  $row = $stmt->fetch();
+  //return result
+  return $row['MAX(OrderID)'];
+}
+
+//gets the weight of your order
+function getOrderWeight () {
+  if (checkCart()) {
+    $total = 0;
+    foreach ($_SESSION['cart'] as $key => $value) {
+      $total = $total + getProductWeight($key);
+    }
+    return $total;
+  }
+}
+
+
 
  ?>
