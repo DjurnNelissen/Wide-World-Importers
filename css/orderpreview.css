@@ -12,14 +12,26 @@
 }
 
 .naw {
-  
+
 }
 
 .order {
-  height: 100vh;
+
 
 }
 
 .order-foot {
 
+}
+
+.page-content {
+    height: 100vh;
+}
+
+.NAW-buttons {
+  text-align: center;
+}
+
+.footer-buttons {
+  text-align: center;
 }

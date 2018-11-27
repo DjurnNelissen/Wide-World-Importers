@@ -43,6 +43,11 @@ include_once('php/order.php');
         <?php
           printDeliveryDetails();
         ?>
+        <!-- buttons -->
+          <div class="col-12 NAW-buttons">
+            <button type="button" name="button" class="btn btn-danger">Edit</button>
+          </div>
+
       </div>
       <!-- user input -->
       <div class="row">
@@ -58,15 +63,16 @@ include_once('php/order.php');
               <textarea class="form-control" name="deliveryIntructions" rows="4" cols="25" placeholder="Delivery Instructions"></textarea>
             </div>
           </div>
-          <!-- -->
+          <!-- comments -->
           <div class="row">
             <div class="col-12">
               <p>
                 <label for="deliveryComments">Delivery Comment</label>
               </p>
-              <textarea class="form-control" name="deliveryComments" rows="4" cols="25" placeholder="comments"></textarea>
+              <textarea class="form-control" name="deliveryComments" rows="4" cols="25" placeholder="Comments"></textarea>
             </div>
           </div>
+
         </div>
       </div>
 
@@ -79,7 +85,16 @@ include_once('php/order.php');
 
     </div>
     <!-- buttons for continue shopping and confirm -->
-    <div class="col-4">
+    <div class="col-4 mt-3 footer-buttons">
+      <div class="row">
+          <div class="col-6">
+            <button type="button" name="button" class="btn btn-warning">Continue shopping</button>
+          </div>
+          <div class="col-6">
+            <button type="button" name="button" class="btn btn-success">Checkout</button>
+          </div>
+      </div>
+
 
     </div>
   </div>
