@@ -238,6 +238,53 @@ function printDeliveryDetails () {
   }
 }
 
+//prints items currently in cart
+function printOrderItems () {
+  //cart has to exist
+  if (checkCart()) {
+    //needs atleast one item in cart
+    if (count($_SESSION['cart']) > 0) {
+      $products = fetchProductsFromCartAsArray();
+
+      foreach ($products as $key => $product) {
+        $div = "
+        <div class='row item'>
+          <!-- item -->
+          <div class='col-3'>
+            <!-- item image -->
+            <img class='img-fluid rounded img-thumbnail mx-auto' src='https://sc02.alicdn.com/kf/HTB1wYdzPFXXXXaXapXXq6xXFXXX2/USB-Flash-Drive-8-GB-Memory-Stick.jpg_350x350.jpg' />
+          </div>
+          <div class='col-3'>
+            <!-- item name -->
+            <p>
+              <a href='product.php?id=" . $product['StockItemID'] . "'> " . $product['StockItemName'] . "</a>
+            </p>
+          </div>
+          <div class='col-2'>
+            <!-- item price -->
+            <p>
+              € " . $product['RecommendedRetailPrice'] . "
+            </p>
+          </div>
+          <div class='col-2'>
+            <!-- amount -->
+            <p>
+              " . $product['amount'] . "
+            </p>
+          </div>
+          <div class='col-2'>
+            <!-- total price -->
+              € " . ($product['RecommendedRetailPrice'] * $product['amount']) . "
+          </div>
+        </div>
+        ";
+
+        print($div);
+      }
+    }
+  }
+}
+
 
 
  ?>

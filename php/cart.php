@@ -222,4 +222,14 @@ function getTotalCartPrice () {
   }
 }
 
+function getTotalItemsInCart () {
+  if (checkCart()) {
+    $total = 0;
+    foreach ($_SESSION['cart'] as $key => $value) {
+      $total = $total + $value['amount'];
+    }
+    return $total;
+  }
+}
+
  ?>

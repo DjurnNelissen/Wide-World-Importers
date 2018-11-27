@@ -4,39 +4,40 @@ $stylesheet = 'css/orderpreview.css';
 $sidebar = FALSE;
 include("includes/page-head.php");
 include_once('php/order.php');
+include_once('php/cart.php');
  ?>
 
   <div class="row mt-1 mx-5 order">
     <div class="col-8 items">
-      <div class="row item">
-        <!-- item -->
+      <h3>Order Items</h3>
+      <div class="row items-header">
         <div class="col-3">
-          <!-- item image -->
-          <img class="img-fluid rounded img-thumbnail mx-auto" src="https://sc02.alicdn.com/kf/HTB1wYdzPFXXXXaXapXXq6xXFXXX2/USB-Flash-Drive-8-GB-Memory-Stick.jpg_350x350.jpg" />
+
         </div>
         <div class="col-3">
-          <!-- item name -->
           <p>
-            <a href="product.php?id=1">USB green</a>
+            Product-name
           </p>
         </div>
         <div class="col-2">
-          <!-- item price -->
           <p>
-            23.24
+            Product-price
           </p>
         </div>
         <div class="col-2">
-          <!-- amount -->
           <p>
-            3
+            Quantity
           </p>
         </div>
         <div class="col-2">
-          <!-- total price -->
-          69.72
+          <p>
+            Total-price
+          </p>
         </div>
       </div>
+      <?php
+        printOrderItems();
+       ?>
     </div>
     <!-- users NAW gegevens -->
     <div class="col-4 naw">
@@ -82,16 +83,38 @@ include_once('php/order.php');
   <div class="row order-foot">
     <!--price, weight etc.. -->
     <div class="col-8">
+      <div class="row">
+        <div class="col-3">
 
+        </div>
+        <div class="col-3">
+
+        </div>
+        <div class="col-2">
+          <p>
+            Weight: <?php print(getOrderWeight()) ?> KG
+          </p>
+        </div>
+        <div class="col-2">
+          <p>
+            Items: <?php print(getTotalItemsInCart()); ?>
+          </p>
+        </div>
+        <div class="col-2">
+          <p>
+            Total: € <?php print(getTotalCartPrice()); ?>
+          </p>
+        </div>
+      </div>
     </div>
     <!-- buttons for continue shopping and confirm -->
     <div class="col-4 mt-3 footer-buttons">
       <div class="row">
           <div class="col-6">
-            <button type="button" name="button" class="btn btn-warning">Continue shopping</button>
+            <button type="button" name="button" class="btn btn-info">Continue shopping</button>
           </div>
           <div class="col-6">
-            <button type="button" name="button" class="btn btn-success">Checkout</button>
+            <button type="button" name="button" class="btn btn-info">Checkout</button>
           </div>
       </div>
 
