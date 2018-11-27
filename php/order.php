@@ -136,6 +136,78 @@ function getOrderWeight () {
   return $total;
 }
 
+//prints the users address and stuff
+function printDeliveryDetails () {
+  if (checkLogin()) {
+    //setup query to fetch all data about user
+    $sql = "SELECT * FROM people p JOIN
+    accounts a ON p.PersonID = a.PersonID JOIN
+    customers c ON a.CustomerID = c.CustomerID
+    WHERE p.LogonName = ?";
+    //execute query
+    $stmt = runQueryWithParams($sql, array($_SESSION['user']['name']));
+    //fetch result
+    $row = $stmt->fetch();
+
+    $div = "
+    <div class='row'>
+      <div class='col-12'>
+        <h3>Delivery details</h3>
+        <!-- full name -->
+        <div class='row'>
+          <div class='col-12'>
+            <p>
+            " . $row['FullName'] . "
+            </p>
+          </div>
+        </div>
+        <!-- line 1-->
+        <div class='row'>
+          <div class='col-12'>
+            <p>
+              " . $row['DeliveryAddressLine1'] . "
+            </p>
+          </div>
+        </div>
+        <!-- line 2-->
+        <div class='row'>
+          <div class='col-12'>
+            <p>
+              " . $row['DeliveryAddressLine2'] . "
+            </p>
+          </div>
+        </div>
+        <!-- postalcode -->
+        <div class='row'>
+          <div class='col-12'>
+            <p>
+              " . $row['DeliveryPostalCode'] . "
+            </p>
+          </div>
+        </div>
+        <!-- e-mail -->
+        <div class='row'>
+          <div class='col-12'>
+            <p>
+              " . $row['EmailAddress'] . "
+            </p>
+          </div>
+        </div>
+        <!-- phone -->
+        <div class='row'>
+          <div class='col-12'>
+            <p>
+              " . $row['PhoneNumber'] . "
+            </p>
+          </div>
+        </div>
+      </div>
+    ";
+
+    print($div);
+  }
+}
+
 
 
  ?>
