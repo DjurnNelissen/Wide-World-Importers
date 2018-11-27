@@ -9,7 +9,7 @@ include_once('php/account.php');
 <div class="col-12 my-5 mx-3">
   <div class="row my-2 px-2">
     <div class="col-2">
-      <h5> <?php print(getAverageRating($_GET['id'])) ?> / 5 stars </h5>
+      <h5> <?php print(getAverageRating($_GET['id'])) ?>/5 stars </h5>
     </div>
     <div class="col-2">
       <div class='stars-outer'>
@@ -36,16 +36,16 @@ include_once('php/account.php');
 			<b>Write your own review:</b>
 		</div>
     <!-- alert for already reviewed -->
-    <div class="alert alert-success mx-5 my-2" role="alert" <?php if (! userHasReviewedProduct($_GET['id']) ||  ! userHasPurchashedProduct($_GET['id'])) print('hidden') ?>>
-      You have already reviewed this product.
+    <div class="alert alert-success mx-5 my-3" role="alert" <?php if (! userHasReviewedProduct($_GET['id']) ||  ! userHasPurchashedProduct($_GET['id'])) print('hidden') ?>>
+      You already have reviewed this product.
     </div>
     <!-- alert for login -->
-    <div class="alert alert-danger mx-5 my-2" role="alert" <?php if (checkLogin()) print('hidden') ?>>
+    <div class="alert alert-info mx-5 my-3" role="alert" <?php if (checkLogin()) print('hidden') ?>>
       You need to login to review this product.
     </div>
     <!-- alert for not purchased -->
-    <div class="alert alert-danger mx-5 my-2" role="alert" <?php if (userHasPurchashedProduct($_GET['id']) || ! checkLogin()) print('hidden') ?>>
-      You need to have purchased this product, before you can review it.
+    <div class="alert alert-info mx-5 my-4" role="alert" <?php if (userHasPurchashedProduct($_GET['id']) || ! checkLogin()) print('hidden') ?>>
+      You need to purchase this product, before you can review it.
     </div>
 		<div class='card-body'>
 			<form class="form-group" action="" method="post">
