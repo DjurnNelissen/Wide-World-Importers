@@ -152,26 +152,41 @@ function printDeliveryDetails () {
     $div = "
     <div class='row'>
       <div class='col-12'>
-        <h3>Delivery details</h3>
+        <h3>Delivery Details</h3>
         <!-- full name -->
         <div class='row'>
-          <div class='col-12'>
+          <div class='col-6'>
             <p>
-            " . $row['FullName'] . "
+            Name
+            </p>
+          </div>
+          <div class='col-6'>
+            <p>
+              " . $row['FullName'] . "
             </p>
           </div>
         </div>
         <!-- line 1-->
         <div class='row'>
-          <div class='col-12'>
+        <div class='col-6'>
+          <p>
+            Address Line 1
+          </p>
+        </div>
+          <div class='col-6'>
             <p>
-              " . $row['DeliveryAddressLine1'] . "
+             " . $row['DeliveryAddressLine1'] . "
             </p>
           </div>
         </div>
         <!-- line 2-->
         <div class='row'>
-          <div class='col-12'>
+        <div class='col-6'>
+          <p>
+          Address Line 2
+          </p>
+        </div>
+          <div class='col-6'>
             <p>
               " . $row['DeliveryAddressLine2'] . "
             </p>
@@ -179,15 +194,25 @@ function printDeliveryDetails () {
         </div>
         <!-- postalcode -->
         <div class='row'>
-          <div class='col-12'>
+        <div class='col-6'>
+          <p>
+              Postal Code
+          </p>
+        </div>
+          <div class='col-6'>
             <p>
-              " . $row['DeliveryPostalCode'] . "
+             " . $row['DeliveryPostalCode'] . "
             </p>
           </div>
         </div>
         <!-- e-mail -->
         <div class='row'>
-          <div class='col-12'>
+        <div class='col-6'>
+          <p>
+            E-mail
+          </p>
+        </div>
+          <div class='col-6'>
             <p>
               " . $row['EmailAddress'] . "
             </p>
@@ -195,7 +220,12 @@ function printDeliveryDetails () {
         </div>
         <!-- phone -->
         <div class='row'>
-          <div class='col-12'>
+        <div class='col-6'>
+          <p>
+            Phone
+          </p>
+        </div>
+          <div class='col-6'>
             <p>
               " . $row['PhoneNumber'] . "
             </p>
