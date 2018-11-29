@@ -20,12 +20,12 @@ function addToCart ($productID, $amount) {
     //check if the product already is in the cart
     if (array_key_exists($productID,$_SESSION['cart'])) {
       //only add the amount
-      $_SESSION['cart'][$productID]['amount'] = $_SESSION['cart'][$productID]['amount'] + $amount;
+      $_SESSION['cart'][$productID]['amount'] = round($_SESSION['cart'][$productID]['amount'] + $amount);
     } else {
       //add the product entirely
       $_SESSION['cart'][$productID] = [
         'ID' => $productID, // ID isnt really needed since its already in the key
-        'amount' => $amount
+        'amount' => round($amount)
       ];
     }
   }
@@ -80,7 +80,7 @@ function setProductInCartCount ($id, $amount) {
     //checks if the product is actually in the cart
     if (array_key_exists($id, $_SESSION['cart'])) {
       if ($amount > 0) {
-        $_SESSION['cart'][$id]['amount'] = $amount;
+        $_SESSION['cart'][$id]['amount'] = round($amount);
       } else {
         //remove product
         unset($_SESSION['cart'][$id]);
