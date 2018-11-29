@@ -150,14 +150,14 @@ function printDeliveryDetails () {
     $row = $stmt->fetch();
 
     $div = "
-    <div class='row'>
+    <div class='row card shadow-sm pb-2'>
       <div class='col-12'>
         <h3>Delivery Details</h3>
         <!-- full name -->
         <div class='row'>
           <div class='col-6'>
             <p>
-            Name
+            Fullname
             </p>
           </div>
           <div class='col-6'>
@@ -232,6 +232,12 @@ function printDeliveryDetails () {
           </div>
         </div>
       </div>
+      <!-- buttons -->
+
+        <div class='col-12 NAW-buttons'>
+          <button type='button' name='button' class='btn btn-danger'>Edit</button>
+        </div>
+    </div>
     ";
 
     print($div);
@@ -248,7 +254,7 @@ function printOrderItems () {
 
       foreach ($products as $key => $product) {
         $div = "
-        <div class='row item'>
+        <div class='row mt-1 item'>
           <!-- item -->
           <div class='col-3'>
             <!-- item image -->
@@ -277,6 +283,7 @@ function printOrderItems () {
               € " . ($product['RecommendedRetailPrice'] * $product['amount']) . "
           </div>
         </div>
+
         ";
 
         print($div);
@@ -285,6 +292,19 @@ function printOrderItems () {
   }
 }
 
+//returns all delivery methods
+function getDeliveryMethods () {
+  $sql = "SELECT * FROM deliverymethods";
 
+  return runQuery($sql);
+}
 
+//prints all delivery methods
+function printDeliveryMethods () {
+  $stmt = getDeliveryMethods();
+
+  while ($row = $stmt->fetch()) {
+    print("<div><input type='radio' name='devMethod' value='" . $row['DeliveryMethodID'] . "'> " . $row['DeliveryMethodName'] . "</input></div>");
+  }
+}
  ?>

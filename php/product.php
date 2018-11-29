@@ -278,4 +278,11 @@ function getProductWeight ($id) {
   return $row['TypicalWeightPerUnit'];
 }
 
+function getMostOrderedProducts () {
+  $sql = "SELECT StockItemID, SUM(Quantity) FROM orderlines
+  GROUP BY StockItemID ORDER BY SUM(Quantity) DESC";
+
+  return runQuery($sql);
+}
+
  ?>
