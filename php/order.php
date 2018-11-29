@@ -255,6 +255,8 @@ function printOrderItems () {
       foreach ($products as $key => $product) {
         $div = "
         <div class='row mt-1 item'>
+          <div class='col-12 card shadow-sm'>
+            <div class='row'>
           <!-- item -->
           <div class='col-3'>
             <!-- item image -->
@@ -282,6 +284,10 @@ function printOrderItems () {
             <!-- total price -->
               € " . ($product['RecommendedRetailPrice'] * $product['amount']) . "
           </div>
+        </div>
+
+        </div>
+
         </div>
 
         ";

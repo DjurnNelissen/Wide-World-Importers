@@ -10,7 +10,7 @@ include_once('php/cart.php');
   <div class="col-12">
     <div class="row mt-1 mx-5 order">
       <!--order items are displayed here -->
-      <div class="col-6 card shadow-sm items">
+      <div class="col-6 card shadow-sm items ">
         <h3>Order Items</h3>
         <div class="row mb-2 shadow-sm items-header">
           <div class="col-3">

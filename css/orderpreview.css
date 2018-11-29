@@ -2,7 +2,7 @@
 
 }
 
-.items > .row > .col-3 > img {
+.items > .row > .col-12 > .row > .col-3 > img {
   width: 75px;
   height: 75px;
 }
