@@ -49,8 +49,12 @@ function removeFromCart ($productID, $amount) {
 //returns a statement object with all products currently in the cart
 function fetchProductsFromCart () {
   if (checkCart()) {
-    $sql = "SELECT * FROM stockitems WHERE StockItemID IN (" . arrayToSQLString(array_keys($_SESSION['cart'])) . ")";
-    return runQuery($sql);
+    $arr = arrayToSQLString(array_keys($_SESSION['cart']));
+    if ($arr != "") {
+      $sql = "SELECT * FROM stockitems WHERE StockItemID IN (" . $arr . ")";
+        return runQuery($sql);
+    }
+
   }
 }
 
@@ -61,6 +65,7 @@ function fetchProductsFromCartAsArray () {
     //creates a new array to store all products
     $result = [];
     //adds each product, also includes the amount in the array
+    if ($stmt) {
     while ($row = $stmt->fetch()) {
       $id = $row['StockItemID'];
       if (array_key_exists($id, $_SESSION['cart'])) {
@@ -69,6 +74,7 @@ function fetchProductsFromCartAsArray () {
         array_push($result,$input);
       }
     }
+  }
     return $result;
   }
 }

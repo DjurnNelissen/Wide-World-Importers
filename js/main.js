@@ -122,7 +122,7 @@ function getCartTotalPrice (callback) {
 
 //empties the cart
 function emptyCart() {
-  sendPostRequest('/api/emptyCart.php','',function (res) {
+  sendPostRequest('api/emptyCart.php','',function (res) {
     location.reload();
   });
 }
