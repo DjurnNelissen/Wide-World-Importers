@@ -1,0 +1,51 @@
+/* Product thumbnails */
+.row-product-image {
+	margin-left: 45px;
+}
+
+.product-image {
+	margin: 0 -10px !important;
+}
+
+/* Beschrijvings labels */
+label {
+	color: #9f9f9f;
+	margin: 0;
+}
+
+/* Product aantal */
+.product-number {
+	display: inline-block;
+	text-align-last: center;
+}
+
+/* Product kleur */
+.product-checkbox {
+	width: 25px;
+	height: 25px;
+	cursor: pointer;
+	appearance: none;
+	border-width: 2px;
+	border-style: solid;
+	-webkit-appearance: none;
+	transition: all .3s linear;
+}
+
+.product-checkbox:checked {
+	border-color: #fff;
+}
+
+.product-checkbox:focus {
+	outline: 0 none;
+	box-shadow: none;
+}
+
+/* Product maat */
+.product-select {
+	text-align-last: center;
+}
+
+/* Product rating */
+.rating-date {
+	float: right;
+}
