@@ -1,7 +1,10 @@
+<!-- include libs -->
 <?php
-  //load libs
-  session_start();
-  include_once("common.php");
+	$title = "Cart";
+	$stylesheet = "css/cart.css";
+	$sidebar = FALSE;
+	include("includes/page-head.php");
+	include_once("php/cart.php");
 
   //handle adding items to cart
   if (isset($_POST['addToCart'])) {
@@ -14,30 +17,17 @@
   }
 
  ?>
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="css/main.css" media="screen" title="no title">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-    <script src="js/main.js" charset="utf-8"></script>
-    <title>WWI Webshop</title>
-  </head>
-  <body>
-    <?php include('Menu.php') ?>
-    <div class="wrapper">
-      <div class="container">
+ 						<div class="row px-5 py-4">
+							<div class="card col shadow-sm">
+								<div class="row p-3">
+									<?php
+										//prints the HTML code to generate the items in the cart
+										printCart();
+                    printCartFooter()
+									?>
+								</div>
+							</div>
+        		</div>
 
-        <div class="row main">
-          <?php
-          //prints the HTML code to generate the items in the cart
-            printCart();
-           ?>
-        </div>
-        <div class="row footer">
-
-        </div>
-      </div>
-    </div>
-  </body>
-</html>
+<!-- include the footer of the page -->
+<?php include("includes/page-foot.php") ?>

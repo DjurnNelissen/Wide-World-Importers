@@ -12,17 +12,19 @@ $password=0;
 if (isset($_POST["email"]) && isset($_POST["passwd"])) {
     $naam = $_POST["email"];
     $password = $_POST["passwd"];
+    var_dump($_POST);
+
     //f..
     //check user if exists
     $sql = "select * from people
-          where LogonName=$naam";
+          where LogonName= '$naam'";
     $stmt = runQuery($sql);
     if ($stmt->rowCount() > 0) {
         $row = $stmt->fetch();
-        $passwdhash = password_hash($password);
-        if (hash_equals($passwdhash, $row[HashedPassword])) {
-            LoginSuccesvol($naam, $passwdhash);
+        if (password_verify($password, $row["HashedPassword"])) {
+            LoginSuccesvol($naam, $password);
         } else {
+            print('err 3');
           loginfailed();
         }
         //encrypt password
@@ -31,19 +33,20 @@ if (isset($_POST["email"]) && isset($_POST["passwd"])) {
 
 
     } else {
-       loginfailed();
+       print('err 1');
+           loginfailed();
     }
 }else{
+    print("err 2");
     loginfailed();
 }
 
 function loginfailed(){
-    header("Location: /Wide-World-Importers/login.php?loginfailed=1");
+    header("Location: /Wide-World-Importers-master/login.php?loginfailed=1");
 }
 function LoginSuccesvol($user, $pass){
-    header("Location: /loginconfirmed.php");
     $_SESSION["user"]= array ('name'=> $user,'hash'=> $pass);
-
+    header("Location: /Wide-World-Importers-master/login.php?");
 }
 
 
