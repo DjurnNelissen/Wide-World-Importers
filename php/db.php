@@ -1,6 +1,4 @@
 <?php
-session_start();
-
 //this file includes all database related functions
 
 //dictionary that stores DB settings
@@ -21,10 +19,21 @@ function runQuery ($q) {
   $dbSettings = getDBsettings();
   $db = "mysql:host=" . $dbSettings['DBserver'] . ";dbname=" . $dbSettings['DBname'] . ";port=" . $dbSettings['DBport'];
   $pdo = new PDO($db, $dbSettings['DBuser'], $dbSettings['DBpass']);
-  //prepare the SQL string
-  $stmt = $pdo->prepare($q);
-  //execute the SQL
-  $stmt->execute();
+
+  try {
+    //prepare the SQL string
+    $stmt = $pdo->prepare($q);
+    //execute the SQL
+    $stmt->execute();
+    //check for error
+  } catch (PDOException $e) {
+    //close errored connection
+    $pdo = null;
+    //return the error
+    return $e;
+  }
+
+
   //close the conention
   $pdo = null;
   //return the result
@@ -36,11 +45,22 @@ function runQueryWithParams ($q, $p) {
   $dbSettings = getDBsettings();
   $db = "mysql:host=" . $dbSettings['DBserver'] . ";dbname=" . $dbSettings['DBname'] . ";port=" . $dbSettings['DBport'];
   $pdo = new PDO($db, $dbSettings['DBuser'], $dbSettings['DBpass']);
-  //prepare the SQL string
-  $stmt = $pdo->prepare($q);
+  $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
   //execute the SQL
-  $stmt->execute(array($p));
-  //close the conention
+  try {
+    //prepare the SQL string
+    $stmt = $pdo->prepare($q);
+    //execute the SQL
+    $stmt->execute($p);
+    //check for error
+  } catch (PDOException $e) {
+    //close errored connection
+    $pdo = null;
+    //return the error
+    var_dump($e);
+    return $e;
+  }
+
   $pdo = null;
   //return the result
   return $stmt;
