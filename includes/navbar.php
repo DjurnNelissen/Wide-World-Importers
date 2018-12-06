@@ -20,7 +20,10 @@
 				<a class="nav-link" href="winkelwagen.php"><i class="fas fa-shopping-cart"></i> Cart</a>
 			</li>
 			<li id="Login" class="nav-item">
-				<a class="nav-link" href="login.php"><i class="fas fa-user"></i> Login</a>
+				<?php
+                include_once ("php/account.php");
+                checknav();
+                ?>
 			</li>
 		</ul>
 	</div>
