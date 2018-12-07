@@ -310,7 +310,7 @@ function printDeliveryMethods () {
   $stmt = getDeliveryMethods();
 
   while ($row = $stmt->fetch()) {
-    print("<div><input type='radio' name='devMethod' value='" . $row['DeliveryMethodID'] . "'> " . $row['DeliveryMethodName'] . "</input></div>");
+    print("<option value='" . $row['DeliveryMethodID'] ."'> " . $row['DeliveryMethodName'] . " </option>");
   }
 }
  ?>

@@ -238,4 +238,19 @@ function getTotalItemsInCart () {
   }
 }
 
+function cartHasFrozenProduct () {
+  if (checkCart() && count($_SESSION['cart']) > 0) {
+
+    $sql = "SELECT COUNT(*) FROM stockitems WHERE StockItemID IN (" .   arrayToSQLString(array_keys($_SESSION['cart'])) . ") AND IsChillerStock = 1 ";
+    var_dump($sql);
+    $stmt = runQuery($sql);
+    $row = $stmt->fetch();
+
+    if ($row['COUNT(*)'] > 0) {
+      return true;
+    }
+  }
+  return false;
+}
+
  ?>
