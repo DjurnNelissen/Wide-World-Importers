@@ -125,34 +125,17 @@ function getLastOrderID () {
   return $row['MAX(OrderID)'];
 }
 
-//gets the weight of your order
-function getOrderWeight () {
-  $total = 0;
-  if (checkCart()) {
-    foreach ($_SESSION['cart'] as $key => $value) {
-      $total = $total + (getProductWeight($value['ID']) * $value['amount']);
-    }
-  }
-  return $total;
-}
+
 
 //prints the users address and stuff
 function printDeliveryDetails () {
   if (checkLogin()) {
-    //setup query to fetch all data about user
-    $sql = "SELECT * FROM people p JOIN
-    accounts a ON p.PersonID = a.PersonID JOIN
-    customers c ON a.CustomerID = c.CustomerID
-    WHERE p.LogonName = ?";
-    //execute query
-    $stmt = runQueryWithParams($sql, array($_SESSION['user']['name']));
-    //fetch result
-    $row = $stmt->fetch();
+    $row = getLoggedInAccDetails();
 
     $div = "
     <div class='row card shadow-sm pb-2'>
       <div class='col-12'>
-        <h3>Delivery Details</h3>
+        <h3>Personal details</h3>
         <!-- full name -->
         <div class='row'>
           <div class='col-6'>
@@ -235,7 +218,13 @@ function printDeliveryDetails () {
       <!-- buttons -->
 
         <div class='col-12 NAW-buttons'>
-          <button type='button' name='button' class='btn btn-danger'>Edit</button>
+          <div class='alert alert-info'>
+            <p>
+              If your personal details are incorrect, Please contact us via our
+              <a href='contact.php'> contact page </a>
+                so we can help you resolve the issue.
+            </p>
+          </div>
         </div>
     </div>
     ";
@@ -307,10 +296,29 @@ function getDeliveryMethods () {
 
 //prints all delivery methods
 function printDeliveryMethods () {
+  if (cartHasFrozenProduct()) {
+    $methods =  [
+      '5' => 'Chilled Van',
+      '9' => 'Refrigerated Road Freight',
+      '10' => 'Refrigerated Air Freight'
+    ];
+
+    foreach ($methods as $key => $value) {
+      print("<option value='" . $key ."'> " . $value . " </option>");
+    }
+  } else {
   $stmt = getDeliveryMethods();
 
-  while ($row = $stmt->fetch()) {
-    print("<option value='" . $row['DeliveryMethodID'] ."'> " . $row['DeliveryMethodName'] . " </option>");
+    while ($row = $stmt->fetch()) {
+      print("<option value='" . $row['DeliveryMethodID'] ."'> " . $row['DeliveryMethodName'] . " </option>");
+    }
   }
+}
+
+function getDeliveryMethodName ($id) {
+  $sql = "SELECT DeliveryMethodName FROM deliverymethods WHERE DeliveryMethodID = ?";
+  $stmt = runQueryWithParams($sql, array($id));
+  $row = $stmt->fetch();
+  return $row['DeliveryMethodName'];
 }
  ?>

@@ -253,4 +253,15 @@ function cartHasFrozenProduct () {
   return false;
 }
 
+//gets the weight of your order
+function getCartWeight () {
+  $total = 0;
+  if (checkCart()) {
+    foreach ($_SESSION['cart'] as $key => $value) {
+      $total = $total + (getProductWeight($value['ID']) * $value['amount']);
+    }
+  }
+  return $total;
+}
+
  ?>

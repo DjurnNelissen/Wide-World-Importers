@@ -44,9 +44,7 @@ function searchProducts (cat) {
 
 //places an order
 function placeOrder () {
-  sendPostRequest('api/placeOrder.php', '', function (res) {
-
-  })
+  window.location.href = "delivery.php";
 }
 
 //adds a product to the cart

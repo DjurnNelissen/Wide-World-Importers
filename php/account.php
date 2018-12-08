@@ -132,6 +132,13 @@ function getLoggedInName () {
   return '';
 }
 
+function getLoggedInCustomer () {
+  $sql = "SELECT CustomerID FROM accounts WHERE AccountID = ?";
+  $stmt = runQueryWithParams($sql, array(getAccountID()));
+  $row = $stmt->fetch();
+  return getCustomer($row['CustomerID']);
+}
+
 //returns a customer Row with the given ID
 function getCustomer ($id) {
   $sql = "SELECT * FROM customers WHERE CustomerID = ?";
@@ -139,6 +146,23 @@ function getCustomer ($id) {
   $stmt = runQueryWithParams($sql, array($id));
 
   return $stmt->fetch();
+}
+
+function getLoggedInAccDetails () {
+  if (checkLogin()) {
+  //setup query to fetch all data about user
+  $sql = "SELECT * FROM people p JOIN
+  accounts a ON p.PersonID = a.PersonID JOIN
+  customers c ON a.CustomerID = c.CustomerID
+  WHERE p.LogonName = ?";
+  //execute query
+  $stmt = runQueryWithParams($sql, array($_SESSION['user']['name']));
+  //fetch result
+  return $stmt->fetch();
+  }
+
+  return null;
+
 }
 
  ?>
