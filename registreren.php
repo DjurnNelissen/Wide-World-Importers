@@ -16,8 +16,9 @@ $street = filter_input(INPUT_POST, 'street', FILTER_SANITIZE_STRING);
 $housenumber = filter_input(INPUT_POST, 'housenumber', FILTER_SANITIZE_STRING);
 $postalcode = filter_input(INPUT_POST, 'postalcode', FILTER_SANITIZE_STRING);
 
+$issueCreatingAccount = FALSE;
 
-if (isset($_POST)) {
+if (isset($_POST['email'])) {
 // Hashed password
 $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
@@ -52,6 +53,8 @@ $stmt = runQuery($sqlAccount);
 
 //var_dump($stmt);
   header('location: login.php');
+} else {
+  $issueCreatingAccount = TRUE;
 }
 }
 ?>
@@ -73,6 +76,18 @@ $stmt = runQuery($sqlAccount);
 						<div class="row px-5 py-4">
 							<div class="card col shadow-sm">
 								<div class="row p-3">
+                  <?php
+                    if ($issueCreatingAccount) {
+                      print("
+                      <div class='col-12 alert alert-danger'>
+                        <p>
+                          There was an issue creating your account, please check if the password matched. otherwise the e-mail is already in use.
+                        </p>
+                       </div>
+                      ");
+                    }
+                   ?>
+
 									<div class="col form">
         <h1>Register now!</h1><br>
             <form method="post" action="registreren.php">
