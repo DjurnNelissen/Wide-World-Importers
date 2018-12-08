@@ -17,7 +17,7 @@ include("includes/page-head.php");
                 <label for="passwd">Password:</label>
                 <input class="form-control" type="password" name="passwd">
 
-                <input class="btn btn-info loginknop" type="submit" id="sub" name="submit" value="Inloggen">
+                <input class="btn btn-info loginknop" type="submit" id="sub" name="submit" value="Login">
             </div>
         </form>
         <p class="card-text">Dont have an account? <br> Register <a href="registreren.php"><u>here</u></a>.</p>
