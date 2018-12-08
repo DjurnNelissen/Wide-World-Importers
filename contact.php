@@ -1,5 +1,3 @@
-<!DOCTYPE html>
-<html>
 <?php
 $title = "Contact";
 $stylesheet = true;
@@ -40,6 +38,3 @@ include("includes/page-head.php");
                     </div>
          </div>
         </div>
-
-
-
