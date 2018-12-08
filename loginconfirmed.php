@@ -42,11 +42,11 @@ if (isset($_POST["email"]) && isset($_POST["passwd"])) {
 }
 
 function loginfailed(){
-    header("Location: /Wide-World-Importers-master/login.php?loginfailed=1");
+    header("Location: login.php?loginfailed=1");
 }
 function LoginSuccesvol($user, $pass){
     $_SESSION["user"]= array ('name'=> $user,'hash'=> $pass);
-    header("Location: /Wide-World-Importers-master/login.php?");
+    header("Location: index.php");
 }
 
 
