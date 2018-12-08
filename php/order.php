@@ -1,4 +1,3 @@
-
 <?php
 //this file includes all functions needed to handle orders
 
@@ -331,18 +330,33 @@ function getDeliveryCosts($id) {
   return (getCartWeight() * 2 * $id);
 }
 
+function getOrderTotalPrice($id) {
+    $sql = "SELECT SUM(ol.Quantity * s.RecommendedRetailPrice) FROM orders o
+JOIN orderlines ol ON o.OrderID = ol.OrderID
+JOIN stockitems s ON ol.StockItemID = s.StockItemID
+WHERE o.OrderID = ?";
+    $stmt = runQuery($sql);
+
+}
+
+function getOrderTotalPriceByOrderline($id) {
+    $sql = "SELECT o.quantity * s.RecommendedRetailPrice FROM orderlines o join stockitems s ON o.StockItemID = s.StockItemID WHERE o.OrderID = ?";
+    $stmt = runQuery($sql);
+}
+
 function printPlacedOrders() {
     $stmt = getUserOrders();
 
   while ($row = $stmt->fetch()) {
-    print ($row['OrderID'] . $row['OrderDate'] .  "<br>");
+    print ($row['OrderID'] . "  " . $row['OrderDate'] . "  " .  getOrderTotalPrice(['OrderID'] . "<br>");
     $stmt2 = getOrderLines($row['OrderID']);
     while ($row2 = $stmt2->fetch()) {
-      print($row2['StockItemID'] . " * ". $row2['Quantity'] ."<br>");
+      print($row2['StockItemID'] . $row2['StockItemName'] . $row2['Quantity'] ."<br>");
     }
 
-    print('<br> ---------------------------- <br>');
+
   }
+
 
 }
  ?>
