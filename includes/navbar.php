@@ -21,7 +21,7 @@
 			</li>
 			<li class="nav-item" id="Contact">
 				<a href="contact.php" class="nav-link">
-						<i class="fas fa-user"></i>Contact
+						<i class="fas fa-address-book"></i>Contact
 				</a>
 			</li>
 
