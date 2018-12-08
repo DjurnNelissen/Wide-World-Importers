@@ -89,17 +89,6 @@ function passwordNotEqual($password,$passwordcheck){
     }
 }
 
-//checks if the username already exist
-function usernameUsed($email){
-
-    $sql = "SELECT LogonName FROM people";
-
-    if($email != runQuery($sql)){
-        return true;
-    }else{
-        return false;
-    }
-}
 
 // password requirements that the password must need
 //function passwordReq ($password){
@@ -132,6 +121,32 @@ function getLoggedInName () {
   return '';
 }
 
+
+
+// checks whether the repeated password is the same as the password
+function passwordEqual($a,$b){
+    if($a == $b){
+        return true;
+    } else {
+        return false;
+    }
+}
+
+//checks if the username already exist
+function usernameNotUsed($i){
+
+    $sql = "SELECT LogonName FROM people WHERE LogonNamw = $i";
+
+   $stmt = runQuery($sql);
+
+    If($stmt->rowCount() > 0) {
+        return false;
+    } else {
+        return true;
+    }
+}
+
+
 //shows name when logged in the navbar
 function checknav()
 {
@@ -148,3 +163,4 @@ function checknav()
 }
 
  ?>
+
