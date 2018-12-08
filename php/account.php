@@ -79,28 +79,16 @@ function setUser ($user, $pass) {
   ];
 }
 
+
 // checks whether the repeated password is the same as the password
-function passwordEqual($a,$b){
-    if($a == $b){
+function passwordNotEqual($password,$passwordcheck){
+    if($password == $passwordcheck){
         return true;
-    } else {
+    }else{
         return false;
     }
 }
 
-//checks if the username already exist
-function usernameNotUsed($i){
-
-    $sql = "SELECT LogonName FROM people WHERE LogonNamw = $i";
-
-   $stmt = runQuery($sql);
-
-    If($stmt->rowCount() > 0) {
-        return false;
-    } else {
-        return true;
-    }
-}
 
 // password requirements that the password must need
 //function passwordReq ($password){
@@ -134,4 +122,45 @@ function getLoggedInName () {
 }
 
 
+
+// checks whether the repeated password is the same as the password
+function passwordEqual($a,$b){
+    if($a == $b){
+        return true;
+    } else {
+        return false;
+    }
+}
+
+//checks if the username already exist
+function usernameNotUsed($i){
+
+    $sql = "SELECT LogonName FROM people WHERE LogonNamw = $i";
+
+   $stmt = runQuery($sql);
+
+    If($stmt->rowCount() > 0) {
+        return false;
+    } else {
+        return true;
+    }
+}
+
+
+//shows name when logged in the navbar
+function checknav()
+{
+    if ((isset($_SESSION["user"]))) {
+        $getgbnaam = "select * from people where LogonName= '" . $_SESSION["user"]["name"] . "'";
+        $pfnaam = runQuery($getgbnaam);
+        $regel = $pfnaam->fetch();
+        print '<a class="nav-link"   href="login.php"><i class="fas fa-user"></i> ' . $regel["PreferredName"] . ' </a></li>';
+        print '<a class="nav-link"   href="logout.php"><i class="fas fa-key"></i> Logout </a></li>';
+    } else {
+        print '<a class="nav-link"   href="login.php"><i class="fas fa-user"></i> Login </a></li>';
+        print '<a class="nav-link"   href="registreren.php"><i class="fas fa-user-edit"></i> Register </a></li>';
+    }
+}
+
  ?>
+
