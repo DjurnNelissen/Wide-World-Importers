@@ -132,5 +132,19 @@ function getLoggedInName () {
   return '';
 }
 
+//shows name when logged in the navbar
+function checknav()
+{
+    if ((isset($_SESSION["user"]))) {
+        $getgbnaam = "select * from people where LogonName= '" . $_SESSION["user"]["name"] . "'";
+        $pfnaam = runQuery($getgbnaam);
+        $regel = $pfnaam->fetch();
+        print '<a class="nav-link"   href="login.php"><i class="fas fa-user"></i> ' . $regel["PreferredName"] . ' </a></li>';
+        print '<a class="nav-link"   href="logout.php"><i class="fas fa-key"></i> Logout </a></li>';
+    } else {
+        print '<a class="nav-link"   href="login.php"><i class="fas fa-user"></i> Login </a></li>';
+        print '<a class="nav-link"   href="registreren.php"><i class="fas fa-user-edit"></i> Register </a></li>';
+    }
+}
 
  ?>
