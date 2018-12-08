@@ -332,7 +332,7 @@ function getDeliveryCosts($id) {
 }
 
 function printPlacedOrders() {
-    $row = getUserOrders();
+    $stmt = getUserOrders();
 
   while ($row = $stmt->fetch()) {
     print ($row['OrderID'] . "<br>");
