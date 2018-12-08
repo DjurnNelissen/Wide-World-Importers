@@ -1,6 +1,8 @@
 <?php
   session_start();
-  include_once('php/product.php');
+  include_once('php/cart.php');
+  include_once('php/order.php');
+  addToCart(1,1);
+  print(getDeliveryCosts(4));
 
-  DumpSQl(findProducts2('Dev Mug WHITE', null, 'priceD'));
  ?>

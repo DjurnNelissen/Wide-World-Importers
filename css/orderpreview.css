@@ -1,0 +1,41 @@
+.items {
+
+}
+
+.items > .row > .col-12 > .row > .col-3 > img {
+  width: 75px;
+  height: 75px;
+}
+
+.item > .row > .col-3 {
+
+}
+
+.item > .row > .col-2 {
+
+}
+
+.naw {
+
+}
+
+.order {
+
+
+}
+
+.order-foot {
+
+}
+
+.page-content {
+    height: 100vh;
+}
+
+.NAW-buttons {
+  text-align: center;
+}
+
+.footer-buttons {
+  text-align: center;
+}

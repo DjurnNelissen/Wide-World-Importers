@@ -1,3 +1,4 @@
+
 <?php
 include_once('db.php');
 
@@ -20,12 +21,12 @@ function addToCart ($productID, $amount) {
     //check if the product already is in the cart
     if (array_key_exists($productID,$_SESSION['cart'])) {
       //only add the amount
-      $_SESSION['cart'][$productID]['amount'] = $_SESSION['cart'][$productID]['amount'] + $amount;
+      $_SESSION['cart'][$productID]['amount'] = round($_SESSION['cart'][$productID]['amount'] + $amount);
     } else {
       //add the product entirely
       $_SESSION['cart'][$productID] = [
         'ID' => $productID, // ID isnt really needed since its already in the key
-        'amount' => $amount
+        'amount' => round($amount)
       ];
     }
   }
@@ -49,8 +50,12 @@ function removeFromCart ($productID, $amount) {
 //returns a statement object with all products currently in the cart
 function fetchProductsFromCart () {
   if (checkCart()) {
-    $sql = "SELECT * FROM stockitems WHERE StockItemID IN (" . arrayToSQLString(array_keys($_SESSION['cart'])) . ")";
-    return runQuery($sql);
+    $arr = arrayToSQLString(array_keys($_SESSION['cart']));
+    if ($arr != "") {
+      $sql = "SELECT * FROM stockitems WHERE StockItemID IN (" . $arr . ")";
+        return runQuery($sql);
+    }
+
   }
 }
 
@@ -61,6 +66,7 @@ function fetchProductsFromCartAsArray () {
     //creates a new array to store all products
     $result = [];
     //adds each product, also includes the amount in the array
+    if ($stmt) {
     while ($row = $stmt->fetch()) {
       $id = $row['StockItemID'];
       if (array_key_exists($id, $_SESSION['cart'])) {
@@ -69,6 +75,7 @@ function fetchProductsFromCartAsArray () {
         array_push($result,$input);
       }
     }
+  }
     return $result;
   }
 }
@@ -80,7 +87,7 @@ function setProductInCartCount ($id, $amount) {
     //checks if the product is actually in the cart
     if (array_key_exists($id, $_SESSION['cart'])) {
       if ($amount > 0) {
-        $_SESSION['cart'][$id]['amount'] = $amount;
+        $_SESSION['cart'][$id]['amount'] = round($amount);
       } else {
         //remove product
         unset($_SESSION['cart'][$id]);
@@ -166,7 +173,7 @@ function printCartFooter () {
 
       <!-- prijs -->
       <div class='col-1'>
-        <button class='btn btn-success' " . returnDisabledIfCartEmpty() . ">Checkout</button>
+        <button class='btn btn-success' " . returnDisabledIfCartEmpty() . " onclick='placeOrder()'>Checkout</button>
       </div>
 
       <!-- aantal -->
@@ -220,6 +227,54 @@ function getTotalCartPrice () {
     //return total
     return $totaal;
   }
+}
+
+//gets the total amount of items in your cart
+function getTotalItemsInCart () {
+  if (checkCart()) {
+    $total = 0;
+    foreach ($_SESSION['cart'] as $key => $value) {
+      $total = $total + $value['amount'];
+    }
+    return $total;
+  }
+}
+
+//checks if the cart has a chilled product
+function cartHasFrozenProduct () {
+  if (checkCart() && count($_SESSION['cart']) > 0) {
+
+    $sql = "SELECT COUNT(*) FROM stockitems WHERE StockItemID IN (" .   arrayToSQLString(array_keys($_SESSION['cart'])) . ") AND IsChillerStock = 1 ";
+    $stmt = runQuery($sql);
+    $row = $stmt->fetch();
+
+    if ($row['COUNT(*)'] > 0) {
+      return true;
+    }
+  }
+  return false;
+}
+
+//gets the weight of your order
+function getCartWeight () {
+  $total = 0;
+  if (checkCart()) {
+    foreach ($_SESSION['cart'] as $key => $value) {
+      $total = $total + (getProductWeight($key) * $value['amount']);
+    }
+  }
+  return $total;
+}
+
+//returns the weight per unit from product
+function getProductWeight ($id) {
+  $sql = "SELECT TypicalWeightPerUnit FROM stockitems WHERE StockItemID = ?";
+
+  $stmt = runQueryWithParams($sql, array($id));
+
+  $row = $stmt->fetch();
+
+  return $row['TypicalWeightPerUnit'];
 }
 
  ?>

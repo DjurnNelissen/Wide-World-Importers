@@ -17,6 +17,7 @@ $housenumber = filter_input(INPUT_POST, 'housenumber', FILTER_SANITIZE_STRING);
 $postalcode = filter_input(INPUT_POST, 'postalcode', FILTER_SANITIZE_STRING);
 
 
+if (isset($_POST)) {
 // Hashed password
 $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
@@ -26,16 +27,30 @@ if(usernameNotUsed($email) && passwordEqual($password, $passwordcheck)) {
         VALUES ((SELECT MAX(pe.PersonID) + 1 FROM people pe) , '$fullname', '$prefferedname', '" .  $prefferedname . " " .  $fullname . "', 1, '$email', '$hashedPassword', 1, '$phonenumber', '$email', 1, (SELECT CURDATE()), '9999-12-31 23:59:59')";
 
 
-        $sqlCustomer = " INSERT INTO customers (CustomerID, CustomerName, BillToCustomerID, CustomerCategoryID, PrimaryContactPersonID, DeliveryMethodID, DeliveryCityID, PostalCityID, CreditLimit, AccountOpenedDate, StandardDiscountPercentage, IsStatementSent, IsOnCreditHold, PaymentDays, PhoneNumber, DeliveryAddressLine1, DeliveryAddressLine2, DeliveryPostalCode, LastEditedBy, ValidFrom, ValidTo)
-        VALUES ((SELECT MAX(c.CustomerID) + 1 FROM customers c) , '$fullname', (SELECT MAX(cu.CustomerID) + 1 FROM customers cu), 9, (SELECT MAX(PersonID) FROM people), 1, 1, '$postalcode', 0, (SELECT CURDATE()), 0, 0, 0, 7, '$phonenumber', '$housenumber', '$street', '$postalcode', 1, (SELECT CURDATE()), '9999-12-31 23:59:59')";
+// query data stores data in the database
+$sqlPeople = " INSERT INTO people (PersonID, Fullname, PreferredName, SearchName, IsPermittedToLogon, LogonName, HashedPassword, IsSystemUser, PhoneNumber, EmailAddress, LastEditedBy, ValidFrom, ValidTo, IsExternalLogonProvider, IsEmployee, IsSalesperson)
+VALUES ((SELECT MAX(pe.PersonID) + 1 FROM people pe) , '$fullname', '$prefferedname', '" .  $prefferedname . " " .  $fullname . "', 1, '$email', '$hashedPassword', 1, '$phonenumber', '$email', 1, (SELECT CURDATE()), '9999-12-31 23:59:59', 0, 0, 0)";
 
-        $sqlAccount = " INSERT INTO accounts (PersonID, CustomerID)
-        VALUES ((SELECT MAX(PersonID) FROM people),
+$stmt = runQuery($sqlPeople);
+
+//var_dump($stmt);
+
+$sqlCustomer = " INSERT INTO customers (CustomerID, CustomerName, BillToCustomerID, CustomerCategoryID, PrimaryContactPersonID, DeliveryMethodID, DeliveryCityID, PostalCityID, CreditLimit, AccountOpenedDate, StandardDiscountPercentage, IsStatementSent, IsOnCreditHold, PaymentDays, PhoneNumber, DeliveryAddressLine1, DeliveryAddressLine2, DeliveryPostalCode, LastEditedBy, ValidFrom, ValidTo, FaxNumber, WebsiteURL, PostalAddressLine1, PostalAddressLine2, PostalPostalCode)
+VALUES ((SELECT MAX(c.CustomerID) + 1 FROM customers c) , '$fullname', (SELECT MAX(cu.CustomerID) + 1 FROM customers cu), 9, (SELECT MAX(PersonID) FROM people), 1, 1, 1, 0, (SELECT CURDATE()), 0, 0, 0, 7, '$phonenumber', '$housenumber', '$street', '$postalcode', 1, (SELECT CURDATE()), '9999-12-31 23:59:59', '', '', '$housenumber', '$street', '$postalcode')";
+
+
+$stmt = runQuery($sqlCustomer);
+
+//var_dump($sqlCustomer);
+//var_dump($stmt);
+
+$sqlAccount = " INSERT INTO accounts (PersonID, CustomerID)
+VALUES ((SELECT MAX(PersonID) FROM people),
         (SELECT MAX(CustomerID) FROM customers))";
 
-        $stmt = runQuery($sqlPeople);
-        $stmt = runQuery($sqlCustomer);
-        $stmt = runQuery($sqlAccount);
+$stmt = runQuery($sqlAccount);
+
+//var_dump($stmt);
 
 }
 ?>
@@ -44,7 +59,6 @@ if(usernameNotUsed($email) && passwordEqual($password, $passwordcheck)) {
 <!------------->
 <!--- HTML ---->
 <!------------->
-
 
 
 <!-- include the header of the page -->

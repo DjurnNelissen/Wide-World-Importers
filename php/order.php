@@ -1,3 +1,4 @@
+
 <?php
 //this file includes all functions needed to handle orders
 
@@ -51,25 +52,28 @@ function createOrder () {
   //we can only create an order if the user is logged in
   if (checkLogin()) {
     //make sure we have a cart
-    if (checkCart()) {
+    if (checkCart() && isset($_SESSION['devOptions'])) {
       //if the cart has more then 1 item
       if (count($_SESSION['cart']) > 0) {
         $params = [];
+        //current date
+        $date = date("Y/m/d");
+
         //get last placed order
         $newOrderID = getLastOrderID() + 1;
         array_push($params, $newOrderID);
         //fetch the account ID
         $accID = getAccountID();
-        array_push($params, $accID, $accID,$newOrderID);
+        array_push($params, $accID, $accID,$date,$newOrderID,$_SESSION['devOptions']['instruction'],$date, $_SESSION['devOptions']['date']);
 
         //create an order
         $sql = "INSERT INTO orders (
-          OrderID, CustomerID, SalesPersonID, PickedByPersonID,
+          OrderID, CustomerID, SalespersonPersonID,ContactPersonID, PickedByPersonID,
           OrderDate, CustomerPurchaseOrderNumber, IsUnderSupplyBackordered, Comments,
-          DeliveryInstructions, LastEditedBy, LastEditedWhen
+          DeliveryInstructions, LastEditedBy, LastEditedWhen, ExpectedDeliveryDate
         )
-        VALUES (?,(SELECT CustomerID FROM accounts WHERE AccountID = ?),1,(SELECT PersonID FROM accounts WHERE AccountID = ?),
-        NOW(),?, 0, '', '', 1, NOW ()
+        VALUES (?,(SELECT CustomerID FROM accounts WHERE AccountID = ?),1,1,(SELECT PersonID FROM accounts WHERE AccountID = ?),
+        ?,?, 0, '', ?, 1, ?, ?
       )";
 
         //execute the query
@@ -77,7 +81,7 @@ function createOrder () {
 
         //add order lines
         foreach ($_SESSION['cart'] as $key => $value) {
-          createOrderLine($value, $newOrderID);
+          createOrderLine($value, $newOrderID, $date);
         }
       }
     }
@@ -85,10 +89,10 @@ function createOrder () {
 }
 
 //generates an order line for a product
-function createOrderLine ($item, $orderID) {
+function createOrderLine ($item, $orderID, $time) {
   if (checkLogin()) {
     //setup values
-    $params = array($orderID, $item['id'], $item['id'],$item['id'], $item['amount'], $item['id'], $item['id'], $item['amount'] );
+    $params = array($orderID, $item['ID'], $item['ID'],$item['ID'], $item['amount'], $item['ID'], $item['ID'], $item['amount'], $time, $time );
     //setup query
     $sql = "INSERT INTO orderlines (
       OrderLineID, OrderID, StockItemID, Description,
@@ -96,13 +100,13 @@ function createOrderLine ($item, $orderID) {
       PickingCompletedWhen, LastEditedBy, LastEditedWhen
       )
       VALUES (
-        (SELECT MAX(OrderLineID) + 1 FROM orderlines),
+        (SELECT MAX(o.OrderLineID) + 1 FROM orderlines o),
         ?, ?, (SELECT StockItemName FROM stockitems WHERE StockItemID = ?),
         (SELECT UnitPackageID FROM stockitems Where StockItemID = ?),
         ?,
         (SELECT UnitPrice FROM stockitems WHERE StockItemID = ?),
         (SELECT TaxRate FROM stockitems WHERE StockItemID = ?),
-        ?, NOW(), 1,1
+        ?, ?, 1, ?
       )";
       //execute query
       $stmt = runQueryWithParams($sql, $params);
@@ -122,17 +126,204 @@ function getLastOrderID () {
   return $row['MAX(OrderID)'];
 }
 
-//gets the weight of your order
-function getOrderWeight () {
-  if (checkCart()) {
-    $total = 0;
-    foreach ($_SESSION['cart'] as $key => $value) {
-      $total = $total + getProductWeight($key);
-    }
-    return $total;
+
+
+//prints the users address and stuff
+function printDeliveryDetails () {
+  if (checkLogin()) {
+    $row = getLoggedInAccDetails();
+
+    $div = "
+    <div class='row card shadow-sm pb-2'>
+      <div class='col-12'>
+        <h3>Personal details</h3>
+        <!-- full name -->
+        <div class='row'>
+          <div class='col-6'>
+            <p>
+            Fullname
+            </p>
+          </div>
+          <div class='col-6'>
+            <p>
+              " . $row['FullName'] . "
+            </p>
+          </div>
+        </div>
+        <!-- line 1-->
+        <div class='row'>
+        <div class='col-6'>
+          <p>
+            Address Line 1
+          </p>
+        </div>
+          <div class='col-6'>
+            <p>
+             " . $row['DeliveryAddressLine1'] . "
+            </p>
+          </div>
+        </div>
+        <!-- line 2-->
+        <div class='row'>
+        <div class='col-6'>
+          <p>
+          Address Line 2
+          </p>
+        </div>
+          <div class='col-6'>
+            <p>
+              " . $row['DeliveryAddressLine2'] . "
+            </p>
+          </div>
+        </div>
+        <!-- postalcode -->
+        <div class='row'>
+        <div class='col-6'>
+          <p>
+              Postal Code
+          </p>
+        </div>
+          <div class='col-6'>
+            <p>
+             " . $row['DeliveryPostalCode'] . "
+            </p>
+          </div>
+        </div>
+        <!-- e-mail -->
+        <div class='row'>
+        <div class='col-6'>
+          <p>
+            E-mail
+          </p>
+        </div>
+          <div class='col-6'>
+            <p>
+              " . $row['EmailAddress'] . "
+            </p>
+          </div>
+        </div>
+        <!-- phone -->
+        <div class='row'>
+        <div class='col-6'>
+          <p>
+            Phone
+          </p>
+        </div>
+          <div class='col-6'>
+            <p>
+              " . $row['PhoneNumber'] . "
+            </p>
+          </div>
+        </div>
+      </div>
+      <!-- buttons -->
+
+        <div class='col-12 NAW-buttons'>
+          <div class='alert alert-info'>
+            <p>
+              If your personal details are incorrect, Please contact us via our
+              <a href='contact.php'> contact page </a>
+                so we can help you resolve the issue.
+            </p>
+          </div>
+        </div>
+    </div>
+    ";
+
+    print($div);
   }
 }
 
+//prints items currently in cart
+function printOrderItems () {
+  //cart has to exist
+  if (checkCart()) {
+    //needs atleast one item in cart
+    if (count($_SESSION['cart']) > 0) {
+      $products = fetchProductsFromCartAsArray();
 
+      foreach ($products as $key => $product) {
+        $div = "
+        <div class='row mt-1 item'>
+          <div class='col-12 card shadow-sm'>
+            <div class='row'>
+          <!-- item -->
+          <div class='col-3'>
+            <!-- item image -->
+            <img class='img-fluid rounded img-thumbnail mx-auto' src='https://sc02.alicdn.com/kf/HTB1wYdzPFXXXXaXapXXq6xXFXXX2/USB-Flash-Drive-8-GB-Memory-Stick.jpg_350x350.jpg' />
+          </div>
+          <div class='col-3'>
+            <!-- item name -->
+            <p>
+              <a href='product.php?id=" . $product['StockItemID'] . "'> " . $product['StockItemName'] . "</a>
+            </p>
+          </div>
+          <div class='col-2'>
+            <!-- item price -->
+            <p>
+              € " . $product['RecommendedRetailPrice'] . "
+            </p>
+          </div>
+          <div class='col-2'>
+            <!-- amount -->
+            <p>
+              " . $product['amount'] . "
+            </p>
+          </div>
+          <div class='col-2'>
+            <!-- total price -->
+              € " . ($product['RecommendedRetailPrice'] * $product['amount']) . "
+          </div>
+        </div>
 
+        </div>
+
+        </div>
+
+        ";
+
+        print($div);
+      }
+    }
+  }
+}
+
+//returns all delivery methods
+function getDeliveryMethods () {
+  $sql = "SELECT * FROM deliverymethods";
+
+  return runQuery($sql);
+}
+
+//prints all delivery methods
+function printDeliveryMethods () {
+  if (cartHasFrozenProduct()) {
+    $methods =  [
+      '5' => 'Chilled Van',
+      '9' => 'Refrigerated Road Freight',
+      '10' => 'Refrigerated Air Freight'
+    ];
+
+    foreach ($methods as $key => $value) {
+      print("<option value='" . $key ."'> " . $value . " </option>");
+    }
+  } else {
+  $stmt = getDeliveryMethods();
+
+    while ($row = $stmt->fetch()) {
+      print("<option value='" . $row['DeliveryMethodID'] ."'> " . $row['DeliveryMethodName'] . " </option>");
+    }
+  }
+}
+
+function getDeliveryMethodName ($id) {
+  $sql = "SELECT DeliveryMethodName FROM deliverymethods WHERE DeliveryMethodID = ?";
+  $stmt = runQueryWithParams($sql, array($id));
+  $row = $stmt->fetch();
+  return $row['DeliveryMethodName'];
+}
+
+function getDeliveryCosts($id) {
+  return (getCartWeight() * 2 * $id);
+}
  ?>

@@ -42,6 +42,11 @@ function searchProducts (cat) {
 
 }
 
+//places an order
+function placeOrder () {
+  window.location.href = "delivery.php";
+}
+
 //adds a product to the cart
 function addToCart (ID, amount) {
   sendPostRequest('api/addToCart.php', 'id=' + ID.toString() + '&amount=' + amount.toString(), function (res) {
@@ -113,9 +118,14 @@ function getCartTotalPrice (callback) {
   sendPostRequest('api/getCartTotalPrice.php','',callback);
 }
 
+//returns the deliverycosts
+function getDeliveryCosts (ID, callback) {
+  sendPostRequest('api/getDeliveryCosts.php', 'id=' + ID.toString(), callback);
+}
+
 //empties the cart
 function emptyCart() {
-  sendPostRequest('/api/emptyCart.php','',function (res) {
+  sendPostRequest('api/emptyCart.php','',function (res) {
     location.reload();
   });
 }
@@ -137,8 +147,17 @@ function sendPostRequest (url, params, callback) {
   http.send(params);
 }
 
+function setDeliveryCost() {
+  var id = document.getElementById('selectedMethod').value;
+  getDeliveryCosts(id, function (res) {
+    console.log(res);
+    document.getElementById('deliveryCosts').innerHTML = "Delivery cost: € " + res.toString();
+  })
+}
+
 $(function () {
   $('.add-to-cart-button').popover({
     container: 'body'
   })
 })
+
