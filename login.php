@@ -1,5 +1,3 @@
-<!DOCTYPE html>
-<html>
 <?php
 $title = "Login";
 $stylesheet = "css/login.css";
