@@ -51,7 +51,7 @@ VALUES ((SELECT MAX(PersonID) FROM people),
 $stmt = runQuery($sqlAccount);
 
 //var_dump($stmt);
-
+  header('location: login.php');
 }
 }
 ?>
