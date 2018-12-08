@@ -1,0 +1,12 @@
+.page-content{
+    background-image: url('../img/Login-Background.jpg');
+    background-size: cover;
+    height: 1080px;
+}
+
+.login-card {
+    margin-top: 15vh;
+}
+.loginknop{
+    margin-top: 10px;
+}

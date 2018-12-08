@@ -1,3 +1,4 @@
+
 <?php
 include_once('db.php');
 include_once('cart.php');
@@ -277,3 +278,4 @@ function getMostOrderedProducts () {
 }
 
  ?>
+

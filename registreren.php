@@ -1,6 +1,7 @@
-<!DOCTYPE html>
 <?php
 include_once ('php/account.php');
+
+//session_start();
 
 // Variable for user input
 $fullname = filter_input(INPUT_POST, 'fullname', FILTER_SANITIZE_STRING);
@@ -19,6 +20,11 @@ $postalcode = filter_input(INPUT_POST, 'postalcode', FILTER_SANITIZE_STRING);
 if (isset($_POST)) {
 // Hashed password
 $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+if(usernameNotUsed($email) && passwordEqual($password, $passwordcheck)) {
+    // query data stores data in the database
+        $sqlPeople = " INSERT INTO people (PersonID, Fullname, PreferredName, SearchName, IsPermittedToLogon, LogonName, HashedPassword, IsSystemUser, PhoneNumber, EmailAddress, LastEditedBy, ValidFrom, ValidTo)
+        VALUES ((SELECT MAX(pe.PersonID) + 1 FROM people pe) , '$fullname', '$prefferedname', '" .  $prefferedname . " " .  $fullname . "', 1, '$email', '$hashedPassword', 1, '$phonenumber', '$email', 1, (SELECT CURDATE()), '9999-12-31 23:59:59')";
 
 
 // query data stores data in the database
@@ -45,6 +51,7 @@ VALUES ((SELECT MAX(PersonID) FROM people),
 $stmt = runQuery($sqlAccount);
 
 //var_dump($stmt);
+
 }
 ?>
 
@@ -53,56 +60,54 @@ $stmt = runQuery($sqlAccount);
 <!--- HTML ---->
 <!------------->
 
-<html>
-  <head>
-    <meta charset="utf-8">
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+<!-- include the header of the page -->
+<?php
+    $title = "Register";
+    $stylesheet = FALSE;
+    $sidebar = FALSE;
+    include("includes/page-head.php");
+?>
 
-    <link rel="stylesheet" href="css/main.css" media="screen" title="no title" type="text/css">
-
-    <title>WWI Webshop</title>
-  </head>
-
-  <body>
-
-      <br><br>
-
-
-        <div class="col form">
-        <h1>Registreer je nu!</h1><br>
+						<div class="row px-5 py-4">
+							<div class="card col shadow-sm">
+								<div class="row p-3">
+									<div class="col form">
+        <h1>Register now!</h1><br>
             <form method="post" action="registreren.php">
-                Volledige naam<br>
+                Fullname<br>
                 <input type="text" name="fullname" size="30" required><br><br>
 
-                Roepnaam<br>
+                Preffered name<br>
                 <input type="text" name="prefferedname" size="30" required><br><br>
 
-                Straat + Huisnr<br>
+                Street + Housenumber<br>
                 <input type="text" name="street" size="30" required>
                 <input type="text" name="housenumber" size="4" required><br><br>
 
 
-                Postcode + Plaats<br>
+                Postalcode + City<br>
                 <input type="text" name="postalcode" size="10" required>
                 <input type="text" name="city" size="25" required><br><br>
 
-                E-mail:<br>
+                E-mail<br>
                 <input type="text" name="email" size="30" required><br><br>
 
-                Telefoonnummer:<br>
+                Phonenumber<br>
                 <input type="text" name="phonenumber" size="30" required><br><br><br>
 
-                Wachtwoord:<br>
+                Password<br>
                 <input type="password" name="password" size="30" required><br><br>
 
-                Herhaal wachtwoord:<br>
+                Repeat password<br>
                 <input type="password" name="passwordcheck" size="30" required><br>
                 <br>
-                <input type="submit" value="Aanmelden">
+                <input type="submit" value="Register">
 
             </form>
         </div>
-
-</body>
-</html>
+								</div>
+							</div>
+						</div>
+<!-- include the footer of the page -->
+<?php include("includes/page-foot.php") ?>
