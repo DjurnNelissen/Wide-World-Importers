@@ -110,6 +110,18 @@ include_once('php/cart.php');
                  </p>
              </div>
             </div>
+            <div class="row">
+              <div class="col-6">
+                <p>
+                    Weight
+                </p>
+              </div>
+              <div class="col-6">
+                <p>
+                    <?php print(getCartWeight()) ?> KG
+                </p>
+              </div>
+            </div>
           </div>
         </div>
         <div class="row">
@@ -142,9 +154,7 @@ include_once('php/cart.php');
 
           </div>
           <div class="col-2">
-            <p>
-              Weight: <?php print(getCartWeight()) ?> KG
-            </p>
+
           </div>
           <div class="col-2">
             <p>
@@ -162,10 +172,12 @@ include_once('php/cart.php');
       <div class="col-4 card shadow-sm py-2">
         <div class="row">
             <div class="col-6">
-              <button type="button" name="button" class="btn btn-info">Continue shopping</button>
+              <a href="index.php"><button type="button" name="button" class="btn btn-info">Continue shopping</button></a>
             </div>
             <div class="col-6">
-              <button type="button" name="button" class="btn btn-info">Checkout</button>
+              <a href="https://www.ideal.nl/en/" target="_blank">
+                  <button type="button" name="button" class="btn btn-info">Checkout</button>
+              </a>
             </div>
         </div>
       </div>

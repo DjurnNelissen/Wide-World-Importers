@@ -110,7 +110,12 @@ if (checkLogin()) {
     </div>
 		<div class="row cost">
 			<div class="col-12" id='deliveryCosts'>
-					Delivery cost: € <?php print(getDeliveryCosts(1)); ?>
+					Delivery cost: € <?php
+			 		if (cartHasFrozenProduct()) {
+						print(getDeliveryCosts(6));
+					} else {
+							print(getDeliveryCosts(1));
+					} ?>
 			</div>
 		</div>
 		<div class="row comment">

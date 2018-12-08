@@ -51,7 +51,7 @@ function createOrder () {
   //we can only create an order if the user is logged in
   if (checkLogin()) {
     //make sure we have a cart
-    if (checkCart()) {
+    if (checkCart() && isset($_SESSION['devOptions'])) {
       //if the cart has more then 1 item
       if (count($_SESSION['cart']) > 0) {
         $params = [];
@@ -63,16 +63,16 @@ function createOrder () {
         array_push($params, $newOrderID);
         //fetch the account ID
         $accID = getAccountID();
-        array_push($params, $accID, $accID,$date,$newOrderID,$date);
+        array_push($params, $accID, $accID,$date,$newOrderID,$_SESSION['devOptions']['instruction'],$date, $_SESSION['devOptions']['date']);
 
         //create an order
         $sql = "INSERT INTO orders (
           OrderID, CustomerID, SalespersonPersonID,ContactPersonID, PickedByPersonID,
           OrderDate, CustomerPurchaseOrderNumber, IsUnderSupplyBackordered, Comments,
-          DeliveryInstructions, LastEditedBy, LastEditedWhen
+          DeliveryInstructions, LastEditedBy, LastEditedWhen, ExpectedDeliveryDate
         )
         VALUES (?,(SELECT CustomerID FROM accounts WHERE AccountID = ?),1,1,(SELECT PersonID FROM accounts WHERE AccountID = ?),
-        ?,?, 0, '', '', 1, ?
+        ?,?, 0, '', ?, 1, ?, ?
       )";
 
         //execute the query
