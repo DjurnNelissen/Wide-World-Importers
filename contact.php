@@ -24,7 +24,7 @@ include("includes/page-head.php");
 <div class="row">
         <div class="col-12 col-md-7 card-body">
                 <h1 class="card-title">Help!</h1>
-                <p>For all your inquiries, please feel free to contact us by mail, on the following address: <a href="mailto:TG.Huizinga@windesheim.nl">service@wwi.com</a>. We will get back to you within a few workingdays.<br>
+                <p>For all your inquiries, please feel free to contact us by mail, on the following address: <a href="mailto:service@wwi.com">service@wwi.com</a>. We will get back to you within a few workingdays.<br>
                 <b>NOTE: </b>if you have an ordernumber, please include it in the mail.</p>
         </div>
         <div class="col-12 col-md-5 card-body">
