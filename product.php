@@ -125,6 +125,17 @@
 												</div>
 											</form>
 
+										 <!-- contact -->
+										 <div class="col-12 my-2">
+											 <a href="mailto:info@wideworldimporters.com
+																?subject=<?php print($row['StockItemName']); ?>
+																&body=Hello Wide World Importers,
+																%0A%0AI have a question about your product: <?php print($row['StockItemName']); ?>.
+																%0A%0AMy question is
+																%0A%0A
+											 " class="btn btn-outline-info"><i class="far fa-envelope"></i> Ask a question.</a>
+										 </div>
+
 											<!-- Specificaties product -->
 											<!--
 												if ($row['ProductSpecifications']) {
