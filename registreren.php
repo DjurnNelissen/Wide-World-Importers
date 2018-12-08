@@ -23,8 +23,8 @@ $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
 if(usernameNotUsed($email) && passwordEqual($password, $passwordcheck)) {
     // query data stores data in the database
-        $sqlPeople = " INSERT INTO people (PersonID, Fullname, PreferredName, SearchName, IsPermittedToLogon, LogonName, HashedPassword, IsSystemUser, PhoneNumber, EmailAddress, LastEditedBy, ValidFrom, ValidTo)
-        VALUES ((SELECT MAX(pe.PersonID) + 1 FROM people pe) , '$fullname', '$prefferedname', '" .  $prefferedname . " " .  $fullname . "', 1, '$email', '$hashedPassword', 1, '$phonenumber', '$email', 1, (SELECT CURDATE()), '9999-12-31 23:59:59')";
+    $sqlPeople = " INSERT INTO people (PersonID, Fullname, PreferredName, SearchName, IsPermittedToLogon, LogonName, HashedPassword, IsSystemUser, PhoneNumber, EmailAddress, LastEditedBy, ValidFrom, ValidTo)
+    VALUES ((SELECT MAX(pe.PersonID) + 1 FROM people pe) , '$fullname', '$prefferedname', '" .  $prefferedname . " " .  $fullname . "', 1, '$email', '$hashedPassword', 1, '$phonenumber', '$email', 1, (SELECT CURDATE()), '9999-12-31 23:59:59')";
 
 
 // query data stores data in the database
@@ -52,6 +52,7 @@ $stmt = runQuery($sqlAccount);
 
 //var_dump($stmt);
 
+}
 }
 ?>
 
@@ -102,7 +103,7 @@ $stmt = runQuery($sqlAccount);
                 Repeat password<br>
                 <input type="password" name="passwordcheck" size="30" required><br>
                 <br>
-                <input type="submit" value="Register">
+                <input class="btn btn-info" type="submit" value="Register">
 
             </form>
         </div>

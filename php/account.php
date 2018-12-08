@@ -167,11 +167,11 @@ function passwordEqual($a,$b){
 //checks if the username already exist
 function usernameNotUsed($i){
 
-    $sql = "SELECT LogonName FROM people WHERE LogonNamw = $i";
+    $sql = "SELECT LogonName FROM people WHERE LogonName = '$i'";
 
    $stmt = runQuery($sql);
-
-    If($stmt->rowCount() > 0) {
+   
+    if($stmt->rowCount() > 0) {
         return false;
     } else {
         return true;
