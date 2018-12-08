@@ -175,9 +175,7 @@ include_once('php/cart.php');
               <a href="index.php"><button type="button" name="button" class="btn btn-info">Continue shopping</button></a>
             </div>
             <div class="col-6">
-              <a href="https://www.ideal.nl/en/" target="_blank">
-                  <button type="button" name="button" class="btn btn-info">Checkout</button>
-              </a>
+                  <button type="button" name="button" class="btn btn-info" onclick="confirmOrder()">Checkout</button>
             </div>
         </div>
       </div>

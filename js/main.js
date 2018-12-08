@@ -34,7 +34,7 @@ function searchProducts (cat) {
 
   url.search = search_params.toString();
   //convert to string
-  url.pathname = '/index.php';
+  url.pathname = 'index.php';
   var new_url = url.toString();
 
   //navigate to new url
@@ -158,6 +158,13 @@ function setDeliveryCost() {
   getDeliveryCosts(id, function (res) {
     console.log(res);
     document.getElementById('deliveryCosts').innerHTML = "Delivery cost: € " + res.toString();
+  })
+}
+
+function confirmOrder () {
+  window.open('https://www.ideal.nl/en/', '_blank');
+  sendPostRequest('api/placeOrder.php', '', function (res) {
+    location.href = "orderhistory.php";
   })
 }
 
