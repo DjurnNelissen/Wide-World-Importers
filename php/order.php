@@ -335,7 +335,7 @@ function printPlacedOrders() {
     $stmt = getUserOrders();
 
   while ($row = $stmt->fetch()) {
-    print ($row['OrderID'] . "<br>");
+    print ($row['OrderID'] . $row['OrderDate'] .  "<br>");
     $stmt2 = getOrderLines($row['OrderID']);
     while ($row2 = $stmt2->fetch()) {
       print($row2['StockItemID'] . " * ". $row2['Quantity'] ."<br>");
@@ -343,15 +343,6 @@ function printPlacedOrders() {
 
     print('<br> ---------------------------- <br>');
   }
-    <div class="card-header" id="headingOne">
-                        <div class="row">
-                            <h6 class="col-12 col-sm-2 my-auto">15</h6>
-                            <h6 class="col-12 col-sm-3 my-auto"> 03-01-1997</h6>
-                            <h6 class="col-12 col-sm-3 my-auto">€97,12</h6>
-                            <h6 class="col-12 col-sm-3 my-auto">Verwerkt</h6>
-                            <button class="btn btn-link col-1" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="True" aria-controls="collapseOne">
-                                Open</button>
-                        </div>
-                    </div>
+
 }
  ?>
