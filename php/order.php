@@ -83,6 +83,10 @@ function createOrder () {
         foreach ($_SESSION['cart'] as $key => $value) {
           createOrderLine($value, $newOrderID, $date);
         }
+
+        unset($_SESSION['cart']);
+        unset($_SESSION['devOptions']);
+
       }
     }
   }
