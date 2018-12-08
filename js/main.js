@@ -151,7 +151,7 @@ function setDeliveryCost() {
   var id = document.getElementById('selectedMethod').value;
   getDeliveryCosts(id, function (res) {
     console.log(res);
-    document.getElementById('deliveryCosts').innerHTML = "Delivery cost: " + res.toString();
+    document.getElementById('deliveryCosts').innerHTML = "Delivery cost: € " + res.toString();
   })
 }
 
