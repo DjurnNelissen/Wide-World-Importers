@@ -170,7 +170,7 @@ function usernameNotUsed($i){
     $sql = "SELECT LogonName FROM people WHERE LogonName = '$i'";
 
    $stmt = runQuery($sql);
-   
+
     if($stmt->rowCount() > 0) {
         return false;
     } else {
@@ -186,12 +186,18 @@ function checknav()
         $getgbnaam = "select * from people where LogonName= '" . $_SESSION["user"]["name"] . "'";
         $pfnaam = runQuery($getgbnaam);
         $regel = $pfnaam->fetch();
-        print '<a class="nav-link"   href="orderhistory.php"><i class="fas fa-user"></i> ' . $regel["PreferredName"] . ' </a></li>';
-        print '<a class="nav-link"   href="logout.php"><i class="fas fa-key"></i> Logout </a></li>';
+        print '<li id="Order" id="nav-item"><a class="nav-link"   href="orderhistory.php"><i class="fas fa-user"></i> ' . $regel["PreferredName"] . ' </a></li>';
+        print '<li onclick="logout()" class="nav-item"><a class="nav-link" href="#"><i class="fas fa-key"></i> Logout </a></li>';
     } else {
-        print '<a class="nav-link"   href="login.php"><i class="fas fa-user"></i> Login </a></li>';
-        print '<a class="nav-link"   href="registreren.php"><i class="fas fa-user-edit"></i> Register </a></li>';
+        print '<li class="nav-item" id="Login"><a class="nav-link"   href="login.php"><i class="fas fa-user"></i> Login </a></li>';
+        print '<li class="nav-item" id="register"><a class="nav-link"   href="registreren.php"><i class="fas fa-user-edit"></i> Register </a></li>';
     }
+}
+
+function logout() {
+  unset($_SESSION['user']);
+  unset($_SESSION['cart']);
+  unset($_SESSION['devOptions']);
 }
 
  ?>

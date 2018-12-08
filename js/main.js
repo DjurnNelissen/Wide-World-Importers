@@ -147,6 +147,12 @@ function sendPostRequest (url, params, callback) {
   http.send(params);
 }
 
+function logout () {
+  sendPostRequest('api/logout.php', '', function (res) {
+    location.reload();
+  })
+}
+
 function setDeliveryCost() {
   var id = document.getElementById('selectedMethod').value;
   getDeliveryCosts(id, function (res) {
@@ -160,4 +166,3 @@ $(function () {
     container: 'body'
   })
 })
-

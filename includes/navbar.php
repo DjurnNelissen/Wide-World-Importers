@@ -19,12 +19,12 @@
 			<li id="Cart" class="nav-item">
 				<a class="nav-link" href="winkelwagen.php"><i class="fas fa-shopping-cart"></i> Cart</a>
 			</li>
-			<li id="Login" class="nav-item">
+
 				<?php
-                include_once ("php/account.php");
-                checknav();
-                ?>
-			</li>
+          include_once ("php/account.php");
+          checknav();
+        ?>
+
 		</ul>
 	</div>
 </nav>
@@ -38,6 +38,12 @@
 		navItem.className += " " + "active";
 	} else if (page == "Login"){
 		var navItem = document.getElementById("Login");
+		navItem.className += " " + "active";
+	} else if (page == "Register") {
+		var navItem = document.getElementById("register");
+		navItem.className += " " + "active";
+	} else if (page == "Orderhistory") {
+		var navItem = document.getElementById("Order");
 		navItem.className += " " + "active";
 	}
 </script>

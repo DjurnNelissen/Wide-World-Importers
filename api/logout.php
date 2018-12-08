@@ -1,8 +1,7 @@
 <?php
 session_start();
-//unsets the user
-if (isset($_SESSION['user'])) {
-  unset($_SESSION['user']);
-}
+include_once('../php/account.php');
+
+logout();
 
  ?>
