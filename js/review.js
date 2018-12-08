@@ -59,6 +59,7 @@ function submitReview (ID) {
     //sends the data to the server
     sendPostRequest('api/submitReview.php', 'rating=' + rating.toString() + '&comment=' + comment + '&productID=' + ID.toString(), function (res) {
       //do stuff with the response
+        res = res.trim();
         if (res == 'success') {
           location.reload();
         } else {
