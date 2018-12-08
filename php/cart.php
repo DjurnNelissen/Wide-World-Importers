@@ -228,6 +228,7 @@ function getTotalCartPrice () {
   }
 }
 
+//gets the total amount of items in your cart
 function getTotalItemsInCart () {
   if (checkCart()) {
     $total = 0;
@@ -238,6 +239,7 @@ function getTotalItemsInCart () {
   }
 }
 
+//checks if the cart has a chilled product
 function cartHasFrozenProduct () {
   if (checkCart() && count($_SESSION['cart']) > 0) {
 
@@ -258,10 +260,21 @@ function getCartWeight () {
   $total = 0;
   if (checkCart()) {
     foreach ($_SESSION['cart'] as $key => $value) {
-      $total = $total + (getProductWeight($value['ID']) * $value['amount']);
+      $total = $total + (getProductWeight($key) * $value['amount']);
     }
   }
   return $total;
+}
+
+//returns the weight per unit from product
+function getProductWeight ($id) {
+  $sql = "SELECT TypicalWeightPerUnit FROM stockitems WHERE StockItemID = ?";
+
+  $stmt = runQueryWithParams($sql, array($id));
+
+  $row = $stmt->fetch();
+
+  return $row['TypicalWeightPerUnit'];
 }
 
  ?>

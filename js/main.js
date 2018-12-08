@@ -118,6 +118,11 @@ function getCartTotalPrice (callback) {
   sendPostRequest('api/getCartTotalPrice.php','',callback);
 }
 
+//returns the deliverycosts
+function getDeliveryCosts (ID, callback) {
+  sendPostRequest('api/getDeliveryCosts.php', 'id=' + ID.toString(), callback);
+}
+
 //empties the cart
 function emptyCart() {
   sendPostRequest('api/emptyCart.php','',function (res) {
@@ -140,6 +145,14 @@ function sendPostRequest (url, params, callback) {
   }
 
   http.send(params);
+}
+
+function setDeliveryCost() {
+  var id = document.getElementById('selectedMethod').value;
+  getDeliveryCosts(id, function (res) {
+    console.log(res);
+    document.getElementById('deliveryCosts').innerHTML = "Delivery cost: " + res.toString();
+  })
 }
 
 $(function () {

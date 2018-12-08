@@ -321,4 +321,8 @@ function getDeliveryMethodName ($id) {
   $row = $stmt->fetch();
   return $row['DeliveryMethodName'];
 }
+
+function getDeliveryCosts($id) {
+  return (getCartWeight() * 2 * $id);
+}
  ?>

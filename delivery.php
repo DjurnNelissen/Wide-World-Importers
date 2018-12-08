@@ -97,15 +97,22 @@ if (checkLogin()) {
 			</div>
 		</div>
     <div class="row method">
+
       <div class="col-12">
-        <h5>Delivery method</h5>
-        <select class="" name="devMethod" required>
+				<h5>Delivery method</h5>
+        <select class="" name="devMethod" required onchange="setDeliveryCost()" id="selectedMethod">
           <?php
             printDeliveryMethods();
           ?>
         </select>
       </div>
+
     </div>
+		<div class="row cost">
+			<div class="col-12" id='deliveryCosts'>
+					Delivery cost: <?php print(getDeliveryCosts(1)); ?>
+			</div>
+		</div>
 		<div class="row comment">
 			<div class="col-3">
 				<h5>Delivery instructions</h5>
