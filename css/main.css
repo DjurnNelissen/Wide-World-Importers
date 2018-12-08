@@ -51,6 +51,12 @@ nav {
 	border-bottom: 1px solid #dfdfdf;
 }
 
+/* Sort button */
+select#orderSelect {
+	color: #212529;
+	border-color: darkgrey;
+}
+
 /* Scroll to top */
 .scroll-top {
 	right: 0;
