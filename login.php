@@ -9,6 +9,19 @@ include("includes/page-head.php");
 <div class="card col-12 col-md-4 mx-auto shadow-sm login-card">
     <div class="card-body">
         <h1 class="card-title">Login</h1>
+        <?php
+          if (isset($_GET['loginfailed'])) {
+            print("
+              <div class='row alert alert-danger'>
+               <div class=col-12>
+                <p>
+                  Login credentials did not match.
+               </p>
+               </div>
+              </div>
+            ");
+          }
+         ?>
         <form action="loginconfirmed.php" method="post" >
             <div class="form-group">
 
