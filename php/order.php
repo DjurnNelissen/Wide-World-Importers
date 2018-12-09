@@ -382,7 +382,7 @@ function printPlacedOrders() {
         print("
          <div class='row'>
               <p class='col-12 col-sm-2 my-auto'>" . $row2['StockItemID'] . "</p>
-              <p class='col-12 col-sm-3 my-auto'> " . $row2['StockItemName'] . "</p>
+              <p class='col-12 col-sm-3 my-auto'><a href='product.php?id=" . $row2['StockItemID'] ."'> " . $row2['StockItemName'] . "</a></p>
               <p class='col-12 col-sm-3 my-auto'> " . $row2['Quantity'] ."</p>
               <p class='col-12 col-sm-3 my-auto'> " . $row2['RecommendedRetailPrice']." </p>
               <p class='col-12 col-sm-1 my-auto'> " . $row2['RecommendedRetailPrice'] * $row2['Quantity'] ."</p>
