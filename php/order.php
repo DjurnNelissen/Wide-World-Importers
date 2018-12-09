@@ -350,6 +350,8 @@ function getOrderTotalPriceByOrderline($id) {
 function printPlacedOrders() {
   $stmt = getUserOrders();
 
+  if ($stmt->rowCount() > 0) {
+
   while ($row = $stmt->fetch()) {
     //print order
     $orderDiv = "
@@ -389,5 +391,14 @@ function printPlacedOrders() {
       </div>
   </div>");
   }
+} else {
+  print("
+    <div class='alert alert-danger mt-2'>
+      <p>
+        There are no orders placed by your account.
+      </p>
+    </div>
+  ");
+}
 }
  ?>
