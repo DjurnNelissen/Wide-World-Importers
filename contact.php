@@ -11,7 +11,6 @@ include("includes/page-head.php");
 			<h1 class="card-title">About Us</h1>
 			<p>
 				Wide World Importers (WWI) is a wholesale novelty goods importer and distributor operating from the San Francisco bay area.<br><br>
-
 				As a wholesaler, WWI’s customers are mostly companies who resell to individuals. WWI sells to retail customers across the United States including specialty stores, supermarkets, computing stores, tourist attraction shops, and some individuals. WWI also sells to other wholesalers via a network of agents who promote the products on WWI’s behalf. While all of WWI’s customers are currently based in the United States, the company is intending to push for expansion into other countries.<br><br>
 			</p>
 		</div>
@@ -25,26 +24,15 @@ include("includes/page-head.php");
 		</div>
 		<div class="col-12 col-md-5 card-body">
 			<h1 class="card-title">Wide World Importers HQ</h1>
-			<table>
-				<tr>
-					<th>WWI Inc</th>
-				</tr>
-				<tr>
-					<td>3251 20th Avenue</td>
-				</tr>
-				<tr>
-					<td>San Francisco, CA 94132</td>
-				</tr>
-				<tr>
-					<td>USA</td>
-				</tr>
-				<tr>
-					<td>office@wwi.com</td>
-				</tr>
-				<tr>
-					<td>06-11223344</td>
-				</tr>
-			</table>
-		</div>
-	</div>
+      <table>
+          <tr><th>WWI Inc</th></tr>
+          <tr><td>3251 20th Avenue</td></tr>
+          <tr><td>San Francisco, CA 94132</td></tr>
+          <tr><td>USA</td></tr>
+          <tr><td>office@wwi.com</td></tr>
+          <tr><td>06-11223344</td></tr>
+      </table>
+    </div>
+  </div>
 </div>
+<?php include("includes/page-foot.php"); ?>
