@@ -38,3 +38,4 @@ include("includes/page-head.php");
                     </div>
          </div>
         </div>
+    <?php include("includes/page-foot.php"); ?>

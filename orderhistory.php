@@ -43,4 +43,4 @@ include('php/order.php')
         </div>
     </div>
 
-    <?php include("includes/page-foot.php");
+    <?php include("includes/page-foot.php"); ?>
