@@ -358,8 +358,9 @@ function printPlacedOrders() {
     <div class='card-header' id='heading" . $row['OrderID'] . "'>
         <div class='row'>
             <h6 class='col-12 col-sm-2 my-auto'>" . $row['OrderID'] . "</h6>
-            <h6 class='col-12 col-sm-3 my-auto'> " . $row['OrderDate'] . "</h6>
-            <h6 class='col-12 col-sm-3 my-auto'> " . getOrderTotalPrice($row['OrderID']) . "</h6>
+            <h6 class='col-12 col-sm-2 my-auto'> " . $row['OrderDate'] . "</h6>
+            <h6 class='col-12 col-sm-2 my-auto'> " . $row['ExpectedDeliveryDate'] . " </h6>
+            <h6 class='col-12 col-sm-2 my-auto'> " . getOrderTotalPrice($row['OrderID']) . "</h6>
             <h6 class='col-12 col-sm-3 my-auto'> Being processed </h6>
             <button class='btn btn-link col-1' type='button' data-toggle='collapse' data-target='#collapse" . $row['OrderID'] . "' aria-expanded='false' aria-controls='collapse". $row['OrderID'] ."'>
                 Open</button>
@@ -381,12 +382,22 @@ function printPlacedOrders() {
         print("
          <div class='row'>
               <p class='col-12 col-sm-2 my-auto'>" . $row2['StockItemID'] . "</p>
-              <p class='col-12 col-sm-3 my-auto'> " . $row2['StockItemName'] . "</p>
+              <p class='col-12 col-sm-3 my-auto'><a href='product.php?id=" . $row2['StockItemID'] ."'> " . $row2['StockItemName'] . "</a></p>
               <p class='col-12 col-sm-3 my-auto'> " . $row2['Quantity'] ."</p>
               <p class='col-12 col-sm-3 my-auto'> " . $row2['RecommendedRetailPrice']." </p>
               <p class='col-12 col-sm-1 my-auto'> " . $row2['RecommendedRetailPrice'] * $row2['Quantity'] ."</p>
           </div>");
     }
+    print("
+      <div class='row shadow-sm mt-2'>
+        <div class='col-4'>
+          <h5>Delivery instructions </h5>
+          <p>
+            " . $row['DeliveryInstructions'] . "
+          </p>
+        </div>
+      </div>
+    ");
     print("
       </div>
   </div>");
