@@ -18,14 +18,13 @@
 
  ?>
  						<div class="row px-5 py-4">
-							<div class="card col shadow-sm">
-								<div class="row p-3">
-									<?php
-										//prints the HTML code to generate the items in the cart
-										printCart();
-                    printCartFooter()
-									?>
-								</div>
+							<div class="card col-12 col-md-8 offset-md-2 p-3 shadow-sm">
+								<?php
+									//prints the HTML code to generate the items in the cart
+									printCartHeader();
+									printCart();
+									printCartFooter();
+								?>
 							</div>
         		</div>
 
