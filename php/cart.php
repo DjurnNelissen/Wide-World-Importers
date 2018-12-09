@@ -112,39 +112,39 @@ function printCart () {
 
   if (count($products) > 0) {
 		for ($i=0; $i < count($products) ; $i++) {
-			print("<div class='row p-3 ml-2 cartItem'>
+			print("<div class='row p-3 mx-2 cartItem'>
 							 <!-- Afbeelding product -->
-							 <div class='col-2'>
-							 	 <img class='img-fluid rounded img-thumbnail' src='https://sc02.alicdn.com/kf/HTB1wYdzPFXXXXaXapXXq6xXFXXX2/USB-Flash-Drive-8-GB-Memory-Stick.jpg_350x350.jpg' />
+							 <div class='col-2 my-auto'>
+							 	 <a href='product.php?id=" . $products[$i]['StockItemID'] . "'><img class='img-fluid rounded img-thumbnail' src='https://sc02.alicdn.com/kf/HTB1wYdzPFXXXXaXapXXq6xXFXXX2/USB-Flash-Drive-8-GB-Memory-Stick.jpg_350x350.jpg' /></a>
 							 </div>
 
 							 <!-- Naam product -->
-							 <div class='col-3'>
+							 <div class='col-2 my-auto'>
 							 	 <b><a clas='cart-title' href='product.php?id=" . $products[$i]['StockItemID'] . "'>" . $products[$i]['StockItemName'] . "</a></b>
 							 </div>
 
 							 <!-- Prijs product -->
-							 <div class='col-1'>
+							 <div class='col-2 my-auto'>
 							 	 <p>€ " . $products[$i]['RecommendedRetailPrice'] . "</p>
 							 </div>
 
                <!-- aantal aanpassen -->
-               <div class='col-2'>
-                <input type='number' min='1' value='" . $products[$i]['amount'] . "' id='" . $products[$i]['StockItemID'] . "' onchange=setProductAmount(" . $products[$i]['StockItemID'] . ")>
-               </div>
+               <div class='col-2 my-auto'><div class='col-12'>
+                <input type='number' class='form-control' min='1' value='" . $products[$i]['amount'] . "' id='" . $products[$i]['StockItemID'] . "' onchange=setProductAmount(" . $products[$i]['StockItemID'] . ")>
+               </div></div>
 
                <!-- totaal prijs -->
 
-               <div class='col-2'>
-                <p id='" . $products[$i]['StockItemID'] . "-total'>€ " . $products[$i]["RecommendedRetailPrice"] * $products[$i]['amount'] . " </p>
+               <div class='col-2 my-auto'>
+                <p id='" . $products[$i]['StockItemID'] . "-total'><b>€ " . $products[$i]["RecommendedRetailPrice"] * $products[$i]['amount'] . "</b></p>
                </div>
 
 							 <!-- Verwijder knoppen -->
-							 <div class='col-2'>
+							 <div class='col-1 my-auto'>
 								 <form class='' action='winkelwagen.php' method='post'>
 									 <input type='number' name='ID' value='" . $products[$i]['StockItemID'] . "' hidden>
 									 <input type='number' name='amount' value=" . (string)$products[$i]['amount'] . " hidden>
-									 <button type='submit' class='btn btn-danger' name='RemoveItem'><i class='fas fa-trash'></i> Remove</button>
+									 <button type='submit' class='btn btn-danger' name='RemoveItem'><i class='fas fa-trash'></i></button>
 									</form>
 								</div>
 							</div>");
@@ -160,35 +160,38 @@ function printCart () {
 //prints the total price, place order button and empty cart button
 function printCartFooter () {
     print ("
-    <div class='row p-3 ml-2 cartItem'>
-      <!-- afbeelding -->
-      <div class='col-2'>
-      <img class='img-fluid rounded img-thumbnail' src='https://sc02.alicdn.com/kf/HTB1wYdzPFXXXXaXapXXq6xXFXXX2/USB-Flash-Drive-8-GB-Memory-Stick.jpg_350x350.jpg' />
+    <div class='row p-3 mx-2'>
+
+      <!-- Remove all button -->
+      <div class='col-2 my-auto'>
+        <button class='btn btn-danger'  onclick='emptyCart()' " . returnDisabledIfCartEmpty() . "><i class='fas fa-trash'></i> Empty cart</button>
       </div>
 
-      <!-- naam -->
-      <div class='col-3'>
-
+      <!-- Totaalprijs -->
+      <div class='col-3 offset-5 pl-5 my-auto'>
+          <p id='cart-totaal-prijs'><u>Total: <b>€ " . getTotalCartPrice() . "</b></u></p>
       </div>
 
-      <!-- prijs -->
-      <div class='col-1'>
+    	<!-- Checkout button -->
+      <div class='col-2 my-auto'>
         <button class='btn btn-success' " . returnDisabledIfCartEmpty() . " onclick='placeOrder()'>Checkout</button>
       </div>
+    </div>
+    ");
 
-      <!-- aantal -->
-      <div class='col-2'>
+}//prints the page title and a place order button
+function printCartHeader () {
+    print ("
+    <div class='row p-3 mx-2'>
 
+      <!-- Remove all button -->
+      <div class='col-10 my-auto'>
+        <h1>Shopping cart:</h1>
       </div>
 
-      <!-- totaal -->
-      <div class='col-2'>
-          <p id='cart-totaal-prijs'>Total: € " . getTotalCartPrice() . "</p>
-      </div>
-
-      <!-- remove -->
-      <div class='col-2'>
-        <button class='btn btn-danger'  onclick='emptyCart()' " . returnDisabledIfCartEmpty() . "><i class='fas fa-trash'></i> Empty cart</button>
+    	<!-- Checkout button -->
+      <div class='col-2 my-auto'>
+        <button class='btn btn-success' " . returnDisabledIfCartEmpty() . " onclick='placeOrder()'>Checkout</button>
       </div>
     </div>
     ");

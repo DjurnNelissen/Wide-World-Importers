@@ -72,58 +72,88 @@ $stmt = runQuery($sqlAccount);
     $sidebar = FALSE;
     include("includes/page-head.php");
 ?>
+				<div class="row px-5 py-4">
+					<div class="card col-12 col-md-6 offset-md-3 p-3 shadow-sm">
+						<div class="row px-5 py-3">
+							<?php
+								if ($issueCreatingAccount) {
+									print("
+									<div class='col-12 alert alert-danger'>
+										<p>
+											There was an issue creating your account, please check if the password matched. otherwise the e-mail is already in use.
+										</p>
+									 </div>
+									");
+								}
+							?>
 
-						<div class="row px-5 py-4">
-							<div class="card col shadow-sm">
-								<div class="row p-3">
-                  <?php
-                    if ($issueCreatingAccount) {
-                      print("
-                      <div class='col-12 alert alert-danger'>
-                        <p>
-                          There was an issue creating your account, please check if the password matched. otherwise the e-mail is already in use.
-                        </p>
-                       </div>
-                      ");
-                    }
-                   ?>
+							<form method="post" action="registreren.php" class="mx-auto">
+								<h1 class="mb-4">Register now:</h1>
 
-									<div class="col form">
-        <h1>Register now!</h1><br>
-            <form method="post" action="registreren.php">
-                Fullname<br>
-                <input type="text" name="fullname" size="30" required><br><br>
-
-                Preffered name<br>
-                <input type="text" name="prefferedname" size="30" required><br><br>
-
-                Street + Housenumber<br>
-                <input type="text" name="street" size="30" required>
-                <input type="text" name="housenumber" size="4" required><br><br>
-
-
-                Postalcode + City<br>
-                <input type="text" name="postalcode" size="10" required>
-                <input type="text" name="city" size="25" required><br><br>
-
-                E-mail<br>
-                <input type="text" name="email" size="30" required><br><br>
-
-                Phonenumber<br>
-                <input type="text" name="phonenumber" size="30" required><br><br><br>
-
-                Password<br>
-                <input type="password" name="password" size="30" required><br><br>
-
-                Repeat password<br>
-                <input type="password" name="passwordcheck" size="30" required><br>
-                <br>
-                <input class="btn btn-info" type="submit" value="Register">
-
-            </form>
-        </div>
+								<div class="form-group">
+									<label for="fullname">Full name</label>
+									<input type="text" class="form-control" name="fullname" placeholder="First and last name" required>
 								</div>
-							</div>
+
+								<div class="form-group">
+									<label for="preffname">Preffered name</label>
+									<input type="text" class="form-control" name="preffname" placeholder="Your preffered name" required>
+								</div>
+
+								<div class="form-row">
+									<div class="form-group col-md-9">
+										<label for="street">Street</label>
+										<input type="text" class="form-control" name="street" placeholder="Enter your address" required>
+									</div>
+
+									<div class="form-group col-md-3">
+										<label for="housenumber">Number</label>
+										<input type="number" class="form-control" name="housenumber" required>
+									</div>
+								</div>
+
+								<div class="form-row">
+									<div class="form-group col-md-4">
+										<label for="postalcode">Postal code</label>
+										<input type="text" class="form-control" name="postalcode" placeholder="Postal code" required>
+									</div>
+
+									<div class="form-group col-md-8">
+										<label for="city">City</label>
+										<input type="text" class="form-control" name="city" placeholder="Enter your city name" required>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label for="email">E-mail address</label>
+									<input type="text" class="form-control" name="email" placeholder="yourname@mail.com" required>
+									<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+								</div>
+
+								<div class="form-group">
+									<label for="phonenumber">Phonenumber</label>
+									<input type="tel" class="form-control" name="phonenumber" placeholder="+31612345678" required>
+								</div>
+
+								<div class="form-row">
+									<div class="form-group col-md-6">
+										<label for="password">Password</label>
+										<input type="password" class="form-control" name="password" placeholder="Enter your password" required>
+										<small id="passwordHelp" class="form-text text-muted">Be smart. Choose a strong password.</small>
+									</div>
+
+									<div class="form-group col-md-6">
+										<label for="passwordcheck">Repeat password</label>
+										<input type="password" class="form-control" name="passwordcheck" placeholder="Confirm your password" required>
+									</div>
+								</div>
+
+								<div class="col-4 offset-4 mt-3">
+									<button type="submit" class="btn btn-success btn-lg"><i class="far fa-save"></i> Register</button>
+								</div>
+							</form>
 						</div>
+					</div>
+				</div>
 <!-- include the footer of the page -->
 <?php include("includes/page-foot.php") ?>
