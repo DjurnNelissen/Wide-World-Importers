@@ -25,7 +25,7 @@ function getUserOrders () {
 //returns he order lines for a specific order
 function getOrderLines($id) {
   //setup query
-  $sql = "SELECT * FROM orderlines WHERE OrderID = ?";
+  $sql = "SELECT * FROM orderlines o JOIN stockitems s ON o.StockItemID = s.StockItemID WHERE OrderID = ?";
   //execute query and return the result
   return runQueryWithParams($sql,array($id));
 }
@@ -331,41 +331,63 @@ function getDeliveryCosts($id) {
 }
 
 function getOrderTotalPrice($id) {
-    $sql = "SELECT SUM(ol.Quantity * s.RecommendedRetailPrice) FROM orders o
+    $sql = "SELECT SUM(ol.Quantity * s.RecommendedRetailPrice) total FROM orders o
 JOIN orderlines ol ON o.OrderID = ol.OrderID
 JOIN stockitems s ON ol.StockItemID = s.StockItemID
 WHERE o.OrderID = ?";
-    $stmt = runQuery($sql);
-
+    $stmt = runQueryWithParams($sql, array($id));
+    $row = $stmt->fetch();
+    return $row['total'];
 }
 
 function getOrderTotalPriceByOrderline($id) {
-    $sql = "SELECT o.quantity * s.RecommendedRetailPrice FROM orderlines o join stockitems s ON o.StockItemID = s.StockItemID WHERE o.OrderID = ?";
-    $stmt = runQuery($sql);
+    $sql = "SELECT o.quantity * s.RecommendedRetailPrice total FROM orderlines o join stockitems s ON o.StockItemID = s.StockItemID WHERE o.OrderLineID = ?";
+    $stmt = runQueryWithParams($sql, array($id));
+    $row = $stmt->fetch();
+    return $row['total'];
 }
 
 function printPlacedOrders() {
-    $stmt = getUserOrders();
+  $stmt = getUserOrders();
 
   while ($row = $stmt->fetch()) {
-    print ($row['OrderID'] . "  " . $row['OrderDate'] . "  " .  getOrderTotalPrice(['OrderID'] . "  Being Processed  " "<br>");
-
+    //print order
+    $orderDiv = "
+    <div class='card-header' id='heading" . $row['OrderID'] . "'>
+        <div class='row'>
+            <h6 class='col-12 col-sm-2 my-auto'>" . $row['OrderID'] . "</h6>
+            <h6 class='col-12 col-sm-3 my-auto'> " . $row['OrderDate'] . "</h6>
+            <h6 class='col-12 col-sm-3 my-auto'> " . getOrderTotalPrice($row['OrderID']) . "</h6>
+            <h6 class='col-12 col-sm-3 my-auto'> Being processed </h6>
+            <button class='btn btn-link col-1' type='button' data-toggle='collapse' data-target='#collapse" . $row['OrderID'] . "' aria-expanded='false' aria-controls='collapse". $row['OrderID'] ."'>
+                Open</button>
+        </div>
+    </div>
+    <div id='collapse" . $row['OrderID'] . "' class='collapse' aria-labelledby='heading" . $row['OrderID'] . "' data-parent='#accordionExample'>
+        <div class='card-body'>
+            <div class='row'>
+                <h6 class='col-12 col-sm-2 my-auto'>ProductID</h6>
+                <h6 class='col-12 col-sm-3 my-auto'>Product</h6>
+                <h6 class='col-12 col-sm-3 my-auto'>Quantity</h6>
+                <h6 class='col-12 col-sm-3 my-auto'>Price</h6>
+                <h6 class='col-12 col-sm-1 my-auto'>Total</h6>
+            </div>
+    ";
+    print($orderDiv);
     $stmt2 = getOrderLines($row['OrderID']);
     while ($row2 = $stmt2->fetch()) {
-      $div = "
-        <div class='row'>
-            <p class='col-12 col-sm-2 my-auto''>" . $row2['StockItemID'] . "</p>
-            <p class='col-12 col-sm-3 my-auto'>" . $row2['StockItemName'] . "</p>
-            <p class='col-12 col-sm-3 my-auto'>2</p>
-            <p class='col-12 col-sm-3 my-auto'>€1,34</p>
-            <p class='col-12 col-sm-1 my-auto'>€2,68</p>
-        </div> ";
-       print($div);
+        print("
+         <div class='row'>
+              <p class='col-12 col-sm-2 my-auto'>" . $row2['StockItemID'] . "</p>
+              <p class='col-12 col-sm-3 my-auto'> " . $row2['StockItemName'] . "</p>
+              <p class='col-12 col-sm-3 my-auto'> " . $row2['Quantity'] ."</p>
+              <p class='col-12 col-sm-3 my-auto'> " . $row2['RecommendedRetailPrice']." </p>
+              <p class='col-12 col-sm-1 my-auto'> " . $row2['RecommendedRetailPrice'] * $row2['Quantity'] ."</p>
+          </div>");
     }
-
-
+    print("
+      </div>
+  </div>");
   }
-
-
 }
  ?>
