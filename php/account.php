@@ -89,17 +89,6 @@ function passwordNotEqual($password,$passwordcheck){
     }
 }
 
-//checks if the username already exist
-function usernameUsed($email){
-
-    $sql = "SELECT LogonName FROM people";
-
-    if($email != runQuery($sql)){
-        return true;
-    }else{
-        return false;
-    }
-}
 
 // password requirements that the password must need
 //function passwordReq ($password){
@@ -132,5 +121,83 @@ function getLoggedInName () {
   return '';
 }
 
+function getLoggedInCustomer () {
+  $sql = "SELECT CustomerID FROM accounts WHERE AccountID = ?";
+  $stmt = runQueryWithParams($sql, array(getAccountID()));
+  $row = $stmt->fetch();
+  return getCustomer($row['CustomerID']);
+}
+
+//returns a customer Row with the given ID
+function getCustomer ($id) {
+  $sql = "SELECT * FROM customers WHERE CustomerID = ?";
+
+  $stmt = runQueryWithParams($sql, array($id));
+
+  return $stmt->fetch();
+}
+
+function getLoggedInAccDetails () {
+  if (checkLogin()) {
+  //setup query to fetch all data about user
+  $sql = "SELECT * FROM people p JOIN
+  accounts a ON p.PersonID = a.PersonID JOIN
+  customers c ON a.CustomerID = c.CustomerID
+  WHERE p.LogonName = ?";
+  //execute query
+  $stmt = runQueryWithParams($sql, array($_SESSION['user']['name']));
+  //fetch result
+  return $stmt->fetch();
+  }
+
+  return null;
+
+}
+
+
+// checks whether the repeated password is the same as the password
+function passwordEqual($a,$b){
+    if($a == $b){
+        return true;
+    } else {
+        return false;
+    }
+}
+
+//checks if the username already exist
+function usernameNotUsed($i){
+
+    $sql = "SELECT LogonName FROM people WHERE LogonName = '$i'";
+
+   $stmt = runQuery($sql);
+
+    if($stmt->rowCount() > 0) {
+        return false;
+    } else {
+        return true;
+    }
+}
+
+
+//shows name when logged in the navbar
+function checknav()
+{
+    if ((isset($_SESSION["user"]))) {
+        $getgbnaam = "select * from people where LogonName= '" . $_SESSION["user"]["name"] . "'";
+        $pfnaam = runQuery($getgbnaam);
+        $regel = $pfnaam->fetch();
+        print '<li id="Order" id="nav-item"><a class="nav-link"   href="orderhistory.php"><i class="fas fa-user"></i> ' . $regel["PreferredName"] . ' </a></li>';
+        print '<li onclick="logout()" class="nav-item"><a class="nav-link" href="#"><i class="fas fa-key"></i> Logout </a></li>';
+    } else {
+        print '<li class="nav-item" id="Login"><a class="nav-link"   href="login.php"><i class="fas fa-user"></i> Login </a></li>';
+        print '<li class="nav-item" id="register"><a class="nav-link"   href="registreren.php"><i class="fas fa-user-edit"></i> Register </a></li>';
+    }
+}
+
+function logout() {
+  unset($_SESSION['user']);
+  unset($_SESSION['cart']);
+  unset($_SESSION['devOptions']);
+}
 
  ?>

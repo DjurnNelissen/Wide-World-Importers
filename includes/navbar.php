@@ -19,9 +19,17 @@
 			<li id="Cart" class="nav-item">
 				<a class="nav-link" href="winkelwagen.php"><i class="fas fa-shopping-cart"></i> Cart</a>
 			</li>
-			<li id="Login" class="nav-item">
-				<a class="nav-link" href="login.php"><i class="fas fa-user"></i> Login</a>
+			<li class="nav-item" id="Contact">
+				<a href="contact.php" class="nav-link">
+						<i class="fas fa-address-book"></i>Contact
+				</a>
 			</li>
+
+				<?php
+          include_once ("php/account.php");
+          checknav();
+        ?>
+
 		</ul>
 	</div>
 </nav>
@@ -35,6 +43,15 @@
 		navItem.className += " " + "active";
 	} else if (page == "Login"){
 		var navItem = document.getElementById("Login");
+		navItem.className += " " + "active";
+	} else if (page == "Register") {
+		var navItem = document.getElementById("register");
+		navItem.className += " " + "active";
+	} else if (page == "Orderhistory") {
+		var navItem = document.getElementById("Order");
+		navItem.className += " " + "active";
+	} else if (page == "Contact") {
+		var navItem = document.getElementById("Contact");
 		navItem.className += " " + "active";
 	}
 </script>

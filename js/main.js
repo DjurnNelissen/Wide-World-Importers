@@ -32,14 +32,15 @@ function searchProducts (cat) {
 
   search_params.delete('id');
 
-  url.search = search_params.toString();
-  //convert to string
-  url.pathname = '/index.php';
-  var new_url = url.toString();
+  var u = 'index.php?' + search_params.toString();
+  location.href = u;
 
-  //navigate to new url
-  location.href = new_url;
 
+}
+
+//places an order
+function placeOrder () {
+  window.location.href = "delivery.php";
 }
 
 //adds a product to the cart
@@ -113,9 +114,14 @@ function getCartTotalPrice (callback) {
   sendPostRequest('api/getCartTotalPrice.php','',callback);
 }
 
+//returns the deliverycosts
+function getDeliveryCosts (ID, callback) {
+  sendPostRequest('api/getDeliveryCosts.php', 'id=' + ID.toString(), callback);
+}
+
 //empties the cart
 function emptyCart() {
-  sendPostRequest('/api/emptyCart.php','',function (res) {
+  sendPostRequest('api/emptyCart.php','',function (res) {
     location.reload();
   });
 }
@@ -135,6 +141,27 @@ function sendPostRequest (url, params, callback) {
   }
 
   http.send(params);
+}
+
+function logout () {
+  sendPostRequest('api/logout.php', '', function (res) {
+    location.reload();
+  })
+}
+
+function setDeliveryCost() {
+  var id = document.getElementById('selectedMethod').value;
+  getDeliveryCosts(id, function (res) {
+    console.log(res);
+    document.getElementById('deliveryCosts').innerHTML = "Delivery cost: € " + res.toString();
+  })
+}
+
+function confirmOrder () {
+  window.open('https://www.ideal.nl/en/', '_blank');
+  sendPostRequest('api/placeOrder.php', '', function (res) {
+    location.href = "orderhistory.php";
+  })
 }
 
 $(function () {

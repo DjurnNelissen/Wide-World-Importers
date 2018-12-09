@@ -1,6 +1,7 @@
-<!DOCTYPE html>
 <?php
 include_once ('php/account.php');
+
+//session_start();
 
 // Variable for user input
 $fullname = filter_input(INPUT_POST, 'fullname', FILTER_SANITIZE_STRING);
@@ -15,28 +16,47 @@ $street = filter_input(INPUT_POST, 'street', FILTER_SANITIZE_STRING);
 $housenumber = filter_input(INPUT_POST, 'housenumber', FILTER_SANITIZE_STRING);
 $postalcode = filter_input(INPUT_POST, 'postalcode', FILTER_SANITIZE_STRING);
 
+$issueCreatingAccount = FALSE;
 
+if (isset($_POST['email'])) {
 // Hashed password
 $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
+if(usernameNotUsed($email) && passwordEqual($password, $passwordcheck)) {
+    // query data stores data in the database
+    $sqlPeople = " INSERT INTO people (PersonID, Fullname, PreferredName, SearchName, IsPermittedToLogon, LogonName, HashedPassword, IsSystemUser, PhoneNumber, EmailAddress, LastEditedBy, ValidFrom, ValidTo)
+    VALUES ((SELECT MAX(pe.PersonID) + 1 FROM people pe) , '$fullname', '$prefferedname', '" .  $prefferedname . " " .  $fullname . "', 1, '$email', '$hashedPassword', 1, '$phonenumber', '$email', 1, (SELECT CURDATE()), '9999-12-31 23:59:59')";
+
 
 // query data stores data in the database
-$sqlPeople = " INSERT INTO people (PersonID, Fullname, PreferredName, SearchName, IsPermittedToLogon, LogonName, HashedPassword, IsSystemUser, PhoneNumber, EmailAddress, LastEditedBy, ValidFrom, ValidTo)
-VALUES ((SELECT MAX(pe.PersonID) + 1 FROM people pe) , '$fullname', '$prefferedname', '" .  $prefferedname . " " .  $fullname . "', 1, '$email', '$hashedPassword', 1, '$phonenumber', '$email', 1, (SELECT CURDATE()), '9999-12-31 23:59:59')";
+$sqlPeople = " INSERT INTO people (PersonID, Fullname, PreferredName, SearchName, IsPermittedToLogon, LogonName, HashedPassword, IsSystemUser, PhoneNumber, EmailAddress, LastEditedBy, ValidFrom, ValidTo, IsExternalLogonProvider, IsEmployee, IsSalesperson)
+VALUES ((SELECT MAX(pe.PersonID) + 1 FROM people pe) , '$fullname', '$prefferedname', '" .  $prefferedname . " " .  $fullname . "', 1, '$email', '$hashedPassword', 1, '$phonenumber', '$email', 1, (SELECT CURDATE()), '9999-12-31 23:59:59', 0, 0, 0)";
 
 $stmt = runQuery($sqlPeople);
 
-$sqlCustomer = " INSERT INTO customers (CustomerID, CustomerName, BillToCustomerID, CustomerCategoryID, PrimaryContactPersonID, DeliveryMethodID, DeliveryCityID, PostalCityID, CreditLimit, AccountOpenedDate, StandardDiscountPercentage, IsStatementSent, IsOnCreditHold, PaymentDays, PhoneNumber, DeliveryAddressLine1, DeliveryAddressLine2, DeliveryPostalCode, LastEditedBy, ValidFrom, ValidTo)
-VALUES ((SELECT MAX(c.CustomerID) + 1 FROM customers c) , '$fullname', (SELECT MAX(cu.CustomerID) + 1 FROM customers cu), 9, (SELECT MAX(PersonID) FROM people), 1, 1, '$postalcode', 0, (SELECT CURDATE()), 0, 0, 0, 7, '$phonenumber', '$housenumber', '$street', '$postalcode', 1, (SELECT CURDATE()), '9999-12-31 23:59:59')";
+//var_dump($stmt);
+
+$sqlCustomer = " INSERT INTO customers (CustomerID, CustomerName, BillToCustomerID, CustomerCategoryID, PrimaryContactPersonID, DeliveryMethodID, DeliveryCityID, PostalCityID, CreditLimit, AccountOpenedDate, StandardDiscountPercentage, IsStatementSent, IsOnCreditHold, PaymentDays, PhoneNumber, DeliveryAddressLine1, DeliveryAddressLine2, DeliveryPostalCode, LastEditedBy, ValidFrom, ValidTo, FaxNumber, WebsiteURL, PostalAddressLine1, PostalAddressLine2, PostalPostalCode)
+VALUES ((SELECT MAX(c.CustomerID) + 1 FROM customers c) , '$fullname', (SELECT MAX(cu.CustomerID) + 1 FROM customers cu), 9, (SELECT MAX(PersonID) FROM people), 1, 1, 1, 0, (SELECT CURDATE()), 0, 0, 0, 7, '$phonenumber', '$housenumber', '$street', '$postalcode', 1, (SELECT CURDATE()), '9999-12-31 23:59:59', '', '', '$housenumber', '$street', '$postalcode')";
 
 
-runQuery($sqlCustomer);
+$stmt = runQuery($sqlCustomer);
+
+//var_dump($sqlCustomer);
+//var_dump($stmt);
 
 $sqlAccount = " INSERT INTO accounts (PersonID, CustomerID)
 VALUES ((SELECT MAX(PersonID) FROM people),
         (SELECT MAX(CustomerID) FROM customers))";
 
-runQuery($sqlAccount);
+$stmt = runQuery($sqlAccount);
+
+//var_dump($stmt);
+  header('location: login.php');
+} else {
+  $issueCreatingAccount = TRUE;
+}
+}
 ?>
 
 
@@ -44,56 +64,66 @@ runQuery($sqlAccount);
 <!--- HTML ---->
 <!------------->
 
-<html>
-  <head>
-    <meta charset="utf-8">
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+<!-- include the header of the page -->
+<?php
+    $title = "Register";
+    $stylesheet = FALSE;
+    $sidebar = FALSE;
+    include("includes/page-head.php");
+?>
 
-    <link rel="stylesheet" href="css/main.css" media="screen" title="no title" type="text/css">
+						<div class="row px-5 py-4">
+							<div class="card col shadow-sm">
+								<div class="row p-3">
+                  <?php
+                    if ($issueCreatingAccount) {
+                      print("
+                      <div class='col-12 alert alert-danger'>
+                        <p>
+                          There was an issue creating your account, please check if the password matched. otherwise the e-mail is already in use.
+                        </p>
+                       </div>
+                      ");
+                    }
+                   ?>
 
-    <title>WWI Webshop</title>
-  </head>
-
-  <body>
-    <?php include("Menu.php") ?>
-      <br><br>
-
-
-        <div class="col form">
-        <h1>Registreer je nu!</h1><br>
+									<div class="col form">
+        <h1>Register now!</h1><br>
             <form method="post" action="registreren.php">
-                Volledige naam<br>
+                Fullname<br>
                 <input type="text" name="fullname" size="30" required><br><br>
 
-                Roepnaam<br>
+                Preffered name<br>
                 <input type="text" name="prefferedname" size="30" required><br><br>
 
-                Straat + Huisnr<br>
+                Street + Housenumber<br>
                 <input type="text" name="street" size="30" required>
                 <input type="text" name="housenumber" size="4" required><br><br>
 
 
-                Postcode + Plaats<br>
+                Postalcode + City<br>
                 <input type="text" name="postalcode" size="10" required>
                 <input type="text" name="city" size="25" required><br><br>
 
-                E-mail:<br>
+                E-mail<br>
                 <input type="text" name="email" size="30" required><br><br>
 
-                Telefoonnummer:<br>
+                Phonenumber<br>
                 <input type="text" name="phonenumber" size="30" required><br><br><br>
 
-                Wachtwoord:<br>
+                Password<br>
                 <input type="password" name="password" size="30" required><br><br>
 
-                Herhaal wachtwoord:<br>
+                Repeat password<br>
                 <input type="password" name="passwordcheck" size="30" required><br>
                 <br>
-                <input type="submit" value="Aanmelden">
+                <input class="btn btn-info" type="submit" value="Register">
 
             </form>
         </div>
-
-</body>
-</html>
+								</div>
+							</div>
+						</div>
+<!-- include the footer of the page -->
+<?php include("includes/page-foot.php") ?>

@@ -1,3 +1,4 @@
+
 <?php
 include_once('db.php');
 include_once('cart.php');
@@ -267,15 +268,14 @@ function getCategoryName($id) {
   return $row['StockGroupName'];
 }
 
-//returns the weight per unit from product
-function getProductWeight ($id) {
-  $sql = "SELECT TypicalWeightPerUnit FROM stockitems WHERE StockItemID = ?";
 
-  $stmt = runQueryWithParams($sql, array($id));
 
-  $row = $stmt->fetch();
+function getMostOrderedProducts () {
+  $sql = "SELECT StockItemID, SUM(Quantity) FROM orderlines
+  GROUP BY StockItemID ORDER BY SUM(Quantity) DESC";
 
-  return $row['TypicalWeightPerUnit'];
+  return runQuery($sql);
 }
 
  ?>
+
