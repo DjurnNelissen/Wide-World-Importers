@@ -331,17 +331,20 @@ function getDeliveryCosts($id) {
 }
 
 function getOrderTotalPrice($id) {
-    $sql = "SELECT SUM(ol.Quantity * s.RecommendedRetailPrice) FROM orders o
+    $sql = "SELECT SUM(ol.Quantity * s.RecommendedRetailPrice) total FROM orders o
 JOIN orderlines ol ON o.OrderID = ol.OrderID
 JOIN stockitems s ON ol.StockItemID = s.StockItemID
 WHERE o.OrderID = ?";
-    $stmt = runQuery($sql);
-
+    $stmt = runQueryWithParams($sql, array($id));
+    $row = $stmt->fetch();
+    return $row['total'];
 }
 
 function getOrderTotalPriceByOrderline($id) {
-    $sql = "SELECT o.quantity * s.RecommendedRetailPrice FROM orderlines o join stockitems s ON o.StockItemID = s.StockItemID WHERE o.OrderID = ?";
-    $stmt = runQuery($sql);
+    $sql = "SELECT o.quantity * s.RecommendedRetailPrice total FROM orderlines o join stockitems s ON o.StockItemID = s.StockItemID WHERE o.OrderLineID = ?";
+    $stmt = runQueryWithParams($sql, array($id));
+    $row = $stmt->fetch();
+    return $row['total'];
 }
 
 function printPlacedOrders() {
