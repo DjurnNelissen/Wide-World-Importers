@@ -4,7 +4,12 @@
     $stylesheet = "css/product.css";
     $sidebar = FALSE;
     include("includes/page-head.php");
+
+include('php/order.php')
+
+
 ?>
+
 
 <div class="row px-5 py-4">
     <div class="card col shadow-sm">

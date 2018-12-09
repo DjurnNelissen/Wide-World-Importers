@@ -1,4 +1,3 @@
-
 <?php
 //this file includes all functions needed to handle orders
 
@@ -329,5 +328,44 @@ function getDeliveryMethodName ($id) {
 
 function getDeliveryCosts($id) {
   return (getCartWeight() * 2 * $id);
+}
+
+function getOrderTotalPrice($id) {
+    $sql = "SELECT SUM(ol.Quantity * s.RecommendedRetailPrice) FROM orders o
+JOIN orderlines ol ON o.OrderID = ol.OrderID
+JOIN stockitems s ON ol.StockItemID = s.StockItemID
+WHERE o.OrderID = ?";
+    $stmt = runQuery($sql);
+
+}
+
+function getOrderTotalPriceByOrderline($id) {
+    $sql = "SELECT o.quantity * s.RecommendedRetailPrice FROM orderlines o join stockitems s ON o.StockItemID = s.StockItemID WHERE o.OrderID = ?";
+    $stmt = runQuery($sql);
+}
+
+function printPlacedOrders() {
+    $stmt = getUserOrders();
+
+  while ($row = $stmt->fetch()) {
+    print ($row['OrderID'] . "  " . $row['OrderDate'] . "  " .  getOrderTotalPrice(['OrderID'] . "  Being Processed  " "<br>");
+
+    $stmt2 = getOrderLines($row['OrderID']);
+    while ($row2 = $stmt2->fetch()) {
+      $div = "
+        <div class='row'>
+            <p class='col-12 col-sm-2 my-auto''>" . $row2['StockItemID'] . "</p>
+            <p class='col-12 col-sm-3 my-auto'>" . $row2['StockItemName'] . "</p>
+            <p class='col-12 col-sm-3 my-auto'>2</p>
+            <p class='col-12 col-sm-3 my-auto'>€1,34</p>
+            <p class='col-12 col-sm-1 my-auto'>€2,68</p>
+        </div> ";
+       print($div);
+    }
+
+
+  }
+
+
 }
  ?>
