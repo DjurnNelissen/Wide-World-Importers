@@ -51,6 +51,31 @@ nav {
 	border-bottom: 1px solid #dfdfdf;
 }
 
+/* Sort button */
+select#orderSelect {
+	color: #212529;
+	border-color: darkgrey;
+}
+
+/* Scroll to top */
+.scroll-top {
+	right: 0;
+	bottom: 0;
+	position: fixed;
+	background-color: white;
+	border: 3px solid lightgrey;
+	border-radius: 10px;
+	font-size: 52px;
+	opacity: 0.75;
+	width: 80px;
+	height: 80px;
+	text-align: center;
+}
+
+.scroll-top > svg {
+	margin-bottom: 5px;
+}
+
 /* registreer pag */
 
 .form {
