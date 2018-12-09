@@ -19,6 +19,11 @@
 			<li id="Cart" class="nav-item">
 				<a class="nav-link" href="winkelwagen.php"><i class="fas fa-shopping-cart"></i> Cart</a>
 			</li>
+			<li class="nav-item" id="Contact">
+				<a href="contact.php" class="nav-link">
+						<i class="fas fa-address-book"></i>Contact
+				</a>
+			</li>
 
 				<?php
           include_once ("php/account.php");
@@ -44,6 +49,9 @@
 		navItem.className += " " + "active";
 	} else if (page == "Orderhistory") {
 		var navItem = document.getElementById("Order");
+		navItem.className += " " + "active";
+	} else if (page == "Contact") {
+		var navItem = document.getElementById("Contact");
 		navItem.className += " " + "active";
 	}
 </script>
