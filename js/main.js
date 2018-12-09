@@ -32,13 +32,9 @@ function searchProducts (cat) {
 
   search_params.delete('id');
 
-  url.search = search_params.toString();
-  //convert to string
-  url.pathname = 'index.php';
-  var new_url = url.toString();
+  var u = 'index.php?' + search_params.toString();
+  location.href = u;
 
-  //navigate to new url
-  location.href = new_url;
 
 }
 
