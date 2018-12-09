@@ -16,7 +16,7 @@ function getUserOrders () {
     $sql = "SELECT * FROM orders WHERE CustomerID = (
       SELECT CustomerID FROM accounts WHERE PersonID = (
         SELECT PersonID FROM people WHERE LogonName = ?)
-      )";
+      ) ORDER BY OrderDate DESC";
       //return the orders
       return runQueryWithParams($sql, array($_SESSION['user']['name']));
   }
