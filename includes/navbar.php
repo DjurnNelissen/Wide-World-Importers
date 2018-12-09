@@ -33,6 +33,7 @@
 		</ul>
 	</div>
 </nav>
+<script src="js/navbar.js" charset="utf-8"></script>
 <script>
 	var page = "<?php echo $title ?>";
 	if (page == "Home"){
