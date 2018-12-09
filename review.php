@@ -6,7 +6,7 @@ include_once('php/account.php');
 <link rel="stylesheet" href="css/review.css" media="screen" title="no title">
 <script src="js/review.js" charset="utf-8"></script>
 
-<div class="col-12 my-5 mx-3">
+<div class="col-12 my-5 mx-auto">
   <div class="row my-2 px-2">
     <div class="col-2">
       <h5> <?php print(getAverageRating($_GET['id'])) ?>/5 stars </h5>
@@ -30,7 +30,7 @@ include_once('php/account.php');
 	<?php printReviews($_GET['id']); ?>
 </div>
 
-<div class="col-12 my-5 mx-3">
+<div class="col-12 my-5 mx-auto">
 	<div class='card'>
 		<div class='card-header'>
 			<b>Write your own review:</b>
