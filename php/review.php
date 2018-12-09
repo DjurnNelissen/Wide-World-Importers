@@ -92,55 +92,60 @@ function printReviews ($productID) {
   //setup sql
   $sql = "SELECT * FROM reviews r
    				LEFT JOIN people p on r.PersonID = p.PersonID
+					JOIN stockitems using(StockItemID)
     			WHERE r.StockItemID = $productID
      			ORDER BY Rating desc";
   //execute query
   $stmt = runQuery($sql);
   //get each row
   if ($stmt->rowCount() > 0) {
-
-
-
-    while ($row = $stmt->fetch()) {
-    //print each review
-
-
-				print ("
-								<div class='card mb-1'>
-									<div class='card-header'>
-										<b>" . $row['PreferredName'] . "</b><span class='rating-date'>" . $row['DateAdded'] . "</span>
-									</div>
-									<div class='card-body'>
-										<div class='stars-outer'>
-											<div class='stars-inner' style='width:
-												"	. getRatingPercentageRounded($row['Rating']) . "%'>
-											</div>
+		while ($row = $stmt->fetch()) {
+    	//print each review
+			print ("<div class='card mb-1'>
+								<div class='card-header'>
+									<b>" . $row['PreferredName'] . "</b><span class='rating-date'>" . $row['DateAdded'] . "</span>
+								</div>
+								<div class='card-body'>
+									<div class='stars-outer'>
+										<div class='stars-inner' style='width:
+											"	. getRatingPercentageRounded($row['Rating']) . "%'>
 										</div>
-										<h5 class='card-title'>"	. round($row['Rating'],1) . "/5 stars!</h5>
-										<p class='card-title'>" . $row['Comment'] . "</p>
 									</div>
-								</div>");
+									<h5 class='card-title'>"	. round($row['Rating'],1) . "/5 stars!</h5>
+									<p class='card-title'>" . $row['Comment'] . "</p>
+								</div>
+							</div>");
 
 		}
   } else {
     //no reviews for this product
 		$today = date("Y-m-d, H:i");
-    print ("
-						<div class='card'>
+		//setup sql
+  	$sql = "SELECT * FROM stockitems WHERE StockItemID = $productID";
+		//execute query
+		$stmt = runQuery($sql);
+		//get each row
+		if ($stmt->rowCount() > 0) {
+			while ($row = $stmt->fetch()) {
+			$itemName = strtolower($row['StockItemName']);
+    	//print each review
+			print("<div class='card'>
 							<div class='card-header'>
 								<b>Your name here!</b><span class='rating-date'>" . $today . "</span>
 							</div>
 							<div class='card-body'>
 								<div class='stars-outer'>
-									<div class='stars-inner' style='width:
-										100%'>
+									<div class='stars-inner' style='width: 100%'>
+
 									</div>
 								</div>
 								<h5 class='card-title'>5/5 stars!</h5>
-								<p class='card-title'>Submit your review about " . $row['StockItemName'] . " now!</p>
+								<p class='card-title'>Submit your review about " . $itemName . " now!</p>
 							</div>
 						</div>");
-  }
+  		}
+		}
+	}
 }
 
 //turns the rating into a %
