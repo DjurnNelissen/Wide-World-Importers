@@ -96,8 +96,8 @@ $stmt = runQuery($sqlAccount);
 								</div>
 
 								<div class="form-group">
-									<label for="preffname">Preffered name</label>
-									<input type="text" class="form-control" name="preffname" placeholder="Your preffered name" required>
+									<label for="prefferedname">Preffered name</label>
+									<input type="text" class="form-control" name="prefferedname" placeholder="Your preffered name" required>
 								</div>
 
 								<div class="form-row">
