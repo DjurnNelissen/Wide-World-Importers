@@ -138,13 +138,13 @@ $stmt = runQuery($sqlAccount);
 								<div class="form-row">
 									<div class="form-group col-md-6">
 										<label for="password">Password</label>
-										<input type="password" class="form-control" name="password" placeholder="Enter your password" required>
+										<input type="password" class="form-control" name="password" placeholder="Enter your password" required minlength='8'>
 										<small id="passwordHelp" class="form-text text-muted">Be smart. Choose a strong password.</small>
 									</div>
 
 									<div class="form-group col-md-6">
 										<label for="passwordcheck">Repeat password</label>
-										<input type="password" class="form-control" name="passwordcheck" placeholder="Confirm your password" required>
+										<input type="password" class="form-control" name="passwordcheck" placeholder="Confirm your password" required minlength='8'>
 									</div>
 								</div>
 
