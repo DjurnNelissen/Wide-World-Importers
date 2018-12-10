@@ -108,7 +108,7 @@ $stmt = runQuery($sqlAccount);
 
 									<div class="form-group col-md-3">
 										<label for="housenumber">Number</label>
-										<input type="number" class="form-control" name="housenumber" required>
+										<input type="text" class="form-control" name="housenumber" required>
 									</div>
 								</div>
 
