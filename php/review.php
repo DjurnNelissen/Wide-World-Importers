@@ -52,7 +52,7 @@ function userHasReviewedProduct ($productID) {
 function submitReview ($productID, $rating, $comment) {
   //checks if the user is logged in
   if (checkLogin()) {
-      
+
       if (userHasPurchashedProduct($productID) && ! userHasReviewedProduct($productID)) {
         $id = getPersonID();
         //check if the ID didnt get an error
@@ -181,12 +181,13 @@ function printDisabled ($id) {
 
 //returns how often a product has been reviewed
 function getReviewCount ($productID) {
+  //setup query
   $sql = "SELECT COUNT(*) FROM reviews WHERE StockItemID = $productID";
-
+  //run query
   $stmt = runQuery($sql);
-
+  //get result
   $row = $stmt->fetch();
-
+  //return result
   return $row['COUNT(*)'];
 }
 

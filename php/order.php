@@ -32,6 +32,7 @@ function getOrderLines($id) {
 
 
 //generates all html needed to view orders -- WIP
+/*
 function printOrders() {
   $stmt = getUserOrders();
 
@@ -45,6 +46,7 @@ function printOrders() {
     print('<br> ---------------------------- <br>');
   }
 }
+*/
 
 //turns the users current cart into an order
 function createOrder () {
@@ -300,36 +302,45 @@ function getDeliveryMethods () {
 
 //prints all delivery methods
 function printDeliveryMethods () {
+  //if there is a frozen product only return cold transport methods
   if (cartHasFrozenProduct()) {
     $methods =  [
       '5' => 'Chilled Van',
       '9' => 'Refrigerated Road Freight',
       '10' => 'Refrigerated Air Freight'
     ];
-
+    //print the options for the select div
     foreach ($methods as $key => $value) {
       print("<option value='" . $key ."'> " . $value . " </option>");
     }
   } else {
-  $stmt = getDeliveryMethods();
-
+    //get methods
+    $stmt = getDeliveryMethods();
+    //print options for select element
     while ($row = $stmt->fetch()) {
       print("<option value='" . $row['DeliveryMethodID'] ."'> " . $row['DeliveryMethodName'] . " </option>");
     }
   }
 }
 
+//get the name for a deliverymethod ID
 function getDeliveryMethodName ($id) {
+  //query
   $sql = "SELECT DeliveryMethodName FROM deliverymethods WHERE DeliveryMethodID = ?";
+  //execute query
   $stmt = runQueryWithParams($sql, array($id));
+  //get result
   $row = $stmt->fetch();
+  //return name
   return $row['DeliveryMethodName'];
 }
 
+//calculate delivery costs -- currently just a dummy since we dont know the actual values
 function getDeliveryCosts($id) {
   return (getCartWeight() * 2 * $id);
 }
 
+//return the total cost for an order based on its ID
 function getOrderTotalPrice($id) {
     $sql = "SELECT SUM(ol.Quantity * s.RecommendedRetailPrice) total FROM orders o
 JOIN orderlines ol ON o.OrderID = ol.OrderID
@@ -340,6 +351,7 @@ WHERE o.OrderID = ?";
     return $row['total'];
 }
 
+//return the total cost of an order line
 function getOrderTotalPriceByOrderline($id) {
     $sql = "SELECT o.quantity * s.RecommendedRetailPrice total FROM orderlines o join stockitems s ON o.StockItemID = s.StockItemID WHERE o.OrderLineID = ?";
     $stmt = runQueryWithParams($sql, array($id));
@@ -347,6 +359,7 @@ function getOrderTotalPriceByOrderline($id) {
     return $row['total'];
 }
 
+//prints the placed orders for the orderhistory page
 function printPlacedOrders() {
   $stmt = getUserOrders();
 

@@ -245,8 +245,9 @@ function getTotalItemsInCart () {
 
 //checks if the cart has a chilled product
 function cartHasFrozenProduct () {
+  //checks if there are products in the cart
   if (checkCart() && count($_SESSION['cart']) > 0) {
-
+    //setup query
     $sql = "SELECT COUNT(*) FROM stockitems WHERE StockItemID IN (" .   arrayToSQLString(array_keys($_SESSION['cart'])) . ") AND IsChillerStock = 1 ";
     $stmt = runQuery($sql);
     $row = $stmt->fetch();
@@ -255,6 +256,7 @@ function cartHasFrozenProduct () {
       return true;
     }
   }
+  //return false by default
   return false;
 }
 

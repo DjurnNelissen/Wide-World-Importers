@@ -269,7 +269,7 @@ function getCategoryName($id) {
 }
 
 
-
+//returns a list of most bought products
 function getMostOrderedProducts () {
   $sql = "SELECT StockItemID, SUM(Quantity) FROM orderlines
   GROUP BY StockItemID ORDER BY SUM(Quantity) DESC";
@@ -278,4 +278,3 @@ function getMostOrderedProducts () {
 }
 
  ?>
-
